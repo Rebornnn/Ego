@@ -1,0 +1,16 @@
+{
+    "code": 200,
+    "msg": "aqEUNRhoLN",
+    "result": {
+        "id": 63261,
+        "username": "8u3XxU3sQG",
+        "nickname": "M1tSansDeT",
+        "sex": 1,
+        "province": 82338,
+        "city": 330200,
+        "district": 330000,
+        "birthday": "2003-12-03",
+        "createTime": 1526120541082,
+        "updateTime": 1526118379321
+    }
+}

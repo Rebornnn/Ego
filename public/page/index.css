@@ -1,0 +1,39 @@
+/* 顶栏 */
+.g-header{
+    height: 90px;
+    background-color: #fff;
+}
+
+.g-header .m-header{
+    width: 1080px;
+}
+
+/* banner */
+.g-banner{
+    height:356px;
+    position: relative;
+}
+
+/* 主体 */
+.g-body{
+    width: 1080px;
+    margin: 50px auto 0;
+}
+
+/* 主栏 */
+.g-main{
+    width: 760px;
+    float: left;
+}
+
+/* 边栏 */
+.g-side{
+    width:295px;
+    float: right;
+}
+
+/* 底部 */
+.g-footer{
+    width: 1080px;
+    margin: 0 auto;
+}
