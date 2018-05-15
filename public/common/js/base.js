@@ -24,6 +24,22 @@
 
 
 /**
+ * 选取元素节点
+ */
+(function(_){
+    /**
+     * 
+     * @param   {String} id 元素的id名 
+     * @returns {Object}  返回元素对象
+     */
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+    _.$=$;
+}(window._));
+
+/**
  * 添加类名
  * 
  * @param   {Object} el 选中的元素

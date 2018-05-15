@@ -17,7 +17,7 @@
             <a href="/index" class="u-logo" target="blank"><img class="logo"></a>
             
             <!-- 标签 -->
-            <div class="m-tabs">
+            <div class="m-tabs" id="hdtabs">
                 <ul class="f-cb">
                     <li class="z-active"><a href="/index">首页</a></li>
                     <li><a  href="/works">作品</a></li>
@@ -28,6 +28,36 @@
                 <!-- <div class="tabs_track">
                     <div class="tabs_thumb" style="width:68px;left:0;"></div>
                 </div> -->
+            </div>
+
+            <!-- 搜索框 -->
+            <form action="/search" id="search" method="GET">
+                <div class="u-search">
+                    <input type="text" id="keyword" name="keyword" placeholder="输入搜索内容">
+                    <button class="icon-btn" type="submit"></button>
+                </div>
+            </form>
+
+            <!-- 登录注册按钮 -->
+            <div class="m-guest" id="guest">
+                <button class="u-btn u-btn-primary u-btn-icon" id="login"><i class="icon-user"></i>登录</button>
+                <button class="u-btn u-btn-link" id="register">注册</button>
+            </div>
+
+            <!-- 用户信息 -->
+            <div class="m-user" id="userdropdown">
+                <div class="user_info">
+                    <img class="user_avatar" src="../res/images/avater.png" alt="头像">
+                    <span class="user_name" id="name"></span>
+                    <i class="sex"></i>
+                    <i class="down"></i>
+                </div>
+                <ul class="user_list">
+                    <li>个人中心</li>
+                    <li>信息</li>
+                    <li>设置</li>
+                    <li id="logout">退出账号</li>
+                </ul>
             </div>
         </div>
     </div>

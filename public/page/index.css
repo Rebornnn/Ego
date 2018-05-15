@@ -6,10 +6,11 @@
 
 .g-header .m-header{
     width: 1080px;
+    vertical-align: middle;
 }
 
 .g-header .u-logo .logo{
-    background: url(../res/icon.png) 0 0;
+    background: url(../res/icon.png) no-repeat 0 0;
 }
 
 /* tabs */
@@ -23,6 +24,10 @@
     padding: 13px 20px;
     font-size: 14px;
     cursor: pointer;
+}
+
+.m-tabs .z-active{
+    color: #5ed0ba;
 }
 
 /* 滑动条 */
@@ -42,6 +47,56 @@
     transition: ease 0.1s;
 }
 
+
+/* 搜索框 */
+.g-header .search{
+    position: relative;
+    box-sizing: border-box;
+    width: 200px;
+    height: 40px;
+    border: 2px solid #5ed0ba;
+    border-radius: 2px;
+}
+
+.search .u-btn{
+    position: absolute;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    background: url(../res/icon.png) no-repeat 0 -30px;
+}
+
+/* guest */
+.g-header .m-guest{
+    display:inline-block;
+    height: 40px;
+}
+
+/* 用户信息 */
+.g-header .m-user{
+    display: none;
+}
+
+.m-user .user_name{
+    max-width: 64px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.m-user .user_list{
+    display: none;
+    position: absolute;
+    width: 100%;
+}
+
+.m-user:hover .user_list{
+    display:block;
+}
+
+.m-user:hover .user_info{
+    border-color: #ddd;
+}
 
 /* banner */
 .g-banner{
