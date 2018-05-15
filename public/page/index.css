@@ -8,6 +8,41 @@
     width: 1080px;
 }
 
+.g-header .u-logo .logo{
+    background: url(../res/icon.png) 0 0;
+}
+
+/* tabs */
+.g-header .m-tabs{
+    display:inline-block;
+    position: relative;
+}
+
+.m-tabs ul>li{
+    float: left;
+    padding: 13px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* 滑动条 */
+.m-tabs .tabs_track{
+    position:absolute;
+    bottom:0;
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
+}
+
+.m-tabs .tabs_thumb{
+    position: absolute;
+    height: 4px;
+    border-radius: 2px;
+    background: #5ed0ba;
+    transition: ease 0.1s;
+}
+
+
 /* banner */
 .g-banner{
     height:356px;
