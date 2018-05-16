@@ -56,7 +56,7 @@
     };
 
     App.Tabs=Tabs;
-}(window.App))
+}(window.App));
 
 
 /**
@@ -96,8 +96,8 @@
  */
 (function(App){
     function Guest(){
-        this.nLogin=document.getElementById('login');
-        this.nRegister=document.getElementById('register');
+        this.nLogin=_.$('login');
+        this.nRegister=_.$('register');
 
         this.nLogin.addEventListener('click',function(){
             //弹出登录弹窗
@@ -130,10 +130,58 @@
             //绑定登录，注册，登出事件
             this.initLoginStatus();
         },
-        getTabIndex:function(){},
-        initLoginStatus:function(){},
-        initUserInfo:function(data){}
+        //获取当前页面tabs中的index
+        getTabIndex:function(){
+            return window.location.href.search(/works/)>0?1:0;
+        },
+        //初始化登录状态
+        initLoginStatus:function(){
+            _.ajax({
+                url:'api/users?getloginuser',
+                success:function(data){
+                    if(data.code===200){
+                        this.initUserInfo(data.result);
+                        //回调函数this.loginCallback
+                    }
+                }.bind(this),
+                error:function(data){}
+            });
+        },
+        //初始化用户信息
+        initUserInfo:function(data){
+            this.sexIcon=_.$('sexIcon');
+            this.nName=_.$('name');
+            this.nGuest=_.$('guest');
+            this.nUser=_.$('userDropdown');
+            this.nLogout=_.$('logout');
+
+            //设置用户姓名和性别icon
+            this.nName.innerText=data.nickname;
+            _.addClassName(this.nSexIcon,App.iconConfig[data.sex]);
+
+            //隐藏登录，注册按钮；显示用户信息
+            _.addClassName(this.nGuest,'f-dn');
+            _.removeClassName(this.User,'f-dn');
+
+            this.nLogout.addEventListener('clcik',function(){
+                _.ajax({
+                    url:'/api/logout',
+                    method:'POST',
+                    data:{},
+                    success:function(data){
+                        if(data.code===200){
+                            window.location.href='/index';
+                        }
+                    },
+                    error:function(){}
+                });
+            });
+        }
     }
 
     App.nav=nav;
 }(window.App));
+
+// document.addEventListener('DOMContentLoaded',function(){
+//     App.nav();
+// });

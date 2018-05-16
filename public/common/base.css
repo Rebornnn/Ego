@@ -23,6 +23,7 @@ a,a:hover{color:#333;}
 /* 清除浮动 */
 .f-cb:after,.f-cbli li:after{display:block;clear:both;visibility:hidden;height:0;overflow:hidden;content:".";}
 .f-cb,.f-cbli li{zoom:1;}
+.f-dn{display: none;}
 
 /* 基类 */
 .u-btn{

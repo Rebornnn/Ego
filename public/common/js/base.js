@@ -5,6 +5,8 @@
     //App为全局对象,_为通用工具对象
     window.App=Object.create(null);
     window._=Object.create(null);
+
+    window.App.iconConfig=['icon-male','icon-female'];
 }());
 
 
@@ -24,7 +26,7 @@
 
 
 /**
- * 选取元素节点
+ * 选取单个元素节点
  */
 (function(_){
     /**
