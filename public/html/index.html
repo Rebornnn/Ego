@@ -8,13 +8,14 @@
     <title>ego</title>
     <link href="../common/base.css" rel="stylesheet"/>
     <link href="../page/index.css" rel="stylesheet"/>
+    <link href="../common/head.css" rel="stylesheet"/>
 </head>
 <body>
     <!--顶栏-->
     <div class="g-header">
         <div class="m-header">
             <!-- logo -->
-            <a href="/index" class="u-logo" target="blank"><img class="logo"></a>
+            <a href="/index" class="u-logo" target="blank"><span class="logo"></span></a>
             
             <!-- 标签 -->
             <div class="m-tabs" id="hdtabs">
@@ -40,15 +41,15 @@
 
             <!-- 登录注册按钮 -->
             <div class="m-guest" id="guest">
-                <button class="u-btn u-btn-primary u-btn-icon" id="login"><i class="icon-user"></i>登录</button>
-                <button class="u-btn u-btn-link" id="register">注册</button>
+                <button class="u-btn u-btn-icon" id="login">&nbsp;</button>
+                <button class="u-btn u-btn-link" id="register">注&nbsp;&nbsp;册</button>
             </div>
 
             <!-- 用户信息 -->
-            <div class="m-user" id="userDropdown">
+            <div class="m-user f-dn" id="userDropdown">
                 <div class="user_info">
                     <img class="user_avatar" src="../res/images/avater.png" alt="头像">
-                    <span class="user_name" id="name"></span>
+                    <span class="user_name" id="name">born</span>
                     <i class="sex" id="sexIcon"></i>
                     <i class="down"></i>
                 </div>

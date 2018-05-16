@@ -38,12 +38,16 @@ a,a:hover{color:#333;}
 }
 
 .u-btn-primary{
-    color: #fff;
-    background-color: #5ed0ba;
+    color: #5ed0ba;
+    background-color: #fff;
 }
 
 .u-btn-link{
-    color: #5ed0ba;
+    color:  #5ed0ba;
     background-color: #fff;
     border: 1px solid #fff;
+}
+
+.icon-btn{
+    border: 0;
 }

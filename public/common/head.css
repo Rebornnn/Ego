@@ -1,0 +1,172 @@
+/* 顶栏 */
+.g-header{
+    height: 90px;
+    background-color: #fff;
+}
+
+.g-header .m-header{
+    width: 1080px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.g-header .u-logo .logo{
+    display: inline-block;
+    height: 90px;
+    width: 216px;
+    background: url(../res/icon.png) no-repeat 0 0;
+    border:0 none;
+}
+
+/* tabs */
+.g-header .m-tabs{
+    position: absolute;
+    left: 260px;
+    top: 50%;transform: translateY(-50%);
+}
+
+.m-tabs ul>li{
+    float: left;
+    padding: 13px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.m-tabs .z-active{
+    color: #5ed0ba;
+}
+
+/* 滑动条 */
+.m-tabs .tabs_track{
+    position:absolute;
+    bottom:0;
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
+}
+
+.m-tabs .tabs_thumb{
+    position: absolute;
+    height: 4px;
+    border-radius: 2px;
+    background: #5ed0ba;
+    transition: ease 0.1s;
+}
+
+
+/* 搜索框 */
+.g-header #search{
+    position: absolute;
+    left: 607px;
+    top: 50%;transform: translateY(-50%);
+    box-sizing: border-box;
+    width: 200px;
+    height: 40px;
+    border: 2px solid #5ed0ba;
+    border-radius: 4px;
+}
+
+#search #keyword{
+    height: 36px;
+    width: 170px;
+    margin-left: 10px;
+    line-height: 36px;
+    border: 0;
+}
+
+#search .icon-btn{
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background: url(../res/icon.png) no-repeat 0 -115px;
+}
+
+/* guest */
+.g-header .m-guest{
+    position: absolute;
+    left: 835px;
+    top: 50%;transform: translateY(-50%);
+    height: 40px;
+    vertical-align: middle;
+}
+
+.m-guest .u-btn-icon{
+    background:url(../res/icon.png) no-repeat -1px -163px;
+}
+
+/* 用户信息 */
+.g-header .m-user{
+    position: absolute;
+    left: 835px;top: 0;
+    width: 190px;
+    
+}
+
+.m-user .user_info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    height: 90px;
+}
+
+.user_info .user_avatar{
+    width: 50px;
+    height: 50px;
+}
+
+.user_info .user_name{
+    max-width: 64px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-left: 10px;
+}
+
+.user_info .sex{
+    width: 12px;
+    height: 20px;
+    background: url(../res/icon.png) no-repeat 0 -920px;
+    margin-left: 10px;
+}
+
+.user_info .down{
+    width: 18px;
+    height: 12px;
+    background: url(../res/icon.png) no-repeat 0 -948px;
+    margin-left: 10px;
+}
+
+.m-user .user_list{
+    display: none;
+    position: absolute;
+    width: 100%;
+}
+
+.m-user:hover{
+    border: 1px solid #ddd;
+    border-bottom: 0;
+}
+
+.m-user:hover .user_list{
+    display:block;
+    border: 1px solid #ddd;
+    border-top: 0;
+}
+
+.user_list li{
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.m-user:hover li:hover{
+    background-color: #eee;
+}
+
+
+
