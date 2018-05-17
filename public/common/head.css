@@ -32,7 +32,11 @@
     cursor: pointer;
 }
 
-.m-tabs .z-active{
+.m-tabs ul>li a{
+    color: #bbb;
+}
+
+.m-tabs .z-active a{
     color: #5ed0ba;
 }
 
@@ -43,6 +47,7 @@
     height: 4px;
     width: 100%;
     border-radius: 2px;
+    background: #dcdddd;
 }
 
 .m-tabs .tabs_thumb{
@@ -102,7 +107,6 @@
     position: absolute;
     left: 835px;top: 0;
     width: 190px;
-    
 }
 
 .m-user .user_info{
@@ -112,6 +116,7 @@
     flex-wrap: nowrap;
     height: 90px;
 }
+
 
 .user_info .user_avatar{
     width: 50px;
@@ -124,6 +129,8 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     margin-left: 10px;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .user_info .sex{
@@ -141,20 +148,17 @@
 }
 
 .m-user .user_list{
-    display: none;
-    position: absolute;
+    position: absolute;top:0;
+    display:none;
+    z-index: 100;
     width: 100%;
-}
-
-.m-user:hover{
+    padding: 90px 0 0 0;
     border: 1px solid #ddd;
-    border-bottom: 0;
+    box-sizing: border-box;
 }
 
 .m-user:hover .user_list{
-    display:block;
-    border: 1px solid #ddd;
-    border-top: 0;
+    display: block;
 }
 
 .user_list li{
@@ -162,9 +166,10 @@
     line-height: 50px;
     text-align: center;
     font-size: 16px;
+    cursor: pointer;
 }
 
-.m-user:hover li:hover{
+.m-user li:hover{
     background-color: #eee;
 }
 

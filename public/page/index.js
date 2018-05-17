@@ -136,6 +136,7 @@
             _.ajax({
                 url:'api/users?getloginuser',
                 success:function(data){
+                    data=JSON.parse(data);
                     if(data.code===200){
                         this.initUserInfo(data.result);
                         //回调函数this.loginCallback
@@ -146,7 +147,7 @@
         },
         //初始化用户信息
         initUserInfo:function(data){
-            this.sexIcon=_.$('sexIcon');
+            this.nSexIcon=_.$('sexIcon');
             this.nName=_.$('name');
             this.nGuest=_.$('guest');
             this.nUser=_.$('userDropdown');
@@ -158,7 +159,7 @@
 
             //隐藏登录，注册按钮；显示用户信息
             _.addClass(this.nGuest,'f-dn');
-            _.removeClass(this.User,'f-dn');
+            _.removeClass(this.nUser,'f-dn');
 
             this.nLogout.addEventListener('clcik',function(){
                 _.ajax({
