@@ -13,9 +13,9 @@
         this.nTabs=this.nTab.children;
         //动态构建滑动条
         this.nTrack=document.createElement('div');
-        _.addClassName(this.nTrack,'tabs_track');
+        _.addClass(this.nTrack,'tabs_track');
         this.nThumb=document.createElement('div');
-        _.addClassName(this.nThumb,'tabs_thumb');
+        _.addClass(this.nThumb,'tabs_thumb');
         this.nTrack.appendChild(this.nThumb);
         this.container.appendChild(this.nTrack);
 
@@ -49,9 +49,9 @@
 
     //设置当前选中项
     Tabs.prototype.setCurrent=function(index){
-        _.removeClassName(this.nTabs[this.index],'z-active');
+        _.removeClass(this.nTabs[this.index],'z-active');
         this.index=index;
-        _.addClassName(this.nTabs[this.index],'z-active');
+        _.addClass(this.nTabs[this.index],'z-active');
         this.hightlight(index);
     };
 
@@ -79,12 +79,9 @@
 
     //搜索功能
     Search.prototype.search=function(event){
-        var value=this.nKeyword.value;
-        if(value){
-            value.replace(/^\s|\s$/,'');
-            return true;
-        }else{
-            return false;
+        this.nKeyword.value=this.nKeyword.value.replace(/^\s+|\s+$/g,'');
+        if(!this.nKeyword.value){
+            event.preventDefault();
         }
     }
 
@@ -126,7 +123,7 @@
                 index:this.getTabIndex()
             });
             this.search=new App.Search(_.$("search"));
-            this.guest=new App.Guest();
+            //this.guest=new App.Guest();
             //绑定登录，注册，登出事件
             this.initLoginStatus();
         },
@@ -157,11 +154,11 @@
 
             //设置用户姓名和性别icon
             this.nName.innerText=data.nickname;
-            _.addClassName(this.nSexIcon,App.iconConfig[data.sex]);
+            _.addClass(this.nSexIcon,App.iconConfig[data.sex]);
 
             //隐藏登录，注册按钮；显示用户信息
-            _.addClassName(this.nGuest,'f-dn');
-            _.removeClassName(this.User,'f-dn');
+            _.addClass(this.nGuest,'f-dn');
+            _.removeClass(this.User,'f-dn');
 
             this.nLogout.addEventListener('clcik',function(){
                 _.ajax({
@@ -182,6 +179,6 @@
     App.nav=nav;
 }(window.App));
 
-// document.addEventListener('DOMContentLoaded',function(){
-//     App.nav();
-// });
+document.addEventListener('DOMContentLoaded',function(){
+    App.nav.init();
+});
