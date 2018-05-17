@@ -180,6 +180,98 @@
     App.nav=nav;
 }(window.App));
 
+
+/**
+ * 构建轮播图
+ */
+(function(App){
+    var template='<div class="m-slider"><div>'
+    function Slider(options){
+        _.extend(this,options);
+
+        //组件节点
+        this.nSlider=_.html2node(template);
+        this.nSliders=this.buildSliders();
+        this.nCursors=this.buildCursor();
+        //初始化事件
+        this.nSlider.addEventListener('mouseenter',this.stop.bind(this));
+        this.nSlider.addEventListener('mouseleave',this.autoPlay.bind(this));
+        //初始化动作
+        this.container.appendChild(this.slider);
+        this.nav(this.initIndex||0);
+        this.autoPlay();
+    }
+    
+    //构造图片节点
+    Slider.prototype.buildSliders=function(){
+
+    }
+
+    //构造指示器节点
+    Slider.prototype.buildCursor=function(){
+        var cursor=document.createElement('ul'),
+            html='';
+
+        cursor.className='m-cursor';
+        for(var i=0;i<this.imgLength;i++){
+            html+=`<li data-index=${i}></li>`;
+        }
+        cursor.innerHTML=html;
+        this.nSlider.appendChild(cursor);
+
+        //处理点击事件
+        cursor.addEventListener('click',function(event){
+            //index=点击节点的下标
+            //this.nav(index);
+        }.bind(this));
+
+        return cursor.children;
+    }
+
+    //下一页
+    Slider.prototype.next=function(){
+        var index=(this.index+1)%this.imgLength;
+        this.nav(index);
+    }
+
+    //跳到指定页
+    Slider.prototype.nav=function(index){
+        if(this.index===index) return;
+        this.last=this.index;
+        this.index=index;
+
+        this.fade();
+        this.setCurrent();
+    }
+
+    //设置当前选中状态
+    Slider.prototype.setCurrent=function(){
+        //去除之前选中节点的选中状态
+        //添加当前选中节点的选中状态
+    }
+
+    //自动播放
+    Slider.prototype.autoPlay=function(){
+        this.timer=setInterval(function(){
+            this.next();
+        }.bind(this),this.interval);
+    }
+
+    //停止自动播放
+    Slider.prototype.stop=function(){
+        clearInterval(this.timer);
+    }
+
+    //切换效果
+    Slider.prototype.fade=function(){
+        if(this.last!==undefined){
+            this.nSliders[this.last].style.opacity=0;
+        }
+        this.nSliders[this.index].style.opacity=1;
+    }
+    App.Slider=Slider;
+}(window.App));
+
 document.addEventListener('DOMContentLoaded',function(){
     App.nav.init();
 });

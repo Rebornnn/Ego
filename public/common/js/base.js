@@ -42,6 +42,21 @@
 }(window._));
 
 /**
+ * html转换成节点对象
+ */
+(function(_){
+    /**
+     * 
+     * @param {String} str html的字符串形式 
+     */
+    function html2node(str) {
+        var container = document.createElement('div');
+		container.innerHTML = str;
+		return container.children[0];
+    }
+}(window._));
+
+/**
  * 添加类名
  * 
  * @param   {Object} el 选中的元素
