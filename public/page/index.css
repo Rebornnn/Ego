@@ -1,8 +1,10 @@
 /* banner */
 .g-banner{
+    position: relative;
     height:356px;
 }
 
+/* 图片样式 */
 .g-banner .m-slider{
     position: relative;
     height: 100%;
@@ -23,6 +25,39 @@
     height: 356px;
     
 }
+
+/* 控制器样式 */
+.g-banner .m-cursor{
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    bottom: 14px;
+    height: 20px;
+    padding: 4px 20px 5px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.8);
+    box-sizing: border-box;
+}
+
+.m-cursor li{
+    display:inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.m-cursor li+li{
+    margin-left: 10px;
+}
+
+.m-cursor .z-active{
+    background: #5ed0ba;
+}
+
+
+
+
 
 /* 主体 */
 .g-body{

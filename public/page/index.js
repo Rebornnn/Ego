@@ -197,14 +197,23 @@
         this.nSlider.addEventListener('mouseenter',this.stop.bind(this));
         this.nSlider.addEventListener('mouseleave',this.autoPlay.bind(this));
         //初始化动作
-        this.container.appendChild(this.slider);
+        this.container.appendChild(this.nSlider);
         this.nav(this.initIndex||0);
         this.autoPlay();
     }
     
     //构造图片节点
     Slider.prototype.buildSliders=function(){
+        var sliders=dcoument.createElement('ul'),
+            html='';
 
+        for(var i=0;i<this.imgLength;i++){
+            html+=`<li class="slider_img"><img src=${this.imgSrc[i]}></li>`
+        }
+        sliders.innerHTML=html;
+        this.nSlider.appendChild(sliders);
+
+        return sliders.children;
     }
 
     //构造指示器节点
@@ -223,6 +232,9 @@
         cursor.addEventListener('click',function(event){
             //index=点击节点的下标
             //this.nav(index);
+            var el=event.currentTarget;
+            this.index=el.dataset.index;
+            this.nav(this.index);
         }.bind(this));
 
         return cursor.children;
@@ -248,6 +260,8 @@
     Slider.prototype.setCurrent=function(){
         //去除之前选中节点的选中状态
         //添加当前选中节点的选中状态
+        _.removeClass(this.nCursors[this.last],'z-active');
+        _.addClass(this.nCursors[this.index],'z-active');
     }
 
     //自动播放
@@ -269,6 +283,7 @@
         }
         this.nSliders[this.index].style.opacity=1;
     }
+    
     App.Slider=Slider;
 }(window.App));
 
