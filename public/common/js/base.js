@@ -7,6 +7,9 @@
     window._=Object.create(null);
 
     window.App.iconConfig=['icon-male','icon-female'];
+    window.App.followConfig=[{class:'z-unfollow'},{class:'z-follow'}];
+    window.App.emitter={};
+    window.App.user={};
 }());
 
 
@@ -54,6 +57,8 @@
 		container.innerHTML = str;
 		return container.children[0];
     }
+
+    _.html2node=html2node;
 }(window._));
 
 /**
@@ -118,7 +123,7 @@
 /**
  * 自定义事件
  */
-(function(_){
+(function(App){
     /**
      * 注册事件
      * 
@@ -126,11 +131,12 @@
      * @param     {Function} func 事件处理函数 
      */
     function on(type, func) {
+        this.handlers={};
         if(typeof this.handlers[type]=="undefined"){
             this.handlers[type]=[];
         }
         
-        this.handlers[type].push(handler);
+        this.handlers[type].push(func);
     }
 
    /**
@@ -169,10 +175,12 @@
         }
     }
 
-    _.on=on;
-    _.off=off;
-    _.fire=fire;
-}(window._));
+    App.emitter={
+        on:on,
+        off:off,
+        fire:fire
+    };
+}(window.App));
 
 
 /**

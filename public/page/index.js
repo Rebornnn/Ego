@@ -123,7 +123,7 @@
                 index:this.getTabIndex()
             });
             this.search=new App.Search(_.$("search"));
-            //this.guest=new App.Guest();
+            this.guest=new App.Guest();
             //绑定登录，注册，登出事件
             this.initLoginStatus();
         },
@@ -139,7 +139,7 @@
                     data=JSON.parse(data);
                     if(data.code===200){
                         this.initUserInfo(data.result);
-                        //回调函数this.loginCallback
+                        this.loginCallback(data.result);
                     }
                 }.bind(this),
                 error:function(data){}
@@ -167,6 +167,7 @@
                     method:'POST',
                     data:{},
                     success:function(data){
+                        data=JSON.parse(data);
                         if(data.code===200){
                             window.location.href='/index';
                         }
@@ -204,7 +205,7 @@
     
     //构造图片节点
     Slider.prototype.buildSliders=function(){
-        var sliders=dcoument.createElement('ul'),
+        var sliders=document.createElement('ul'),
             html='';
 
         for(var i=0;i<this.imgLength;i++){
@@ -232,9 +233,9 @@
         cursor.addEventListener('click',function(event){
             //index=点击节点的下标
             //this.nav(index);
-            var el=event.currentTarget;
-            this.index=el.dataset.index;
-            this.nav(this.index);
+            var el=event.target;
+            var index=el.dataset.index;
+            this.nav(index);
         }.bind(this));
 
         return cursor.children;
@@ -260,7 +261,9 @@
     Slider.prototype.setCurrent=function(){
         //去除之前选中节点的选中状态
         //添加当前选中节点的选中状态
-        _.removeClass(this.nCursors[this.last],'z-active');
+        if(this.last!==undefined){
+            _.removeClass(this.nCursors[this.last],'z-active');
+        }
         _.addClass(this.nCursors[this.index],'z-active');
     }
 
@@ -287,6 +290,164 @@
     App.Slider=Slider;
 }(window.App));
 
-document.addEventListener('DOMContentLoaded',function(){
-    App.nav.init();
-});
+
+/**
+ * 构建明日之星
+ */
+(function(App){
+    function StarList(container,data){
+        this.listInfo=data;
+        this.container=container;
+        //绑定事件
+        this.container.addEventListener('click',this.follwHandler.bind(this));
+        this.render(data);
+    }
+
+    //扩展StarList原型
+    _.extend(StarList.prototype,App.emitter);
+    
+    //渲染整个ul 
+    StarList.prototype.render=function(data){
+        var html='';
+        data.forEach(function(item){
+            html+=this.renderItem(item);
+        }.bind(this));
+        this.container.innerHTML=html;
+    }
+    //渲染单个ul
+    StarList.prototype.renderItem=function(data){
+        var config=App.followConfig[Number(!!data.isFollow)];
+        var html=`
+        <li class="m-card f-cb">
+            <span class="card_avatar"></span>
+            <div class="card_info">
+                <div>${data.nickname}</div>
+                <div><span>作品  ${data.workCount}</span><span>粉丝  ${data.followCount}</span></div>
+            </div>
+            <button class="u-btn u-btn-icon ${config.class}" data-userid="${data.id}"></button>
+        </li>`;
+
+        return html;
+    }
+    //点击按钮的处理函数
+    StarList.prototype.follwHandler=function(event){
+        var target=event.target;
+        if(event.target.tagName==='BUTTON'){
+            var user=window.App.user;
+
+            //未登录情况
+            if(user.username===undefined){
+                this.fire('login');
+                return;
+            }
+            //已经登录的情况
+            var userId=target.dataset.userid,
+                //data=点击的用户信息
+                data=this.listInfo.filter(function(item){
+                    return (item.id===parseInt(userId));
+                })[0];
+            if(_.hasClass(target,'z-unfollow')){
+                this.follow(data,target.parentNode);
+            }else{
+                this.unfollow(data,target.parentNode);
+            }
+        }
+    }
+    //点击关注操作
+    StarList.prototype.follow=function(followInfo,replaceNode){
+        _.ajax({
+            url:'/api/users?follow',
+            type:'post',
+            data:{id:followInfo.id},
+            contentType:'application/json',
+            success:function(data){
+                data=JSON.parse(data);
+                if(data.code===200){
+                    followInfo.isFollow=true;
+                    followInfo.followCount++;
+                    var newNode=_.html2node(this.renderItem(followInfo));
+                    replaceNode.parentNode.replaceChild(newNode,replaceNode);
+                }
+            }.bind(this),
+            error:function(){}
+        });
+    }
+    //点击取消关注操作
+    StarList.prototype.unfollow=function(followInfo,replaceNode){
+        _.ajax({
+            url:'api/users?unfollow',
+            type:'post',
+            data:{id:followInfo.id},
+            contentType:'application/json',
+            success:function(data){
+                data=JSON.parse(data);
+                if(data.code===200){
+                    followInfo.isFollow=false;
+                    followInfo.followCount--;
+                    var newNode=_.html2node(this.renderItem(followInfo));
+                    replaceNode.parentNode.replaceChild(newNode,replaceNode);
+                }
+            }.bind(this),
+            error:function(){}
+        });
+    }
+
+    App.StarList=StarList;
+}(window.App));
+
+
+
+
+/**
+ * 页面的初始化
+ */
+(function(App){
+    var page={
+        init:function(){
+            this.initNav();
+            this.initStarList();
+            this.Slider=new App.Slider({
+                container:_.$('slider'),
+                initIndex:0,
+                imgLength:4,
+                imgSrc:['../res/banner0.jpg','../res/banner1.jpg','../res/banner2.jpg','../res/banner3.jpg'],
+                interval:2000
+            });
+            //this.sideTab=new App.Tabs({container:_.$('sidetabs')});
+        },
+        initNav:function(argument){
+            App.nav.init({
+                login:function(data){
+                    if(!window.App.user.username){
+                        window.App.user=data;
+                        this.initStarList();
+                    }
+                }.bind(this)
+            });
+        },
+        initStarList:function(){
+            _.ajax({
+                url:'api/users?getstarlist',
+                success:function(data){
+                    data=JSON.parse(data);
+                    if(data.code===200){
+                        if(!this.starList){
+                            this.starList=new App.StarList(_.$('starList'),data.result);
+                            this.starList.on('login',function(){
+                                this.nav.showLogin();
+                            }.bind(this));
+                        }else{
+                            this.starList.render(data.result);
+                        }
+                    }
+                }.bind(this),
+                error:function(){}
+            });
+        }
+    };
+
+    //页面初始化
+    document.addEventListener('DOMContentLoaded',function(e){
+        page.init();
+    });
+}(window.App));

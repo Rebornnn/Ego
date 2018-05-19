@@ -152,9 +152,10 @@
     display:none;
     z-index: 100;
     width: 100%;
-    padding: 90px 0 0 0;
+    padding: 89px 0 0 0;
     border: 1px solid #ddd;
     box-sizing: border-box;
+    
 }
 
 .m-user:hover .user_list{
@@ -167,6 +168,7 @@
     text-align: center;
     font-size: 16px;
     cursor: pointer;
+    background: #fff;
 }
 
 .m-user li:hover{

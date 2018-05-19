@@ -16,14 +16,14 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+    width: 100%;
     opacity: 0;
     transition: opacity ease .5s;
 }
 
 .slider_img img{
-    width: 1200px;
+    width: 100%;
     height: 356px;
-    
 }
 
 /* 控制器样式 */
@@ -63,13 +63,144 @@
 .g-body{
     width: 1080px;
     margin: 50px auto 0;
+    background: #efefef;
 }
+
+
+
+
 
 /* 主栏 */
 .g-main{
     width: 760px;
     float: left;
 }
+
+.g-main .m-section{
+    width: 100%;
+    background: #fff;
+    border: 1px solid #e2e3e3;
+}
+
+/* 主栏头部 */
+.m-section .section_head{
+    height: 70px;
+    font-size: 14px;
+    border-bottom: 1px solid #e2e3e3;
+    position: relative;;
+}
+
+.section_head .u-icon{
+    position: absolute;
+    top: 50%;transform: translateY(-50%);
+    left: 25px;
+    width: 40px;
+    height: 40px;
+}
+
+.m-section .sction_name{
+    height: 70px;
+    line-height: 70px;
+    margin-left: 80px;
+}
+
+.section_head .section_more{
+    position: absolute;
+    right: 15px;
+    top: 50%;transform: translateY(-50%);
+    width: 76px;
+    height: 32px;
+    background: url(../res/icon.png) no-repeat 0 -266px;
+}
+
+.m-section .m-list{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px 15px 15px 0;
+}
+
+/* 精选作品 */
+.section_head .u-icon-diamond{
+    background: url(../res/icon.png) no-repeat 0 -221px;
+}
+
+.m-list li{
+    float: left;
+    width: 173px;
+    height: 269px;
+    margin-left: 13px;
+}
+
+/* 明日之星 */
+.m-section .u-icon-star{
+    background: url(../res/icon.png) no-repeat 0 -495px;
+}
+
+/* 单个卡片 */
+.m-section .m-card{
+    float: left;
+    width: 358px;
+    height: 95px;
+    margin-left: 13px;
+    border: 1px solid #e2e3e3;
+    box-sizing: border-box;
+}
+/* 明日之星头像 */
+.m-card .card_avatar{
+    float: left;
+    width: 69px;
+    height: 69px;
+    background: url(../res/avaters.png) no-repeat 0 0;
+    margin: 13px 20px 20px 20px;
+}
+/* 明日之星信息 */
+.m-card .card_info{
+    display: inline-block;
+    width: 156px;
+    height: 40px;
+    margin-top: 27px;
+}
+
+.m-card .card_info div:first-child{
+    font-size: 14px; 
+    font-weight: 700;
+    margin-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.m-card .card_info span{
+    font-size: 9px;
+    font-weight: 200;
+}
+.m-card .card_info span+span{
+    margin-left: 15px;
+}
+/* 按钮 */
+.m-card .u-btn-icon{
+    width: 62px;
+    height: 26px;
+    background: url(../res/icon.png) no-repeat -1px -645px;
+    margin-top: 35px;
+}
+
+.m-card .z-follow{
+    position: relative;
+    background: url(../res/icon.png) no-repeat -2px -555px;
+}
+
+.m-card .z-follow:hover:after{
+    content: " ";
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    width: 62px;
+    height: 26px;
+    background: url(../res/icon.png) no-repeat -2px -601px;
+}
+
 
 /* 边栏 */
 .g-side{
