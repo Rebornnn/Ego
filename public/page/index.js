@@ -1,192 +1,8 @@
 /**
- * 构建Tabs
- */
-(function(App){
-    /**
-     * @param {Object} options 配置信息 
-     */
-    function Tabs(options){
-        _.extend(this,options);
-        this.index=this.index||0;
-        //缓存节点
-        this.nTab=this.container.getElementsByTagName('ul')[0];
-        this.nTabs=this.nTab.children;
-        //动态构建滑动条
-        this.nTrack=document.createElement('div');
-        _.addClass(this.nTrack,'tabs_track');
-        this.nThumb=document.createElement('div');
-        _.addClass(this.nThumb,'tabs_thumb');
-        this.nTrack.appendChild(this.nThumb);
-        this.container.appendChild(this.nTrack);
-
-        this.init();
-    }
-
-    //初始化
-    Tabs.prototype.init=function(){
-        //绑定事件
-        for(var i=0;i<this.nTabs.length;i++){
-            this.nTabs[i].addEventListener('mouseenter',function(index){
-                this.hightlight(index);
-            }.bind(this,i));
-            this.nTabs[i].addEventListener('click',function(){
-                this.setCurrent(index);
-            }.bind(this,i));
-        }
-        this.nTab.addEventListener('mouseleave',function(){
-            this.hightlight(this.index);
-        }.bind(this));
-
-        this.setCurrent(this.index);
-    };
-
-    //高亮当前项
-    Tabs.prototype.hightlight=function(index){
-        var tab=this.nTabs[index];
-        this.nThumb.style.width=tab.offsetWidth+'px';
-        this.nThumb.style.left=tab.offsetLeft+'px';
-    };
-
-    //设置当前选中项
-    Tabs.prototype.setCurrent=function(index){
-        _.removeClass(this.nTabs[this.index],'z-active');
-        this.index=index;
-        _.addClass(this.nTabs[this.index],'z-active');
-        this.hightlight(index);
-    };
-
-    App.Tabs=Tabs;
-}(window.App));
-
-
-/**
- * 构建搜索框
- */
-(function(App){
-    /**
-     * 
-     * @param {Object} container  表单节点
-     */
-    function Search(container) {
-        this.nForm=container;
-        this.nKeyword=this.nForm.getElementsByTagName('input')[0];
-        this.init();
-    }
-    //初始化
-    Search.prototype.init=function(){
-        this.nForm.addEventListener('submit',this.search.bind(this));
-    }
-
-    //搜索功能
-    Search.prototype.search=function(event){
-        this.nKeyword.value=this.nKeyword.value.replace(/^\s+|\s+$/g,'');
-        if(!this.nKeyword.value){
-            event.preventDefault();
-        }
-    }
-
-    App.Search=Search;
-}(window.App));
-
-/**
- * 构建登录与注册
- */
-(function(App){
-    function Guest(){
-        this.nLogin=_.$('login');
-        this.nRegister=_.$('register');
-
-        this.nLogin.addEventListener('click',function(){
-            //弹出登录弹窗
-
-        }.bind(this));
-        this.nRegister.addEventListener('click',function(){
-            //弹出注册弹窗
-
-        }.bind(this));
-    }
-
-    App.Guest=Guest;
-}(window.App));
-
-
-/**
- * 构建顶栏
- */
-(function(App){
-    var nav={
-        init:function(options){
-            options=options||{};
-            this.loginCallback=options.login;
-            this.hdtab=new App.Tabs({
-                container:_.$("hdtabs"),
-                index:this.getTabIndex()
-            });
-            this.search=new App.Search(_.$("search"));
-            this.guest=new App.Guest();
-            //绑定登录，注册，登出事件
-            this.initLoginStatus();
-        },
-        //获取当前页面tabs中的index
-        getTabIndex:function(){
-            return window.location.href.search(/works/)>0?1:0;
-        },
-        //初始化登录状态
-        initLoginStatus:function(){
-            _.ajax({
-                url:'api/users?getloginuser',
-                success:function(data){
-                    data=JSON.parse(data);
-                    if(data.code===200){
-                        this.initUserInfo(data.result);
-                        this.loginCallback(data.result);
-                    }
-                }.bind(this),
-                error:function(data){}
-            });
-        },
-        //初始化用户信息
-        initUserInfo:function(data){
-            this.nSexIcon=_.$('sexIcon');
-            this.nName=_.$('name');
-            this.nGuest=_.$('guest');
-            this.nUser=_.$('userDropdown');
-            this.nLogout=_.$('logout');
-
-            //设置用户姓名和性别icon
-            this.nName.innerText=data.nickname;
-            _.addClass(this.nSexIcon,App.iconConfig[data.sex]);
-
-            //隐藏登录，注册按钮；显示用户信息
-            _.addClass(this.nGuest,'f-dn');
-            _.removeClass(this.nUser,'f-dn');
-
-            this.nLogout.addEventListener('clcik',function(){
-                _.ajax({
-                    url:'/api/logout',
-                    method:'POST',
-                    data:{},
-                    success:function(data){
-                        data=JSON.parse(data);
-                        if(data.code===200){
-                            window.location.href='/index';
-                        }
-                    },
-                    error:function(){}
-                });
-            });
-        }
-    }
-
-    App.nav=nav;
-}(window.App));
-
-
-/**
  * 构建轮播图
  */
 (function(App){
-    var template='<div class="m-slider"><div>'
+    var template='<div class="m-slider"><div>';
     function Slider(options){
         _.extend(this,options);
 
@@ -322,7 +138,7 @@
             <span class="card_avatar"></span>
             <div class="card_info">
                 <div>${data.nickname}</div>
-                <div><span>作品  ${data.workCount}</span><span>粉丝  ${data.followCount}</span></div>
+                <div><span>作品&nbsp;&nbsp;${data.workCount}</span><span>&nbsp;&nbsp;粉丝&nbsp;&nbsp;${data.followCount}</span></div>
             </div>
             <button class="u-btn u-btn-icon ${config.class}" data-userid="${data.id}"></button>
         </li>`;
@@ -337,7 +153,7 @@
 
             //未登录情况
             if(user.username===undefined){
-                this.fire('login');
+                this.fire({type:'login'});
                 return;
             }
             //已经登录的情况
@@ -413,7 +229,10 @@
                 imgSrc:['../res/banner0.jpg','../res/banner1.jpg','../res/banner2.jpg','../res/banner3.jpg'],
                 interval:2000
             });
-            //this.sideTab=new App.Tabs({container:_.$('sidetabs')});
+            this.compileTemplateAside();
+            this.sideTab=new App.Tabs({
+                container:_.$("ranking_tabs")
+            });
         },
         initNav:function(argument){
             App.nav.init({
@@ -443,7 +262,58 @@
                 }.bind(this),
                 error:function(){}
             });
-        }
+        },
+
+        //编译侧边栏
+        compileTemplateAside: function(){
+			var html = '';
+
+            html += `<div class="m-mywork"><img src="../res/images/myWork.png" alt="我的作品"></div>`;
+			// 圈子
+			html += App.template.aside_circle({
+				list: [
+					{img_url: '../res/images/community1.jpg', circle_name: '门口小贩',circle_members:5221},
+					{img_url: '../res/images/community2.jpg', circle_name: '原画集中营',circle_members:5221},
+					{img_url: '../res/images/community3.jpg', circle_name: '—— Horizon ——',circle_members:5221}
+				]
+			});
+
+			// 热门话题
+			html += App.template.aside_hottopic({
+				list: [
+					{title: '1. [萝莉学院] 你不知道的那些事儿 这是标题标题 这是标题标题 这是标题标题 这是标题标题'},
+					{title: '1. [萝莉学院] 你不知道的那些事儿 这是标题标题 这是标题标题 这是标题标题 这是标题标题'},
+					{title: '1. [萝莉学院] 你不知道的那些事儿 这是标题标题 这是标题标题 这是标题标题 这是标题标题'},
+					{title: '1. [萝莉学院] 你不知道的那些事儿 这是标题标题 这是标题标题 这是标题标题 这是标题标题'},
+					{title: '1. [萝莉学院] 你不知道的那些事儿 这是标题标题 这是标题标题 这是标题标题 这是标题标题'}
+				]
+			});
+
+			// 排行
+			html += App.template.aside_ranking({
+				list: [
+					{img_url: '/res/images/work5.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
+					{img_url: '/res/images/work6.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
+					{img_url: '/res/images/work8.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
+					{img_url: '/res/images/work9.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
+					{img_url: '/res/images/work10.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421}
+				]
+			});
+
+			// 达人排行
+			html += App.template.aside_authorranking({
+				list: [
+					{img_url: '/res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
+					{img_url: '/res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
+					{img_url: '/res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
+					{img_url: '/res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
+					{img_url: '/res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421}
+				]
+			});
+
+			// 编译结果，载入页面主内容区
+			_.$('gSide').innerHTML = html;
+		},
     };
 
     //页面初始化
