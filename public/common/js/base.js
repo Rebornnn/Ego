@@ -119,6 +119,65 @@
     _.hasClass=hasClass;
 }(window._));
 
+/**
+ * 计算年龄
+ */
+(function(_){
+    /**
+     * 
+     * @param {String} birthday 格式为“1991-10-10” 
+     */
+    function getAge(birthday) {
+        var today = new Date();
+        var birthDate = new Date(birthday);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+    
+    _.getAge=getAge;
+}(window._));
+
+/**
+ * 计算星座
+ */
+(function(_){
+    /**
+     * 
+     * @param {String} birthday 格式为“1991-10-10”
+     */
+    function getConstellation(birthday) {
+        birthday=new Date(birthday);
+        var month=birthday.getMonth()+1;
+        var date=birthday.getDate();
+        var constellations=['摩羯','水瓶','双鱼','白羊','金牛','双子','巨蟹','狮子','处女','天枰','天蝎','射手','魔羯'];
+        return constellations[month-(date-14<'657778999988'.charAt(month-1))];
+    }
+
+    _.getConstellation=getConstellation;
+}(window._));
+
+/**
+ * 计算城市
+ */
+(function(_){
+    function getCity(lib,address){
+        var province=lib.filter(function(item){
+            return parseInt(item[0])===address.province;
+        })[0];
+        var city=province[2].filter(function(item){
+            return parseInt(item[0])===address.city;
+        })[0];
+
+        return city[1];
+    }
+
+    _.getCity=getCity;
+}(window._));
+
 
 /**
  * 自定义事件

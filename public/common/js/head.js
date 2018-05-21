@@ -549,8 +549,9 @@
                     success:function(data){
                         data=JSON.parse(data);
                         if(data.code===200){
-                            _.addClass(this.nUser,'f-dn');
-                            _.removeClass(this.nGuest,'f-dn');
+                            // _.addClass(this.nUser,'f-dn');
+                            // _.removeClass(this.nGuest,'f-dn');
+                            window.location.reload();
                         }
                     }.bind(this),
                     error:function(){}

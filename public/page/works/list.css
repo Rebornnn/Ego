@@ -1,0 +1,125 @@
+/* banner */
+.g-banner{
+    height: 250px;
+    background-image: url(../../res/banner4.jpg);
+    background-size: 100% 100%;
+}
+
+/* 主体 */
+.g-body{
+    width: 750px;
+    margin: 0 auto;
+    background: #efefef;
+}
+
+/* 个人信息 */
+.g-profile{
+    height: 216px;
+    background-color: #fff;
+    margin-top: -115px;
+    text-align: center;
+    border-bottom: 2px solid #c5c6c6;
+}
+
+
+/* 作品 */
+.g-main{
+    position: relative;
+    height: 600px;
+    background-color: #fff;
+}
+.g-main .g-wrap{
+    width: 650px;
+    margin: 0 auto;
+}
+
+.g-main .g-wrap .list-loaded{
+    display: inline-block;
+}
+.g-main .m-works{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -25px;
+}
+
+.g-main .item{
+    position: relative;
+    width: 110px;
+    height: 166px;
+    box-sizing: border-box;
+    border: 1px solid #d3d4d4;
+    background-color: #fff;
+    margin-right: 25px;
+    margin-bottom: 10px;
+}
+
+.g-main .item a{
+    display: block;
+    width: 110px;
+    height: 166px;
+}
+.g-main .item a:before{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    bottom: -4px;
+    left:-4px;
+    border: 1px solid #d7d7d7;
+    background-color: #c5c6c6;
+    content: "";
+}
+.g-main .item h3{
+    position: absolute;
+    right: 6px;
+    bottom: -6px;
+    left: -6px;
+    height: 30px;
+    line-height: 30px;
+    background-color: rgba(255,255,255,.8);
+    text-align: center;
+}
+.g-main .item img{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    bottom: -7px;
+    left: -7px;
+    width: 110px;
+    height: 166px;
+    box-sizing: border-box;
+    border: 1px solid #d7d7d7;
+    border-top: none;
+    border-right: none;
+}
+
+.g-main .item .icons{
+    position: absolute;
+    top:6px;
+    right: 0;
+    width: 46px;
+    height: 18px;
+    z-index: 999;
+}
+
+.g-main .item .icons .u-icon{
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+.g-main .item .u-icon-edit{
+    background: url(../../res/icon.png) no-repeat -337px -70px;
+}
+.g-main .item .u-icon-delete{
+    background: url(../../res/icon.png) no-repeat -337px -97px;
+}
+
+/* 边栏 */
+.m-aside{
+    width: 100px;
+    height: 276px;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: -100px;
+}

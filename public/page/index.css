@@ -56,17 +56,12 @@
 }
 
 
-
-
-
 /* 主体 */
 .g-body{
     width: 1080px;
     margin: 50px auto 0;
     background: #efefef;
 }
-
-
 
 
 
@@ -367,5 +362,28 @@
 /* 底部 */
 .g-footer{
     width: 1080px;
+    height: 85px;
     margin: 0 auto;
+}
+
+.g-footer .m-main{
+    width: 760px;
+    line-height: 85px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #fff;
+    background: #5ecbb5;
+    text-align: center;
+}
+
+.g-footer .m-side{
+    width: 295px;
+    line-height: 85px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    color: black;
+    text-align: center;
+    background: #fff;
 }
