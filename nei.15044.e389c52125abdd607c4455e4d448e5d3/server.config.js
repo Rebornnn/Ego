@@ -6,12 +6,12 @@
 var path = require('path');
 module.exports = {
     /* 根目录 */
-    webRoot: 'F:/Ego/public/',
+    webRoot: 'F:/新建文件夹/Ego/public/',
     /* 视图目录 */
-    viewRoot: 'F:/Ego/public/html/',
+    viewRoot: 'F:/新建文件夹/Ego/public/html/',
     /* 路由 */
     routes: {
-        //"ALL /api/*": "http://59.111.103.100/",
+        //"ALL /api/*": "代理所有接口, 这里输入代理服务器地址",
         "GET /works/detail/:id": { name: '作品详情页面', index: 0, list: [{"id":13096,"path":"works\\detail"}] },
         "GET /works/create": { name: '作品创建页面', index: 0, list: [{"id":13081,"path":"works\\create"}] },
         "GET /works": { name: '作品列表页面', index: 0, list: [{"id":13079,"path":"works\\list"}] },
@@ -76,9 +76,9 @@ module.exports = {
     /* 项目的 key */
     projectKey: 'e389c52125abdd607c4455e4d448e5d3',
     /* 同步模块mock数据路径 */
-    mockTpl: 'F:/Ego/mock.data/template/',
+    mockTpl: 'F:/新建文件夹/Ego/mock.data/template/',
     /* 异步接口mock数据路径 */
-    mockApi: 'F:/Ego/mock.data/interface/',
+    mockApi: 'F:/新建文件夹/Ego/mock.data/interface/',
     /* 是否修改代理的host */
     changeOrigin: true,
     /* 模板后缀 */

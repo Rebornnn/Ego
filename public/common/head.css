@@ -178,23 +178,23 @@
 /* 登录框 */
 .m-modal .modal_login{
     width: 408px;
-    padding: 10px 30px 30px 30px;
+    padding: 30px;
     box-sizing: border-box;
 }
 
 .modal_login .u-close{
+    position: absolute;
+    top: 5px;right: 5px;
     font-size: 16px;
     font-weight: 300px;
-    text-align: right;
     color: #c0c0c1;
-    margin-bottom: 10px;
     cursor: pointer;
 }
 
 .modal_login .modal_tt{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .modal_login .modal_tt strong{
@@ -264,4 +264,82 @@
 }
 .u-checkbox input[type="checkbox"]:checked~.u-icon-checkbox{
     display: none;
+}
+
+/* 注册框 */
+.modal_signin{
+    padding: 30px 100px 40px 100px;
+}
+
+.modal_signin .m-form{
+    width: 345px;
+}
+
+.modal_signin .m-form .u-formitem{
+    width: 345px;
+}
+
+.modal_signin .m-form .formitem_ct{
+    width: 266px;
+}
+
+.modal_signin .u-close{
+    position: absolute;
+    top: 5px;right: 5px;
+    font-size: 16px;
+    font-weight: 300px;
+    color: #c0c0c1;
+    cursor: pointer;
+}
+
+.modal_signin .logo{
+    display: block;
+    background: url(../res/icon.png) no-repeat 0 -20px;
+    width: 220px;
+    height: 51px;
+}
+
+.modal_signin .sex_box{
+    display: flex;
+    height: 100%;
+}
+
+.modal_signin .sex_box  label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+/* .u-checkbox input[type="checkbox"]{
+    display: none;
+}
+.u-checkbox .u-icon-checkboxchecked{
+    display: none;
+}
+
+.u-checkbox input[type="checkbox"]:checked~.u-icon-checkboxchecked{
+    display: inline-block;
+}
+.u-checkbox input[type="checkbox"]:checked~.u-icon-checkbox{
+    display: none;
+} */
+
+.modal_signin .formitem_ct-captcha .u-ipt{
+    height: 100%;
+}
+
+.modal_signin .formitem_ct-captcha #captchaimg{
+    height: 100%;
+    width: 94px;
+    cursor: pointer;
+}
+
+.modal_signin .u-remember{
+    line-height: 24px;
+}
+
+.modal_signin button[type=submit]{
+    width: 100%;
+    margin-top: 10px;
 }

@@ -99,6 +99,7 @@
         this.nLogin.addEventListener('click',function(){
             //弹出登录弹窗
             this.modal=new App.LoginModal({parent:_.$('gHeader')});
+            //注册ok事件
             this.modal.on('ok',function(event){
                 App.nav.initUserInfo(event.data);
                 App.nav.loginCallback&&App.nav.loginCallback(event.data);
@@ -111,6 +112,13 @@
 
         this.nRegister.addEventListener('click',function(){
             //弹出注册弹窗
+            this.modal=new App.RegisterModal({parent:_.$('gHeader')});
+            //注册ok事件
+            this.modal.on('ok',function(event){
+                this.modal.hide();
+                App.nav.initUserInfo(event.data);
+                App.nav.loginCallback&&App.nav.loginCallback(event.data);
+            }.bind(this));
             
         }.bind(this));
     }
@@ -126,7 +134,7 @@
     var validator=App.validator;
     var html=`
     <div class="modal_login">
-        <div class="u-close">X</div>
+        <div class="u-close" id="login_close">X</div>
         <div class="modal_tt">
             <strong>欢迎回来</strong><span>还没有帐号？<a class="u-link" id="goregister">立即注册</a></span>
         </div>
@@ -164,6 +172,7 @@
         this.nRemember=_.$('remember');
         this.nError=_.$('errormsg');
         this.nRegister=_.$('goregister');
+        this.nClose=_.$('login_close');
 
         this.initLoginEvent();
         this.show();
@@ -176,9 +185,15 @@
     LoginModal.prototype.initLoginEvent=function(){
         //绑定提交事件
         this.nForm.addEventListener('submit',this.submit.bind(this));
+
         //绑定跳转注册事件
         this.nRegister.addEventListener('click',function(){
                 this.fire({type:'register'});
+        }.bind(this));
+
+        //绑定关闭事件
+        this.nClose.addEventListener('click',function(){
+            this.hide();
         }.bind(this));
     }
 
@@ -248,6 +263,235 @@
 
 
 /**
+ * 构建注册框
+ */
+(function(App){
+    var validator=App.validator;
+    var html=`
+    <div class="modal_signin">
+        <div class="u-close" id="signin_close">X</div>
+        <div><i class="logo"></i></div>
+        <form class="m-form" id="registerform">
+            <div class="u-formitem">
+                <label for="phone" class="formitem_tt">手机号</label>
+                <input type="text" id="phone" name="phone" placeholder="请输入11位手机号码" class="formitem_ct u-ipt">
+            </div>
+            <div class="u-formitem">
+                <label for="nickname" class="formitem_tt">昵称</label>
+                <input type="text" id="nickname" name="nickname" placeholder="中英文均可，至少8个字符" class="formitem_ct u-ipt">
+            </div>
+            <div class="u-formitem">
+                <label for="password" class="formitem_tt">密码</label>
+                <input type="password" id="password_signin" name="password" placeholder="长度6-16字符，不包含空格" class="formitem_ct u-ipt">
+            </div>
+            <div class="u-formitem">
+                <label for="confirm_password" class="formitem_tt">确认密码</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="再次输入密码" class="formitem_ct u-ipt">
+            </div>
+            <div class="u-formitem">
+                <label for class="formitem_tt">性别</label>
+                <div class="formitem_ct">
+                    <div class="sex_box">
+                        <label>
+                            <input type="radio" name="sex" checkded value="0">
+                            <i class="u-icon u-icon-radio"></i>
+                            <i class="u-icon u-icon-radiochecked"></i>
+                            少男
+                        </label>
+                        <label>
+                            <input type="radio" name="sex" value="0">
+                            <i class="u-icon u-icon-radio"></i>
+                            <i class="u-icon u-icon-radiochecked"></i>
+                            少女
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="u-formitem">
+                <label for="" class="formitem_tt">生日</label>
+                <div class="formitem_ct">
+                    <div class="m-cascadeselect birthday_select" id="birthday"></div>
+                </div>
+            </div>
+            <div class="u-formitem">
+                <label for="" class="formitem_tt">所在地</label>
+                <div class="formitem_ct">
+                    <div class="m-cascadeselect loation_select" id="location"></div>
+                </div>
+            </div>
+            <div class="u-formitem">
+                <label for="" class="formitem_tt">验证码</label>
+                <div class="formitem_ct formitem_ct-captcha">
+                    <input type="text" id="captcha" class="u-ipt">
+                    <img id="captchaimg" src="/captch" alt="验证码">
+                </div>
+            </div>
+            <div class="u-formitem u-formitem-2 u-remember">
+                <label for="read" class="u-checkbox u-checkbox-read">
+                    <input type="checkbox" id="read">
+                    <i class="u-icon u-icon-checkbox"></i>
+                    <i class="u-icon u-icon-checkboxchecked"></i>
+                    <span>我已阅读相关条款</span>
+                </label>
+            </div>
+            <button class="u-btn u-btn-primary" type="submit">注&nbsp;&nbsp;册</button>
+        </form>
+    </div>`;
+
+    function RegisterModal(options) {
+        options.content=html;
+        App.Modal.call(this,options);
+        //缓存节点
+        this.nForm=_.$('registerform');
+        this.nPhone=_.$('phone');
+        this.nNick=_.$('nickname');
+        this.pwd=_.$('password_signin');
+        this.nConfirmpwd=_.$('confirm_password');
+        this.nCaptcha=_.$('captcha');
+        this.nCaptchImg=_.$('captchaimg');
+        this.nClose=_.$('signin_close');
+
+        this.initSelect();
+        this.initRegisterEvent();
+        this.show();
+    }
+
+    //扩展原型
+    RegisterModal.prototype=Object.create(App.Modal.prototype);
+    _.extend(RegisterModal.prototype,App.emitter);
+
+    RegisterModal.prototype.initRegisterEvent=function(){
+        //绑定验证码图片事件
+        this.nCaptchImg.addEventListener('click',function(){
+            this.resetCaptcha();
+        }.bind(this));
+        
+        //绑定提交事件
+        this.nForm.addEventListener('submit',this.submit.bind(this));
+
+
+        //绑定关闭事件
+        this.nClose.addEventListener('click',function(){
+            this.hide();
+        }.bind(this));
+    }
+    
+    //初始化选择器
+    RegisterModal.prototype.initSelect=function(){}
+    
+    //重置验证码图片
+    RegisterModal.prototype.resetCaptcha=function(){
+        this.nCaptchImg.src='/captcha?t='+ +new Date();
+    }
+    
+    //表单提交
+    RegisterModal.prototype.submit=function(event){
+        event.preventDefault();
+        this.check();
+        if(true){
+            var data={
+                username:this.nPhone.value.trim(),
+                nickname:this.nNick.value.trim(),
+                password:hex_md5(this.pwd.value),
+                sex:this.getRadioValue('registerform','sex'),
+                captcha:this.nCaptcha.value.trim()
+            };
+            // this.birthday=this.birthdaySelect.getValue().join('-');
+            // data.birthday=this.birthday;
+            // this.location=this.locationSelect.getValue();
+            // data.province=this.location[0];
+            // data.city=this.location[1];
+            // data.district=this.location[2];
+
+            _.ajax({
+                url:'/api/register',
+                type:'post',
+                data:data,
+                success:function(data){
+                    data=JSON.parse(data);
+                    if(data.code===200){
+                        this.hide();
+                        this.fire({type:'ok',data:data.result});
+                    }else{
+                        this.nError.innerText=data.msg;
+                        this.showError(this.nForm,true);
+                    }
+                }.bind(this),
+                fail:function(){}
+            });
+        }
+    }
+    
+    //表单校验
+    RegisterModal.prototype.check=function(){
+        var isValid=true,
+            errorMsg='';
+        var checkList=[
+            [this.nPhone,['required','phone']],
+            [this.nNick,['required','nickname']],
+            [this.pwd,['required','length']],
+            [this.nConfirmpwd,['required','length']],
+            [this.nCaptcha,['required']]
+        ];
+
+        isValid=this.checkRules(checkList);
+        if(!isValid){
+            errorMsg='输入有误'
+        }
+
+        //验证两次密码是否一致
+        //验证条款是否为空
+        //显示错误
+
+        return isValid;
+    }
+    
+    //校验规则配置
+    RegisterModal.prototype.checkRules=function(checkList){
+
+        for(var i=0;i<checkList.length;i++){
+            var checkItem=checkList[i][0],
+                rules=checkList[i][1],
+                flag;
+
+            for(var j=0;j<rules.length;j++){
+                var key=rules[j];
+                switch(key){
+                    case 'nickname':
+                        flag=validator.isNickName(checkItem.value);
+                        break;
+                    case 'length':
+                        flag=validator.isLength(checkItem.value,6,16);
+                        break;
+                    case 'required':
+                        flag=validator.isEmpty(checkItem.value);
+                        break;
+                }
+            }
+            if(!flag){break;}
+        }
+        //显示错误
+        this.showError(checkItem,flag);
+
+        return flag;
+    }
+
+    RegisterModal.prototype.showError=function(node,boo){
+        if(boo){
+            _.addClass(node,'error');
+        }
+    }
+
+    RegisterModal.prototype.getRadioValue=function(){}
+    RegisterModal.prototype.birthdaySelect=function(){}
+    RegisterModal.prototype.locationSelect=function(){}
+
+
+    App.RegisterModal=RegisterModal;
+}(window.App));
+
+
+/**
  * 构建顶栏
  */
 (function(App){
@@ -298,20 +542,20 @@
             _.addClass(this.nGuest,'f-dn');
             _.removeClass(this.nUser,'f-dn');
 
-            this.nLogout.addEventListener('clcik',function(){
+            this.nLogout.addEventListener('click',function(){
                 _.ajax({
                     url:'/api/logout',
-                    method:'POST',
-                    data:{},
+                    type:'post',
                     success:function(data){
                         data=JSON.parse(data);
                         if(data.code===200){
-                            window.location.href='/index';
+                            _.addClass(this.nUser,'f-dn');
+                            _.removeClass(this.nGuest,'f-dn');
                         }
-                    },
+                    }.bind(this),
                     error:function(){}
                 });
-            });
+            }.bind(this));
         }
     }
 

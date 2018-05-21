@@ -12,73 +12,6 @@
     window.App.user={};
 }());
 
-/**
- * 通用modal
- */
-(function(App){
-    var template = '<div class="m-modal f-dn"></div>';
-
-    /**
-     * 
-     * @param {Object} options 配置参数，parent为挂载的父节点，content为内容
-     */
-	function Modal(options){
-		// 继承配置
-		_.extend(this, options);
-		// 缓存节点
-		this.container = _.html2node(template);
-		this.container.innerHTML = this.content || '';
-		// 挂载到父节点
-		this.parent.appendChild(this.container);
-	}
-
-	// 展示弹窗
-	Modal.prototype.show = function(){
-		_.removeClass(this.container, 'f-dn');
-	};
-	// 关闭弹窗
-	Modal.prototype.hide = function(){
-		_.addClass(this.container, 'f-dn');
-	};
-
-	App.Modal = Modal;
-}(window.App));
-
-
-/**
- * 验证器（验证数据格式）
- */
-(function(App){
-
-	var validator = {
-		// 1. 验证是否为空
-		isEmpty: function(value){
-			return typeof value === 'undefined' || !value.trim();
-		},
-		// 2. 验证电话号码
-		isPhone: function(value){
-			return /^\d{11}$/.test(value);
-		},
-		// 3. 验证昵称
-		isNickName: function(value){
-			// 中英文数字均可，至少8个字符
-			return /^[\u4e00-\u9fa5a-zA-Z0-9]{8}[\u4e00-\u9fa5a-zA-Z0-9]*$/.test(value);
-		},
-		// 4. 长度限制
-		isLength: function(value, min, max){
-			var length = value.toString().length;
-			// 验证结果
-			var result = true;
-			// 长度 大于等于最小值，小于等于最大值
-			typeof min !== 'undefined' && (result = result && length >= min);
-			typeof max !== 'undefined' && (result = result && length <= max);
-			return result;
-		}
-	};
-
-	App.validator = validator;
-})(window.App);
-
 
 /**
  * 对象浅复制
@@ -437,6 +370,212 @@
 
     _.ajax = ajax;
 }(window._));
+
+
+
+/**
+ * 通用modal
+ */
+(function(App){
+    var template = '<div class="m-modal f-dn"></div>';
+
+    /**
+     * 
+     * @param {Object} options 配置参数，parent为挂载的父节点，content为内容
+     */
+	function Modal(options){
+		// 继承配置
+		_.extend(this, options);
+		// 缓存节点
+		this.container = _.html2node(template);
+		this.container.innerHTML = this.content || '';
+		// 挂载到父节点
+		this.parent.appendChild(this.container);
+	}
+
+	// 展示弹窗
+	Modal.prototype.show = function(){
+		_.removeClass(this.container, 'f-dn');
+	};
+	// 关闭弹窗
+	Modal.prototype.hide = function(){
+		_.addClass(this.container, 'f-dn');
+	};
+
+	App.Modal = Modal;
+}(window.App));
+
+
+/**
+ * 选择器
+ */
+(function(App){
+    var template=`
+    <div class="m-select">
+        <div class="select_hd">
+            <span class="select_val></span>
+            <span class="u-icon-dropdown"></span>
+        </div>
+        <ul class="select_opt f-dn">
+            <li data-index="0" class="z-select"><li>
+            <li data-index="0" ><li>
+            <li data-index="0" ><li>
+            <li data-index="0" ><li>
+        </ul>
+    </div>`;
+
+    /**
+     * 
+     * @param {Object} options parent为父容器节点
+     */
+    function Select(options){
+        _.extend(this,options);
+        this.body=_.html2node(template);
+        //缓存节点
+        this.nOption=this.body.getElementsByTagName('ul')[0];
+        this.nValue=this.body.getElementsByTagName('span')[0];
+
+        this.init();
+    }
+    //扩展原型
+    _.extend(Select.prototype,App.emitter);
+
+    //初始化
+    Select.prototype.init=function(){
+        this.render();
+        this.initEvent();
+        this.parent.appendChild(this.body);
+    }
+    //绑定事件
+    Select.prototype.initEvent=function(){
+        this.body.addEventListener('click',this.clickHandler.bind(this));
+        document.addEventListener('click',this.close.bind(this));
+    }
+    //渲染下拉列表
+    Select.prototype.render=function(data,defaultIndex){
+        var optionsHTML='';
+
+        for(var i=0;i<data.length;i++){
+            //格式化数据{name:value}
+            optionsHTML+=`<li data-index=${i}>${data[i].name}</li>`
+        }
+
+        this.nOption.innerHTML=optionsHTML;
+        this.nOptions=this.nOption.children;
+        this.options=data;
+        this.selectedIndex=undefined;
+        //默认选中第一项
+        this.setSelect(defaultIndex||0);
+    }
+    //处理函数
+    Select.prototype.clickHandler=function(event){
+        var index=event.target.dataset.index;
+        if(event.target.targetname==='LI'){
+            this.setSelect(index);
+        }else{
+            this.toggle();
+        }
+    }
+    //打开下拉菜单
+    Select.prototype.open=function(){
+        _.removeClass(this.nOption,'f-dn');
+    }
+    //关闭下拉菜单
+    Select.prototype.close=function(){
+        _.addClass(this.nOption,'f-dn');
+    }
+    //下拉菜单的开关
+    Select.prototype.toggle=function(){
+        _.hasClass(this.nOption,'f-dn')?this.open():this.close();
+    }
+    //获取当前选中项的值
+    Select.prototype.getValue=function(){
+        return this.options[this.selectedIndex].value;
+    }
+    //设置选中项的选中状态并发出事件
+    Select.prototype.setSelect=function(index){
+        //取消上次选中效果
+        if(this.selectIndex!==undefined){
+            _.removeClass(this.nOptions[this.selectedIndex],'z-select');
+        }
+        //设置选中
+        this.selectedIndex=index;
+        this.nValue.innerText=this.nOptions[this.selectedIndex].name;
+        _.addClass(this.nOptions[this.selectedIndex],'z-select');
+
+        this.fire({type:'select',data:this.getValue()});
+    }
+
+    App.Select=Select;
+}(window.App));
+
+
+/**
+ * 级联选择器
+ */
+(function(App){
+    function CascadeSelect(){
+        _.extend(this,options);
+        this.selectList=[];
+        this.init();
+    }
+
+    CascadeSelect.prototype.init=function(){
+        for(var i=0;i<3;i++){
+            var select =new App.Select({container:this.container});
+            select.on('select',this.onChange.bind(this,i));
+            this.selectList[i]=select;
+        }
+        this.selectList[0].render(this.data);
+    }
+    CascadeSelect.prototype.getValue=function(){}
+    //响应select事件，渲染下一个Select数据
+    CascadeSelect.prototype.onChange=function(){
+        var next=index+1;
+        if(next===this.selectList.length) return;
+        this.selectList[next].render(this.getList(next));
+    }
+    //获取第N个Select的数据
+    CascadeSelect.prototype.getList=function(n){}
+
+    App.CascadeSelect=CascadeSelect;
+}(window.App));
+
+/**
+ * 验证器
+ */
+(function(App){
+
+	var validator = {
+		// 1. 验证是否为空
+		isEmpty: function(value){
+			return typeof value === 'undefined' || !value.trim();
+		},
+		// 2. 验证电话号码
+		isPhone: function(value){
+			return /^\d{11}$/.test(value);
+		},
+		// 3. 验证昵称
+		isNickName: function(value){
+			// 中英文数字均可，至少8个字符
+			return /^[\u4e00-\u9fa5a-zA-Z0-9]{8}[\u4e00-\u9fa5a-zA-Z0-9]*$/.test(value);
+		},
+		// 4. 长度限制
+		isLength: function(value, min, max){
+			var length = value.toString().length;
+			// 验证结果
+			var result = true;
+			// 长度 大于等于最小值，小于等于最大值
+			typeof min !== 'undefined' && (result = result && length >= min);
+			typeof max !== 'undefined' && (result = result && length <= max);
+			return result;
+		}
+	};
+
+	App.validator = validator;
+}(window.App));
+
+
 
 
 
