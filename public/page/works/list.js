@@ -104,6 +104,106 @@
                     }
                 }       
             });
+        },
+        //删除方法
+        deleteWorks:function(works){
+            var self=this;
+            var html=`
+            <div class="modal-list modal_delete">
+                <div class="modal_head">
+                    <span class="u-tips">提示信息:</span>
+                    <i class="u-close" id="modal_close">X</i>
+                </div>
+                <div class=u-content>
+                    确定要删除作品<em class="del-item-name">"${works.name}"</em>吗
+                </div>
+                <div>
+                    <button class="u-btn u-btn-primary" id="confirm">确&nbsp;&nbsp;认</button>
+                    <button class="u-btn u-btn-primary" id="cancel">取&nbsp;&nbsp;消</button>
+                </div>
+            </div>
+            `;
+            self.modal=new App.Modal({
+                parent:_.$('gBody'),
+                content:html
+            });
+            self.modal.show();
+            _.extend(self.modal,App.emitter);
+            //注册事件
+            self.modal.on('ok',function(){
+                //这里不能直接用modal.hide()，因为事件注册函数on()会将第一次创建的modal缓存起来，当执行hide()删除节点后，
+                //第一次创建的modal不在DOM树中仍然还在内存中，但是没有父元素，也就不能执行removeChildren()操作
+                self.modal.hide();
+                _.ajax({
+                    url:'/api/works/'+works.id,
+                    type:'delete',
+                    success:function(data){
+                        //删除成功后，重新刷新列表
+                        self.initList();
+                    }
+                });
+            }.bind(self));
+            //触发事件
+            _.$('confirm').addEventListener('click',function(){
+                self.modal.fire({type:'ok'});
+            });
+            _.$('cancel').addEventListener('click',function(){
+                self.modal.hide();
+            });
+        },
+        //编辑方法
+        editWorks:function(works,workEl){
+            var self=this;
+            var input;
+            var html=`
+            <div class="modal-list modal_edit">
+                <div class="modal_head">
+                    <span class="u-tips">请输入新的作品名称：</span>
+                    <i class="u-close" id="modal_close">X</i>
+                </div>
+                <div class=u-content>
+                    <input id="name-inp" class="item-name-inp" value="${works.name}" autofocus="autofocus" placeholder="名称不能为空"/>
+                </div>
+                <div>
+                    <button class="u-btn u-btn-primary" id="confirm">确&nbsp;&nbsp;认</button>
+                    <button class="u-btn u-btn-primary" id="cancel">取&nbsp;&nbsp;消</button>
+                </div>
+            </div>
+            `;
+            var modal=new App.Modal({
+                parent:_.$('gBody'),
+                content:html
+            });
+            modal.show();
+            _.extend(modal,App.emitter);
+            //注册事件
+            modal.on('edit',function(){
+                var newName=_.$('name-inp').value.trim();
+                //检查name是否为空，为空则提示用户，并结束程序运行
+                if(!newName){
+                    
+                    return;
+                }
+
+                if(newName!==works.name){
+                    _.ajax({
+                        url:'/api/works/'+works.id,
+                        type:'patch',
+                        data:{name:newName},
+                        success:function(data){
+                            data=JSON.parse(data);
+                            worksEl.getElementsByTagName('h3')[0].innerText=data.result.name;
+                        }
+                    });
+                }
+            });
+            //触发事件
+            _.$('confirm').addEventListener('click',function(){
+                modal.fire({type:'edit'});
+            });
+            _.$('cancel').addEventListener('click',function(){
+                modal.hide();
+            });
         }
     }
 

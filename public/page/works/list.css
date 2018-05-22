@@ -123,3 +123,18 @@
     top: 0;
     left: -100px;
 }
+
+/* modal */
+.m-modal .modal-list{
+    width: 408px;
+    box-sizing: border-box;
+}
+
+.modal-list .u-close{
+    position: absolute;
+    top: 5px;right: 5px;
+    font-size: 16px;
+    font-weight: 300px;
+    color: #c0c0c1;
+    cursor: pointer;
+}

@@ -458,7 +458,8 @@
 	};
 	// 关闭弹窗
 	Modal.prototype.hide = function(){
-		_.addClass(this.container, 'f-dn');
+        //_.addClass(this.container, 'f-dn');
+        this.parent.removeChild(this.container); 
 	};
 
 	App.Modal = Modal;
