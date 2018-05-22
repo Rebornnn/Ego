@@ -138,3 +138,23 @@
     color: #c0c0c1;
     cursor: pointer;
 }
+
+/* 分页器 */
+.m-pagination li{
+    float: left;
+    padding: 0 14px;
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    cursor: pointer;
+    color: #5eccb6;
+}
+
+.m-pagination .disabled{
+    cursor:not-allowed;
+    color: #ccc;
+}
+
+.m-pagination .active{
+    background: url(../../res/pagination_active.png) no-repeat 50% 50%;
+}

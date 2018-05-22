@@ -6,9 +6,9 @@
 var path = require('path');
 module.exports = {
     /* 根目录 */
-    webRoot: 'F:/新建文件夹/Ego/public/',
+    webRoot: 'F:/Ego/public/',
     /* 视图目录 */
-    viewRoot: 'F:/新建文件夹/Ego/public/html/',
+    viewRoot: 'F:/Ego/public/html/',
     /* 路由 */
     routes: {
         //"ALL /api/*": "代理所有接口, 这里输入代理服务器地址",
@@ -56,7 +56,7 @@ module.exports = {
     /* 自动打开的页面地址 */
     openUrl: '',
     /* 端口 */
-    port: 8002,
+    port: 8004,
     /* 是否使用 https 协议，设为true的时候表示启用 */
     https: false,
     /* 是否使用 nei 提供的在线 mock 数据 */
@@ -76,9 +76,9 @@ module.exports = {
     /* 项目的 key */
     projectKey: 'e389c52125abdd607c4455e4d448e5d3',
     /* 同步模块mock数据路径 */
-    mockTpl: 'F:/新建文件夹/Ego/mock.data/template/',
+    mockTpl: 'F:/Ego/mock.data/template/',
     /* 异步接口mock数据路径 */
-    mockApi: 'F:/新建文件夹/Ego/mock.data/interface/',
+    mockApi: 'F:/Ego/mock.data/interface/',
     /* 是否修改代理的host */
     changeOrigin: true,
     /* 模板后缀 */

@@ -1,7 +1,133 @@
+/**
+ * 通知框模板
+ */
+(function(App){
+
+}(window.App));
+
+
+
+
+/**
+ * 分页器
+ */
+(function(App){
+    //默认选中的页码
+    var DEFAULT_PAGE=1;
+    //默认显示的页码个数
+    var DEFAULT_SHOW_NUM=8;
+    //每页显示的默认数量
+    var DEFAULT_ITEMS_LIMIT=10;
+
+    function Pagination(options){
+        this.options=options;
+        this.current=options.current||DEFAULT_PAGE;
+        this.showNum=options.showNum||DEFAULT_SHOW_NUM;
+        this.itemsLimit=options.itemsLimit||DEFAULT_ITEMS_LIMIT;
+        this.init();
+    }
+
+    agination.prototype.init=function(){
+        //销毁元素
+        this.destroy();
+        this.render();
+        //设置页码状态
+        this.setStatus();
+        this.addEvent();
+    };
+
+    Pagination.prototype.render=function(){
+        var url=_.createElement('ul','m-pagination');
+        this.first=_.createElement('ul','','第一页');
+        this.first.dataset.page=1;
+        ul.appendChild(this.first);
+        
+        //类似的创建prev元素
+
+        this.pageNum=Math.ceil(this.options.total/this.itemsLimit);
+        this.startNum=Math.floor((this.current-1)/this.showNum)*this.showNum+1;
+        this.numEls=[];
+        for(var i=0;i<this.showNum;i++){
+            var numEl=createElement('li'),
+                num=this.startNum+i;
+            
+            if(num<=this.pageNum){
+                numEl.innerHTML='num';
+                numEl.dataset.page=num;
+                this.numEls.push(numEl);
+                ul.appendChild(numEl);
+            }
+        }
+
+        //类似地，创建next和last元素
+
+
+        this.options.parent.appendChild(ul);
+    };
+
+    Pagination.prototype.destroy=function(){
+        if(this.container){
+            this.options.parent.removeChild(this.container);
+            this.container=null;
+        }
+    };
+
+    Pagination.prototype.setStatus=function(){
+        //判断是否为第一页，如果是，first和prev元素样式都为disabled
+        //同理判断是否为最后一页，相应的设置next和last
+        //设置prev和next两个元素的data-page值
+
+        this.numEls.forEach(function(numEl){
+            numEl.className='';
+            if(this.current===parseInt(numEl.dataset.page)){
+                numEl.className='active';
+            }
+        }.bind(this));
+    }
+
+    Pagination.prototype.addEvent=function(){
+        var clickHandler=function(e){
+            var numEl=e.target;
+            //如果已经是disabled或者active状态，则不操作
+            this.current=parseInt(numEl.dataset.page);
+            //判断是否需要翻篇
+            if(this.current<this.startNum||this.current>=this.startNum+this.showNum){
+                this.render();
+            }else{
+                this.setStatus();
+            }
+            //有切换动作需要回调来渲染列表
+            this.options.callback(this.current);
+        }.bind(this);
+        this.container.addEventListener('click',clickHandler);
+    }
+
+    App.Pagination=Pagination;
+}(window.App));
+
 (function(App){
     var page={
         init:function(){
             this.initNav();
+            new App.Pagination({
+                parent:document.querySelector('#pagination'),
+                total:100,
+                current:1,
+                showNum:8,
+                itemsLimit:10,
+                callback:function(currentPage){
+                    this.loadList({
+                        query:{
+                            limit:10,
+                            offset:(currentPage-1)*10,
+                            total:0
+                        },
+                        callback:function(data){
+                            this.renderList(data.result.data);
+                        }.bind(this)
+                    });
+                }.bind(this)
+            });
         },
         initNav:function(){
             App.nav.init({
@@ -107,14 +233,13 @@
         },
         //删除方法
         deleteWorks:function(works){
-            var self=this;
             var html=`
             <div class="modal-list modal_delete">
                 <div class="modal_head">
                     <span class="u-tips">提示信息:</span>
                     <i class="u-close" id="modal_close">X</i>
                 </div>
-                <div class=u-content>
+                <div class="u-content">
                     确定要删除作品<em class="del-item-name">"${works.name}"</em>吗
                 </div>
                 <div>
@@ -123,33 +248,31 @@
                 </div>
             </div>
             `;
-            self.modal=new App.Modal({
+            this.modal=new App.Modal({
                 parent:_.$('gBody'),
                 content:html
             });
-            self.modal.show();
-            _.extend(self.modal,App.emitter);
+            this.modal.show();
+            _.extend(this.modal,App.emitter);
             //注册事件
-            self.modal.on('ok',function(){
-                //这里不能直接用modal.hide()，因为事件注册函数on()会将第一次创建的modal缓存起来，当执行hide()删除节点后，
-                //第一次创建的modal不在DOM树中仍然还在内存中，但是没有父元素，也就不能执行removeChildren()操作
-                self.modal.hide();
+            this.modal.on('ok',function(){
+                this.modal.hide();
                 _.ajax({
                     url:'/api/works/'+works.id,
                     type:'delete',
                     success:function(data){
                         //删除成功后，重新刷新列表
-                        self.initList();
-                    }
+                        this.initList();
+                    }.bind(this)
                 });
-            }.bind(self));
+            }.bind(this));
             //触发事件
             _.$('confirm').addEventListener('click',function(){
-                self.modal.fire({type:'ok'});
-            });
+                this.modal.fire({type:'ok'});
+            }.bind(this));
             _.$('cancel').addEventListener('click',function(){
-                self.modal.hide();
-            });
+                this.modal.hide();
+            }.bind(this));
         },
         //编辑方法
         editWorks:function(works,workEl){
@@ -190,9 +313,13 @@
                         url:'/api/works/'+works.id,
                         type:'patch',
                         data:{name:newName},
+                        contentType:'application/json',
                         success:function(data){
                             data=JSON.parse(data);
                             worksEl.getElementsByTagName('h3')[0].innerText=data.result.name;
+                        },
+                        error:function(status,statusText){
+                            console.log(status,statusText);
                         }
                     });
                 }

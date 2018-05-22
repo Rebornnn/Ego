@@ -61,6 +61,10 @@
     _.html2node=html2node;
 }(window._));
 
+
+
+
+
 /**
  * 添加类名
  * 
@@ -118,6 +122,28 @@
 
     _.hasClass=hasClass;
 }(window._));
+
+
+/**
+ * 创建元素
+ */
+(function(_){
+    /**
+     * 
+     * @param {String} tag 元素名
+     * @param {String} val 元素值
+     * @param {String} clas 类名
+     */
+    function createElement(tag,clas,val) {
+        var elem=document.createElement(tag);
+        if(clas){elem.innerText=val;}
+        if(val){_.addClass(elem,clas);}
+
+        return elem;
+    }
+}(window._));
+
+
 
 /**
  * 计算年龄
@@ -459,7 +485,8 @@
 	// 关闭弹窗
 	Modal.prototype.hide = function(){
         //_.addClass(this.container, 'f-dn');
-        this.parent.removeChild(this.container); 
+        this.parent.removeChild(this.container);
+        this.container=null;
 	};
 
 	App.Modal = Modal;

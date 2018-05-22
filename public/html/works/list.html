@@ -71,14 +71,27 @@
         </div>
         <!-- 内容 -->
         <div class="g-main">
-            <!-- 作品 -->
+            <!-- 作品栏 -->
             <div class="g-wrap">
+                <!-- 加载图片 -->
                 <img id="g-bd" class="f-dn" src="../../res/images/loading.gif">
+                <!-- 作品 -->
                 <ul class="m-works" id="mWorks">
                 </ul>
+
+                <!-- 分页器 -->
+                <div id="pagination">
+                </div>
             </div>
             <!-- 边栏 -->
             <div class="m-aside"></div>
+
+            <!-- 分页器 -->
+            <ul class="m-pagination">
+                <li class="disabled">第一页</li>
+                <li class="disabled">上一页</li>
+                <li class="z-active">上一页</li>
+            </ul>
         </div>
     </div>
 <script src="../../lib/handlebars-v4.0.11.js"></script>
@@ -87,5 +100,6 @@
 <script src="../../common/js/template.js"></script>
 <script src="../../page/works/list.js"></script>
 <script src="../../lib/address_codes.js"></script>
+<script src="../../lib/md5.js"></script>
 </body>
 </html>
