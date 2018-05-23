@@ -1,0 +1,68 @@
+.g-body{
+    width: 1096px;
+    margin: 0 auto;
+}
+
+/* 主栏 */
+.g-main{
+    width: 770px;
+}
+/* 分类 */
+.form_work .u-btn{
+    display: inline-block;
+    width: 90px;
+    text-align: center;
+    height: 38px;
+    line-height: 38px;
+    border-radius: 3px;
+    border: 1px solid #5ed0ba;
+    background-color: #fff;
+    margin-right: 32px;
+    cursor: pointer;
+}
+
+.form_work input[type="radio"]{
+    opacity: 0;
+}
+
+.form_work input[type="radio"]:checked + .u-btn{
+    background-color: #5ed0ba;
+    color: #fff;
+}
+
+/* 标签 */
+.m-tag{
+    display: flex;
+    flex-wrap: wrap;
+}
+.m-tag .tag{
+    position: relative;
+    padding: 6px 12px;
+    margin: 0 12px 0 0;
+}
+.m-tag .tag .close{
+    position: absolute;
+    right: 0;
+    top:-3px;
+    font-size: 20px;
+    opacity: 0;
+}
+
+.m-tag .tag:hover .close{
+    opacity: 0.2;
+}
+.m-tag .tap-add .u-inp{
+    display: none;
+}
+.m-tag .tag-add span{
+    display: block;
+}
+
+.m-tag .tag-add.focused .u-inp{
+    display: block;
+}
+.m-tag .tag-add.focused span{
+    display: none;
+}
+
+

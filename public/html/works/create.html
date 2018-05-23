@@ -7,9 +7,108 @@
     <meta name="keywords" content="ego"/>
     <title>ego</title>
     <link href="../../common/base.css" rel="stylesheet"/>
+    <link href="../../common/head.css" rel="stylesheet"/>
     <link href="../../page/works/create.css" rel="stylesheet"/>
 </head>
 <body>
+    <!--顶栏-->
+    <div class="g-header" >
+        <div class="m-header" id="gHeader">
+            <!-- logo -->
+            <a href="/index" class="u-logo" target="blank"><span class="logo"></span></a>
+            
+            <!-- 标签 -->
+            <div class="m-tabs" id="hdtabs">
+                <ul class="f-cb">
+                    <li class="z-active"><a href="/index">首页</a></li>
+                    <li><a  href="/works">作品</a></li>
+                    <li><a href="">圈子</a></li>
+                    <li><a href="">奇思妙想</a></li>
+                </ul>
+                <!-- 标签下标 -->
+
+            </div>
+
+            <!-- 搜索框 -->
+            <form action="/search" id="search" method="GET">
+                <div class="u-search">
+                    <input type="text" id="keyword" name="keyword" placeholder="输入搜索内容">
+                    <button class="icon-btn" type="submit"></button>
+                </div>
+            </form>
+
+            <!-- 登录注册按钮 -->
+            <div class="m-guest" id="guest">
+                <button class="u-btn u-btn-icon" id="login">&nbsp;</button>
+                <button class="u-btn u-btn-link" id="register">注&nbsp;&nbsp;册</button>
+            </div>
+
+            <!-- 用户信息 -->
+            <div class="m-user f-dn" id="userDropdown">
+                <div class="user_info">
+                    <img class="user_avatar" src="../res/images/avater.png" alt="头像">
+                    <span class="user_name" id="name">born</span>
+                    <i class="sex" id="sexIcon"></i>
+                    <i class="down"></i>
+                </div>
+                <ul class="user_list">
+                    <li>个人中心</li>
+                    <li>信息</li>
+                    <li>设置</li>
+                    <li id="logout">退出账号</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主体 -->
+    <div class="g-body">
+        <!-- 主栏 -->
+        <div class="g-main">
+            <!-- 表单 -->
+            <form class="form_work"></form>
+                <div class="m-formitem">
+                    <label class="category">作品分类</label>
+                    <div class="u-cnt">
+                        <label>
+                            <input type="radio" name="category" checked value="0">
+                            <span class="u-btn u-btn-primary">原&nbsp;&nbsp;&nbsp;创</span> 
+                        </label>
+                        <label>
+                            <input type="radio" name="category" value="1">
+                            <span class="u-btn u-btn-primary">临摹</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="m-formitem" id="mTags">
+                    <label class="tags">标签</label>
+                    <!-- <ul class="m-tag">
+                        <li class="tag">
+                            <button class="close">X</button>
+                            <span>少女系</span>
+                        </li>
+                        <li class="tag">
+                            <button class="close">X</button>
+                            <span>少女系</span>
+                        </li>
+                        <li class="tag tag-add">
+                            <input class="u-inp" type="text">
+                            <span class="txt">+ 自定义标签</span>
+                        </li>
+                    </ul> -->
+                </div>
+            </form>
+        </div>
+        <!-- 侧栏 -->
+        <div class="g-side"></div>
+    </div>
+
+<script src="../../lib/handlebars-v4.0.11.js"></script>
+<script src="../../common/js/base.js"></script>
+<script src="../../common/js/head.js"></script>
+<script src="../../common/js/template.js"></script>
 <script src="../../page/works/create.js"></script>
+<script src="../../lib/address_codes.js"></script>
+<script src="../../lib/md5.js"></script>
 </body>
 </html>

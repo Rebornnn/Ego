@@ -363,22 +363,22 @@
             setTime(callback, script);
         }
         //设置请求超时
-        function setTime(callback, script) {
-            if (timeOut !== undefined) {
-                timeout_flag = setTimeout(function() {
-                    if (dataType === "jsonp") {
-                        delete window[callback];
-                        document.body.removeChild(script);
+        // function setTime(callback, script) {
+        //     if (timeOut !== undefined) {
+        //         timeout_flag = setTimeout(function() {
+        //             if (dataType === "jsonp") {
+        //                 delete window[callback];
+        //                 document.body.removeChild(script);
 
-                    } else {
-                        timeout_bool = true;
-                        xhr && xhr.abort();
-                    }
-                    console.log("timeout");
+        //             } else {
+        //                 timeout_bool = true;
+        //                 xhr && xhr.abort();
+        //             }
+        //             console.log("timeout");
 
-                }, timeOut);
-            }
-        }
+        //         }, timeOut);
+        //     }
+        // }
 
         // XHR
         function createXHR() {
@@ -400,26 +400,19 @@
             }
             //创建对象。
             xhr = getXHR();
-            xhr.open(type, url, async);
             xhr.withCredentials = true;
-            //设置请求头
-            if (type === "post" && !contentType) {
-                //若是post提交，则设置content-Type 为application/x-www-four-urlencoded
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
-            } else if (contentType) {
-                xhr.setRequestHeader("Content-Type", contentType);
-            }
+            
             //添加监听
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
-                    if (timeOut !== undefined) {
-                        //由于执行abort()方法后，有可能触发onreadystatechange事件，
-                        //所以设置一个timeout_bool标识，来忽略中止触发的事件。
-                        if (timeout_bool) {
-                            return;
-                        }
-                        clearTimeout(timeout_flag);
-                    }
+                    // if (timeOut !== undefined) {
+                    //     //由于执行abort()方法后，有可能触发onreadystatechange事件，
+                    //     //所以设置一个timeout_bool标识，来忽略中止触发的事件。
+                    //     if (timeout_bool) {
+                    //         return;
+                    //     }
+                    //     clearTimeout(timeout_flag);
+                    // }
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
                         success(xhr.responseText);
                     } else {
@@ -428,11 +421,19 @@
                 }
             };
 
-
+            
+            xhr.open(type, url, async);
+            
+            //设置请求头
+            if (type === "post" && !contentType) {
+                //若是post提交，则设置content-Type 为application/x-www-four-urlencoded
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+            } else if (contentType) {
+                xhr.setRequestHeader("Content-Type", contentType);
+            }
             //发送请求
             xhr.send(type === "get" ? null : data);
-            
-            setTime(); //请求超时
+            //setTime(); //请求超时
         }
 
 

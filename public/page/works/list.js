@@ -308,7 +308,7 @@
                     <i class="u-close" id="modal_close">X</i>
                 </div>
                 <div class=u-content>
-                    <input id="name-inp" class="item-name-inp" value="${works.name}" autofocus="autofocus" placeholder="名称不能为空"/>
+                    <input id="name-inp" class="item-name-inp" value="${works.name}" autofocus placeholder="名称不能为空"/>
                 </div>
                 <div>
                     <button class="u-btn u-btn-primary" id="confirm">确&nbsp;&nbsp;认</button>
@@ -337,7 +337,7 @@
                         type:'patch',
                         data:{name:newName},
                         contentType:'application/json',
-                        //async:false,
+                        timeOut:5000,
                         success:function(data){
                             data=JSON.parse(data);
                             worksEl.getElementsByTagName('h3')[0].innerText=data.result.name;
@@ -350,7 +350,6 @@
                     //     url:'/api/works/'+works.id,
                     //     method:'patch',
                     //     data:{name:newName},
-                    //     async:false,
                     //     success:function(data){
                     //         //data=JSON.parse(data);
                     //         worksEl.getElementsByTagName('h3')[0].innerText=data.result.name;
