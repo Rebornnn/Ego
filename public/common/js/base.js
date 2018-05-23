@@ -136,11 +136,13 @@
      */
     function createElement(tag,clas,val) {
         var elem=document.createElement(tag);
-        if(clas){elem.innerText=val;}
-        if(val){_.addClass(elem,clas);}
+        if(val){elem.innerText=val;}
+        if(clas){_.addClass(elem,clas);}
 
         return elem;
     }
+
+    _.createElement=createElement;
 }(window._));
 
 
@@ -425,8 +427,11 @@
                     }
                 }
             };
+
+
             //发送请求
             xhr.send(type === "get" ? null : data);
+            
             setTime(); //请求超时
         }
 

@@ -2,7 +2,31 @@
  * 通知框模板
  */
 (function(App){
+    function noticeModal(options){
+        options.content=html;
+        App.Modal.call(this,options);
+        //缓存节点
+        this.nConfirm=_.$('confirm');
+        this.nCANCEL=_.$('cancel');
 
+        this.initEvent()
+        this.show();
+    }
+
+    noticeModal.prototype=Object.create(App.Modal.prototype);
+    _.extend(noticeModal.prototype,App.emitter);
+
+    noticeModal.prototype.initEvent=function(){
+        this.nConfirm.addEventListener('click',function(){
+            this.fire({type:'ok'});
+        }.bind(this));
+
+        this.nCANCEL.addEventListener('click',function(){
+            this.hide();
+        });
+    }
+
+    App.noticeModal=noticeModal;
 }(window.App));
 
 
@@ -27,9 +51,8 @@
         this.init();
     }
 
-    agination.prototype.init=function(){
-        //销毁元素
-        this.destroy();
+    Pagination.prototype.init=function(){
+        
         this.render();
         //设置页码状态
         this.setStatus();
@@ -37,10 +60,10 @@
     };
 
     Pagination.prototype.render=function(){
-        var url=_.createElement('ul','m-pagination');
-        this.first=_.createElement('ul','','第一页');
+        this.container=_.createElement('ul','m-pagination','');
+        this.first=_.createElement('li','first','第一页');
         this.first.dataset.page=1;
-        ul.appendChild(this.first);
+        this.container.appendChild(this.first);
         
         //类似的创建prev元素
 
@@ -48,21 +71,21 @@
         this.startNum=Math.floor((this.current-1)/this.showNum)*this.showNum+1;
         this.numEls=[];
         for(var i=0;i<this.showNum;i++){
-            var numEl=createElement('li'),
+            var numEl=_.createElement('li'),
                 num=this.startNum+i;
             
             if(num<=this.pageNum){
                 numEl.innerHTML='num';
                 numEl.dataset.page=num;
                 this.numEls.push(numEl);
-                ul.appendChild(numEl);
+                this.container.appendChild(numEl);
             }
         }
 
         //类似地，创建next和last元素
 
 
-        this.options.parent.appendChild(ul);
+        this.options.parent.appendChild(this.container);
     };
 
     Pagination.prototype.destroy=function(){
@@ -111,9 +134,9 @@
             this.initNav();
             new App.Pagination({
                 parent:document.querySelector('#pagination'),
-                total:100,
+                total:30,
                 current:1,
-                showNum:8,
+                showNum:6,
                 itemsLimit:10,
                 callback:function(currentPage){
                     this.loadList({
@@ -314,6 +337,7 @@
                         type:'patch',
                         data:{name:newName},
                         contentType:'application/json',
+                        //async:false,
                         success:function(data){
                             data=JSON.parse(data);
                             worksEl.getElementsByTagName('h3')[0].innerText=data.result.name;
@@ -322,6 +346,16 @@
                             console.log(status,statusText);
                         }
                     });
+                    // $.ajax({
+                    //     url:'/api/works/'+works.id,
+                    //     method:'patch',
+                    //     data:{name:newName},
+                    //     async:false,
+                    //     success:function(data){
+                    //         //data=JSON.parse(data);
+                    //         worksEl.getElementsByTagName('h3')[0].innerText=data.result.name;
+                    //     }
+                    // });
                 }
             });
             //触发事件
