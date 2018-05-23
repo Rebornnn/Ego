@@ -515,7 +515,7 @@
         //初始化登录状态
         initLoginStatus:function(){
             _.ajax({
-                url:'api/users?getloginuser',
+                url:'http://localhost:8004/api/users?getloginuser',
                 success:function(data){
                     data=JSON.parse(data);
                     if(data.code===200){

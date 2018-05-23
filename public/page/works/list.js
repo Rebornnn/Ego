@@ -333,11 +333,9 @@
 
                 if(newName!==works.name){
                     _.ajax({
-                        url:'/api/works/'+works.id,
+                        url:'http://localhost:8004/api/works/'+works.id,
                         type:'patch',
                         data:{name:newName},
-                        contentType:'application/json',
-                        timeOut:5000,
                         success:function(data){
                             data=JSON.parse(data);
                             worksEl.getElementsByTagName('h3')[0].innerText=data.result.name;
