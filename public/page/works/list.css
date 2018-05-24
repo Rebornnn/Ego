@@ -19,6 +19,13 @@
     margin-top: -115px;
     text-align: center;
     border-bottom: 2px solid #c5c6c6;
+    padding-top: 27px;
+}
+
+.g-profile .u-info{
+    margin: 12px 0;
+    line-height: 12px;
+    font-size: 12px;
 }
 
 
@@ -32,6 +39,14 @@
     width: 650px;
     margin: 0 auto;
 }
+
+.g-main .g-wrap .m-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
 
 .g-main .g-wrap .list-loaded{
     display: inline-block;
@@ -124,6 +139,33 @@
     left: -100px;
 }
 
+.m-aside li{
+    width: 101px;
+    height: 46px;
+    line-height: 46px;
+    text-align: center;
+    color: #5eccb6;
+    background: #fdfdfd;
+}
+.m-aside  li.z-active{
+    color: #fdfdfd;
+    background: #5eccb6;
+}
+.m-aside li.msg{
+    position: relative;
+}
+.m-aside li.msg::before{
+    content: " ";
+    position: absolute;
+    top:5px;
+    right:8px;
+    z-index: 100;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e55f48;
+}
+
 /* modal */
 .m-modal .modal-list{
     width: 408px;
@@ -140,6 +182,12 @@
 }
 
 /* 分页器 */
+.m-pagination{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
 .m-pagination li{
     float: left;
     padding: 0 14px;
@@ -157,4 +205,5 @@
 
 .m-pagination .active{
     background: url(../../res/pagination_active.png) no-repeat 50% 50%;
+    color: #fff
 }

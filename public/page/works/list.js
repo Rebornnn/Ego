@@ -71,7 +71,7 @@
         this.render();
         //设置页码状态
         this.setStatus();
-        this.addEvent();
+        
     };
 
     Pagination.prototype.render=function(){
@@ -81,6 +81,9 @@
         this.container.appendChild(this.first);
         
         //类似的创建prev元素
+        this.prev=_.createElement('li','prev','上一页');
+        
+        this.container.appendChild(this.prev);
 
         this.pageNum=Math.ceil(this.options.total/this.itemsLimit);
         this.startNum=Math.floor((this.current-1)/this.showNum)*this.showNum+1;
@@ -90,7 +93,7 @@
                 num=this.startNum+i;
             
             if(num<=this.pageNum){
-                numEl.innerHTML='num';
+                numEl.innerText=num;
                 numEl.dataset.page=num;
                 this.numEls.push(numEl);
                 this.container.appendChild(numEl);
@@ -98,9 +101,15 @@
         }
 
         //类似地，创建next和last元素
+        this.next=_.createElement('li','next','下一页');
+        this.container.appendChild(this.next);
 
+        this.last=_.createElement('li','last','尾页');
+        this.last.dataset.page=this.pageNum;
+        this.container.appendChild(this.last);
 
         this.options.parent.appendChild(this.container);
+        this.addEvent();
     };
 
     Pagination.prototype.destroy=function(){
@@ -114,6 +123,21 @@
         //判断是否为第一页，如果是，first和prev元素样式都为disabled
         //同理判断是否为最后一页，相应的设置next和last
         //设置prev和next两个元素的data-page值
+        if(this.current===1){
+            _.addClass(this.first,'disabled');
+            _.addClass(this.prev,'disabled');
+        }else{
+            _.removeClass(this.first,'disabled');
+            _.removeClass(this.prev,'disabled');
+        }
+        
+        if(this.current===this.pageNum){
+            _.addClass(this.next,'disabled');
+            _.addClass(this.last,'disabled');
+        }else{
+            _.removeClass(this.next,'disabled');
+            _.removeClass(this.last,'disabled');
+        }
 
         this.numEls.forEach(function(numEl){
             numEl.className='';
@@ -121,15 +145,23 @@
                 numEl.className='active';
             }
         }.bind(this));
+
+        this.next.dataset.page=this.current;
+        this.prev.dataset.page=this.current;
     }
 
     Pagination.prototype.addEvent=function(){
         var clickHandler=function(e){
             var numEl=e.target;
             //如果已经是disabled或者active状态，则不操作
-            this.current=parseInt(numEl.dataset.page);
+            if(!_.hasClass(numEl,'disable')||!_.hasClass(numEl,'active')){
+                this.current=parseInt(numEl.dataset.page);
+            }
+            if(_.hasClass(numEl,'prev')){this.current=this.current-1;}
+            if(_.hasClass(numEl,'next')){this.current=this.current+1;}
             //判断是否需要翻篇
             if(this.current<this.startNum||this.current>=this.startNum+this.showNum){
+                this.destroy();
                 this.render();
             }else{
                 this.setStatus();
@@ -149,10 +181,10 @@
             this.initNav();
             new App.Pagination({
                 parent:document.querySelector('#pagination'),
-                total:30,
+                total:80,
                 current:1,
                 showNum:6,
-                itemsLimit:10,
+                itemsLimit:8,
                 callback:function(currentPage){
                     this.loadList({
                         query:{
