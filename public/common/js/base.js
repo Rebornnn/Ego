@@ -226,7 +226,7 @@
     }
 
    /**
-    * 删除事件
+    * 删除事件处理函数
     * 
     * @param      {String} type 自定义事件名称
     * @param     {Function} func 事件处理函数 
@@ -235,12 +235,19 @@
         if(this.handlers[type] instanceof Array){
             var handlers=this.handlers[type];
             for(var i=0,len=handlers.length;i<len;i++){
-                if(handlers[i]===handler){
+                if(handlers[i]===func){
                     break;
                 }
             }
             
             handlers.splice(i,1);
+        }
+    }
+
+
+    function offType(type){
+        if(this.handlers[type] instanceof Array){
+            this.handlers[type]=[];
         }
     }
 
@@ -265,6 +272,7 @@
         handlers:{},
         on:on,
         off:off,
+        offType:offType,
         fire:fire
     };
 }(window.App));
@@ -363,22 +371,22 @@
             setTime(callback, script);
         }
         //设置请求超时
-        // function setTime(callback, script) {
-        //     if (timeOut !== undefined) {
-        //         timeout_flag = setTimeout(function() {
-        //             if (dataType === "jsonp") {
-        //                 delete window[callback];
-        //                 document.body.removeChild(script);
+        function setTime(callback, script) {
+            if (timeOut !== undefined) {
+                timeout_flag = setTimeout(function() {
+                    if (dataType === "jsonp") {
+                        delete window[callback];
+                        document.body.removeChild(script);
 
-        //             } else {
-        //                 timeout_bool = true;
-        //                 xhr && xhr.abort();
-        //             }
-        //             console.log("timeout");
+                    } else {
+                        timeout_bool = true;
+                        xhr && xhr.abort();
+                    }
+                    console.log("timeout");
 
-        //         }, timeOut);
-        //     }
-        // }
+                }, timeOut);
+            }
+        }
 
         // XHR
         function createXHR() {
@@ -405,14 +413,14 @@
             //添加监听
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
-                    // if (timeOut !== undefined) {
-                    //     //由于执行abort()方法后，有可能触发onreadystatechange事件，
-                    //     //所以设置一个timeout_bool标识，来忽略中止触发的事件。
-                    //     if (timeout_bool) {
-                    //         return;
-                    //     }
-                    //     clearTimeout(timeout_flag);
-                    // }
+                    if (timeOut !== undefined) {
+                        //由于执行abort()方法后，有可能触发onreadystatechange事件，
+                        //所以设置一个timeout_bool标识，来忽略中止触发的事件。
+                        if (timeout_bool) {
+                            return;
+                        }
+                        clearTimeout(timeout_flag);
+                    }
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
                         success(xhr.responseText);
                     } else {
@@ -433,7 +441,7 @@
             }
             //发送请求
             xhr.send(type === "get" ? null : data);
-            //setTime(); //请求超时
+            setTime(); //请求超时
         }
 
 
@@ -449,7 +457,7 @@
             success = options.success || function() {}; //请求成功的回调函数
         var timeout_bool = false, //是否请求超时
             timeout_flag = null, //超时标识
-            xhr = null; //xhr对角
+            xhr = null; //xhr对象
         setData();
         before();
         if (dataType === "jsonp") {

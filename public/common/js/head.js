@@ -515,12 +515,12 @@
         //初始化登录状态
         initLoginStatus:function(){
             _.ajax({
-                url:'http://localhost:8004/api/users?getloginuser',
+                url:'/api/users?getloginuser',
                 success:function(data){
                     data=JSON.parse(data);
                     if(data.code===200){
                         this.initUserInfo(data.result);
-                        this.loginCallback(data.result);
+                        if(typeof this.loginCallback === 'function'){this.loginCallback(data.result);}
                     }
                 }.bind(this),
                 error:function(data){}

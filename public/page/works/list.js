@@ -3,27 +3,42 @@
  */
 (function(App){
     function noticeModal(options){
-        options.content=html;
         App.Modal.call(this,options);
         //缓存节点
         this.nConfirm=_.$('confirm');
         this.nCANCEL=_.$('cancel');
+        this.nClose=_.$('modal_close');
 
         this.initEvent()
         this.show();
     }
 
+
     noticeModal.prototype=Object.create(App.Modal.prototype);
+    //注意点：emitter混入到原型对象上，会导致事件的处理函数重复累加
     _.extend(noticeModal.prototype,App.emitter);
 
     noticeModal.prototype.initEvent=function(){
         this.nConfirm.addEventListener('click',function(){
             this.fire({type:'ok'});
+            //清除ok事件,如果不清空ok事件处理函数，那么每注册一次ok事件就会
+            //添加一个事件处理函数，且当触发ok事件来执行处理函数时会从注册的
+            //第一个处理函数开始执行，但是第一个注册的处理函数中缓存的值在执行
+            //完后会被销毁，从而导致一个bug。
+            //BUG：通知modal的确认按钮只会在第一次点击时成功执行，
+            //接下来创建的通知框中的确认按钮都不会执行
+            this.offType('ok');
         }.bind(this));
 
         this.nCANCEL.addEventListener('click',function(){
+            this.offType('ok');
             this.hide();
-        });
+        }.bind(this));
+
+        this.nClose.addEventListener('click',function(){
+            this.offType('ok');
+            this.hide();
+        }.bind(this));
     }
 
     App.noticeModal=noticeModal;
@@ -271,35 +286,23 @@
                 </div>
             </div>
             `;
-            this.modal=new App.Modal({
+            this.modal=new App.noticeModal({
                 parent:_.$('gBody'),
                 content:html
             });
-            this.modal.show();
-            _.extend(this.modal,App.emitter);
-            //注册事件
             this.modal.on('ok',function(){
                 this.modal.hide();
                 _.ajax({
-                    url:'/api/works/'+works.id,
+                    url:'api/works/'+works.id,
                     type:'delete',
                     success:function(data){
-                        //删除成功后，重新刷新列表
                         this.initList();
                     }.bind(this)
                 });
             }.bind(this));
-            //触发事件
-            _.$('confirm').addEventListener('click',function(){
-                this.modal.fire({type:'ok'});
-            }.bind(this));
-            _.$('cancel').addEventListener('click',function(){
-                this.modal.hide();
-            }.bind(this));
         },
         //编辑方法
         editWorks:function(works,workEl){
-            var self=this;
             var input;
             var html=`
             <div class="modal-list modal_edit">
@@ -316,14 +319,12 @@
                 </div>
             </div>
             `;
-            var modal=new App.Modal({
+            this.modal=new App.noticeModal({
                 parent:_.$('gBody'),
                 content:html
             });
-            modal.show();
-            _.extend(modal,App.emitter);
             //注册事件
-            modal.on('edit',function(){
+            this.modal.on('ok',function(){
                 var newName=_.$('name-inp').value.trim();
                 //检查name是否为空，为空则提示用户，并结束程序运行
                 if(!newName){
@@ -333,7 +334,7 @@
 
                 if(newName!==works.name){
                     _.ajax({
-                        url:'http://localhost:8004/api/works/'+works.id,
+                        url:'/api/works/'+works.id,
                         type:'patch',
                         data:{name:newName},
                         success:function(data){
@@ -354,13 +355,6 @@
                     //     }
                     // });
                 }
-            });
-            //触发事件
-            _.$('confirm').addEventListener('click',function(){
-                modal.fire({type:'edit'});
-            });
-            _.$('cancel').addEventListener('click',function(){
-                modal.hide();
             });
         }
     }
