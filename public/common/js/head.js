@@ -1,21 +1,21 @@
 /**
  * 构建Tabs
  */
-(function(App){
+(function (App) {
     /**
      * @param {Object} options 配置信息 
      */
-    function Tabs(options){
-        _.extend(this,options);
-        this.index=this.index||0;
+    function Tabs(options) {
+        _.extend(this, options);
+        this.index = this.index || 0;
         //缓存节点
-        this.nTab=this.container.getElementsByTagName('ul')[0];
-        this.nTabs=this.nTab.children;
+        this.nTab = this.container.getElementsByTagName('ul')[0];
+        this.nTabs = this.nTab.children;
         //动态构建滑动条
-        this.nTrack=document.createElement('div');
-        _.addClass(this.nTrack,'tabs_track');
-        this.nThumb=document.createElement('div');
-        _.addClass(this.nThumb,'tabs_thumb');
+        this.nTrack = document.createElement('div');
+        _.addClass(this.nTrack, 'tabs_track');
+        this.nThumb = document.createElement('div');
+        _.addClass(this.nThumb, 'tabs_thumb');
         this.nTrack.appendChild(this.nThumb);
         this.container.appendChild(this.nTrack);
 
@@ -23,17 +23,17 @@
     }
 
     //初始化
-    Tabs.prototype.init=function(){
+    Tabs.prototype.init = function () {
         //绑定事件
-        for(var i=0;i<this.nTabs.length;i++){
-            this.nTabs[i].addEventListener('mouseenter',function(index){
+        for (var i = 0; i < this.nTabs.length; i++) {
+            this.nTabs[i].addEventListener('mouseenter', function (index) {
                 this.hightlight(index);
-            }.bind(this,i));
-            this.nTabs[i].addEventListener('click',function(){
+            }.bind(this, i));
+            this.nTabs[i].addEventListener('click', function () {
                 this.setCurrent(index);
-            }.bind(this,i));
+            }.bind(this, i));
         }
-        this.nTab.addEventListener('mouseleave',function(){
+        this.nTab.addEventListener('mouseleave', function () {
             this.hightlight(this.index);
         }.bind(this));
 
@@ -41,98 +41,102 @@
     };
 
     //高亮当前项
-    Tabs.prototype.hightlight=function(index){
-        var tab=this.nTabs[index];
-        this.nThumb.style.width=tab.offsetWidth+'px';
-        this.nThumb.style.left=tab.offsetLeft+'px';
+    Tabs.prototype.hightlight = function (index) {
+        var tab = this.nTabs[index];
+        this.nThumb.style.width = tab.offsetWidth + 'px';
+        this.nThumb.style.left = tab.offsetLeft + 'px';
     };
 
     //设置当前选中项
-    Tabs.prototype.setCurrent=function(index){
-        _.removeClass(this.nTabs[this.index],'z-active');
-        this.index=index;
-        _.addClass(this.nTabs[this.index],'z-active');
+    Tabs.prototype.setCurrent = function (index) {
+        _.removeClass(this.nTabs[this.index], 'z-active');
+        this.index = index;
+        _.addClass(this.nTabs[this.index], 'z-active');
         this.hightlight(index);
     };
 
-    App.Tabs=Tabs;
+    App.Tabs = Tabs;
 }(window.App));
 
 
 /**
  * 构建搜索框
  */
-(function(App){
+(function (App) {
     /**
      * 
      * @param {Object} container  表单节点
      */
     function Search(container) {
-        this.nForm=container;
-        this.nKeyword=this.nForm.getElementsByTagName('input')[0];
+        this.nForm = container;
+        this.nKeyword = this.nForm.getElementsByTagName('input')[0];
         this.init();
     }
     //初始化
-    Search.prototype.init=function(){
-        this.nForm.addEventListener('submit',this.search.bind(this));
+    Search.prototype.init = function () {
+        this.nForm.addEventListener('submit', this.search.bind(this));
     }
 
     //搜索功能
-    Search.prototype.search=function(event){
-        this.nKeyword.value=this.nKeyword.value.replace(/^\s+|\s+$/g,'');
-        if(!this.nKeyword.value){
+    Search.prototype.search = function (event) {
+        this.nKeyword.value = this.nKeyword.value.replace(/^\s+|\s+$/g, '');
+        if (!this.nKeyword.value) {
             event.preventDefault();
         }
     }
 
-    App.Search=Search;
+    App.Search = Search;
 }(window.App));
 
 /**
  * 构建登录与注册
  */
-(function(App){
-    function Guest(){
-        this.nLogin=_.$('login');
-        this.nRegister=_.$('register');
+(function (App) {
+    function Guest() {
+        this.nLogin = _.$('login');
+        this.nRegister = _.$('register');
 
-        this.nLogin.addEventListener('click',function(){
+        this.nLogin.addEventListener('click', function () {
             //弹出登录弹窗
-            this.modal=new App.LoginModal({parent:_.$('gHeader')});
+            this.modal = new App.LoginModal({
+                parent: _.$('gHeader')
+            });
             //注册ok事件
-            this.modal.on('ok',function(event){
+            this.modal.on('ok', function (event) {
                 App.nav.initUserInfo(event.data);
-                App.nav.loginCallback&&App.nav.loginCallback(event.data);
+                App.nav.loginCallback && App.nav.loginCallback(event.data);
             }.bind(this));
-            this.modal.on('register',function(){
+            this.modal.on('register', function () {
                 this.modal.hide();
                 this.nRegister.click();
             }.bind(this));
         }.bind(this));
 
-        this.nRegister.addEventListener('click',function(){
+        this.nRegister.addEventListener('click', function () {
             //弹出注册弹窗
-            this.modal=new App.RegisterModal({parent:_.$('gHeader')});
+            this.modal = new App.RegisterModal({
+                parent: _.$('gHeader')
+            });
             //注册ok事件
-            this.modal.on('ok',function(event){
+            this.modal.on('ok', function (event) {
                 this.modal.hide();
                 App.nav.initUserInfo(event.data);
-                App.nav.loginCallback&&App.nav.loginCallback(event.data);
+                App.nav.loginCallback && App.nav.loginCallback(event.data);
             }.bind(this));
-            
+
         }.bind(this));
     }
 
-    App.Guest=Guest;
+    App.Guest = Guest;
 }(window.App));
 
 
 /**
  * 构建登录弹窗
  */
-(function(App){
-    var validator=App.validator;
-    var html=`
+(function (App) {
+    var validator = App.validator;
+    var html = `
     <div class="modal_login">
         <div class="u-close" id="login_close">X</div>
         <div class="modal_tt">
@@ -162,112 +166,118 @@
         </form>
     </div>`;
 
-    function LoginModal(options){
-        options.content=html;
-        App.Modal.call(this,options);
+    function LoginModal(options) {
+        options.content = html;
+        App.Modal.call(this, options);
         //缓存节点
-        this.nForm=_.$('loginform');
-        this.nUsername=_.$('username');
-        this.nPassword=_.$('password');
-        this.nRemember=_.$('remember');
-        this.nError=_.$('errormsg');
-        this.nRegister=_.$('goregister');
-        this.nClose=_.$('login_close');
+        this.nForm = _.$('loginform');
+        this.nUsername = _.$('username');
+        this.nPassword = _.$('password');
+        this.nRemember = _.$('remember');
+        this.nError = _.$('errormsg');
+        this.nRegister = _.$('goregister');
+        this.nClose = _.$('login_close');
 
         this.initLoginEvent();
         this.show();
     }
 
     //扩展原型
-    LoginModal.prototype=Object.create(App.Modal.prototype);
-    _.extend(LoginModal.prototype,App.emitter);
+    LoginModal.prototype = Object.create(App.Modal.prototype);
+    _.extend(LoginModal.prototype, App.emitter);
 
-    LoginModal.prototype.initLoginEvent=function(){
+    LoginModal.prototype.initLoginEvent = function () {
         //绑定提交事件
-        this.nForm.addEventListener('submit',this.submit.bind(this));
+        this.nForm.addEventListener('submit', this.submit.bind(this));
 
         //绑定跳转注册事件
-        this.nRegister.addEventListener('click',function(){
-                this.fire({type:'register'});
+        this.nRegister.addEventListener('click', function () {
+            this.fire({
+                type: 'register'
+            });
         }.bind(this));
 
         //绑定关闭事件
-        this.nClose.addEventListener('click',function(){
+        this.nClose.addEventListener('click', function () {
             this.hide();
         }.bind(this));
     }
 
-    LoginModal.prototype.check=function(){
-        var isValid=true,flag=true;
+    LoginModal.prototype.check = function () {
+        var isValid = true,
+            flag = true;
 
         //验证用户名
-        flag=flag && !validator.isEmpty(this.nUsername.value);
-        flag=flag && validator.isPhone(this.nUsername.value);
-        !flag && this.showError(this.nUsername,true);
-        isValid=isValid && flag;
+        flag = flag && !validator.isEmpty(this.nUsername.value);
+        flag = flag && validator.isPhone(this.nUsername.value);
+        !flag && this.showError(this.nUsername, true);
+        isValid = isValid && flag;
 
         //验证密码
-        flag=true;
-        flag=flag && !validator.isEmpty(this.nPassword.value);
-        !flag && this.showError(this.nPassword,true);
-        isValid=isValid && flag;
+        flag = true;
+        flag = flag && !validator.isEmpty(this.nPassword.value);
+        !flag && this.showError(this.nPassword, true);
+        isValid = isValid && flag;
 
         //显示错误
         return isValid;
     }
 
-    LoginModal.prototype.submit=function(event){
+    LoginModal.prototype.submit = function (event) {
         event.preventDefault();
-        if(this.check()){
-            var data={
-                username:this.nUsername.value.trim(),
-                password:hex_md5(this.nPassword.value),
-                remember:!!this.nRemember.checked
+        if (this.check()) {
+            var data = {
+                username: this.nUsername.value.trim(),
+                password: hex_md5(this.nPassword.value),
+                remember: !!this.nRemember.checked
             };
 
             _.ajax({
-                url:'/api/login',
-                type:'post',
-                data:data,
-                success:function(data){
-                    data=JSON.parse(data);
-                    if(data.code===200){
+                url: '/api/login',
+                type: 'post',
+                data: data,
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data.code === 200) {
                         this.hide();
-                        this.fire({type:'ok',data:data.result});
-                    }else{
+                        this.fire({
+                            type: 'ok',
+                            data: data.result
+                        });
+                    } else {
                         //根据错误码显示不同的错误提示
-                        switch(data.code){
+                        switch (data.code) {
                             case 400:
-                                this.nError.innerText='密码错误，重新输入';
+                                this.nError.innerText = '密码错误，重新输入';
                                 break;
                             case 404:
-                                this.nError.innerText='用户不存在，请重新输入';
+                                this.nError.innerText = '用户不存在，请重新输入';
                                 break;
                         }
-                        this.showError(this.nForm,true);
+                        this.showError(this.nForm, true);
                     }
                 }.bind(this),
-                error:function(){}
+                error: function () {}
             });
         }
     }
 
-    LoginModal.prototype.showError=function(node,boo){
-        if(boo){
-            _.addClass(node,'error');
+    LoginModal.prototype.showError = function (node, boo) {
+        if (boo) {
+            _.addClass(node, 'error');
         }
     }
 
-    App.LoginModal=LoginModal;
+    App.LoginModal = LoginModal;
 }(window.App));
 
 
 /**
  * 构建注册框
  */
-(function(App){
-    var validator=App.validator;
-    var html=`
+(function (App) {
+    var validator = App.validator;
+    var html = `
     <div class="modal_signin">
         <div class="u-close" id="signin_close">X</div>
         <div><i class="logo"></i></div>
@@ -333,110 +343,74 @@
                     <i class="u-icon u-icon-checkboxchecked"></i>
                     <span>我已阅读相关条款</span>
                 </label>
+                this.show();
             </div>
             <button class="u-btn u-btn-primary" type="submit">注&nbsp;&nbsp;册</button>
         </form>
     </div>`;
 
     function RegisterModal(options) {
-        options.content=html;
-        App.Modal.call(this,options);
+        options.content = html;
+        App.Modal.call(this, options);
         //缓存节点
-        this.nForm=_.$('registerform');
-        this.nPhone=_.$('phone');
-        this.nNick=_.$('nickname');
-        this.pwd=_.$('password_signin');
-        this.nConfirmpwd=_.$('confirm_password');
-        this.nCaptcha=_.$('captcha');
-        this.nCaptchImg=_.$('captchaimg');
-        this.nClose=_.$('signin_close');
+        this.nForm = _.$('registerform');
+        this.nPhone = _.$('phone');
+        this.nNick = _.$('nickname');
+        this.pwd = _.$('password_signin');
+        this.nConfirmpwd = _.$('confirm_password');
+        this.nCaptcha = _.$('captcha');
+        this.nCaptchImg = _.$('captchaimg');
+        this.nClose = _.$('signin_close');
 
         this.initSelect();
         this.initRegisterEvent();
-        this.show();
     }
 
     //扩展原型
-    RegisterModal.prototype=Object.create(App.Modal.prototype);
-    _.extend(RegisterModal.prototype,App.emitter);
+    RegisterModal.prototype = Object.create(App.Modal.prototype);
+    _.extend(RegisterModal.prototype, App.emitter);
 
-    RegisterModal.prototype.initRegisterEvent=function(){
+    RegisterModal.prototype.initRegisterEvent = function () {
         //绑定验证码图片事件
-        this.nCaptchImg.addEventListener('click',function(){
+        this.nCaptchImg.addEventListener('click', function () {
             this.resetCaptcha();
         }.bind(this));
-        
+
         //绑定提交事件
-        this.nForm.addEventListener('submit',this.submit.bind(this));
+        this.nForm.addEventListener('submit', this.submit.bind(this));
 
 
         //绑定关闭事件
-        this.nClose.addEventListener('click',function(){
+        [this.nPhone, ['required', 'phone']],
+        this.nClose.addEventListener('click', function () {
             this.hide();
         }.bind(this));
     }
-    
-    //初始化选择器
-    RegisterModal.prototype.initSelect=function(){}
-    
-    //重置验证码图片
-    RegisterModal.prototype.resetCaptcha=function(){
-        this.nCaptchImg.src='/captcha?t='+ +new Date();
-    }
-    
-    //表单提交
-    RegisterModal.prototype.submit=function(event){
-        event.preventDefault();
-        this.check();
-        if(true){
-            var data={
-                username:this.nPhone.value.trim(),
-                nickname:this.nNick.value.trim(),
-                password:hex_md5(this.pwd.value),
-                sex:this.getRadioValue('registerform','sex'),
-                captcha:this.nCaptcha.value.trim()
-            };
-            // this.birthday=this.birthdaySelect.getValue().join('-');
-            // data.birthday=this.birthday;
-            // this.location=this.locationSelect.getValue();
-            // data.province=this.location[0];
-            // data.city=this.location[1];
-            // data.district=this.location[2];
 
-            _.ajax({
-                url:'/api/register',
-                type:'post',
-                data:data,
-                success:function(data){
-                    data=JSON.parse(data);
-                    if(data.code===200){
-                        this.hide();
-                        this.fire({type:'ok',data:data.result});
-                    }else{
-                        this.nError.innerText=data.msg;
-                        this.showError(this.nForm,true);
-                    }
-                }.bind(this),
-                fail:function(){}
-            });
-        }
+    //初始化选择器
+    RegisterModal.prototype.initSelect = function () {}
+
+    //重置验证码图片
+    RegisterModal.prototype.resetCaptcha = function () {
+        this.nCaptchImg.src = '/captcha?t=' + +new Date();
     }
-    
+
+
+
     //表单校验
-    RegisterModal.prototype.check=function(){
-        var isValid=true,
-            errorMsg='';
-        var checkList=[
-            [this.nPhone,['required','phone']],
-            [this.nNick,['required','nickname']],
-            [this.pwd,['required','length']],
-            [this.nConfirmpwd,['required','length']],
-            [this.nCaptcha,['required']]
+    RegisterModal.prototype.check = function () {
+        var isValid = true,
+            errorMsg = '';
+        var checkList = [
+            [this.nNick, ['required', 'nickname']],
+            [this.pwd, ['required', 'length']],
+            [this.nConfirmpwd, ['required', 'length']],
+            [this.nCaptcha, ['required']]
         ];
 
-        isValid=this.checkRules(checkList);
-        if(!isValid){
-            errorMsg='输入有误'
+        isValid = this.checkRules(checkList);
+        if (!isValid) {
+            errorMsg = '输入有误'
         }
 
         //验证两次密码是否一致
@@ -445,122 +419,164 @@
 
         return isValid;
     }
-    
-    //校验规则配置
-    RegisterModal.prototype.checkRules=function(checkList){
 
-        for(var i=0;i<checkList.length;i++){
-            var checkItem=checkList[i][0],
-                rules=checkList[i][1],
+    //校验规则配置
+    RegisterModal.prototype.checkRules = function (checkList) {
+
+        for (var i = 0; i < checkList.length; i++) {
+            var checkItem = checkList[i][0],
+                rules = checkList[i][1],
                 flag;
 
-            for(var j=0;j<rules.length;j++){
-                var key=rules[j];
-                switch(key){
+            for (var j = 0; j < rules.length; j++) {
+                var key = rules[j];
+                switch (key) {
                     case 'nickname':
-                        flag=validator.isNickName(checkItem.value);
+                        flag = validator.isNickName(checkItem.value);
                         break;
                     case 'length':
-                        flag=validator.isLength(checkItem.value,6,16);
+                        flag = validator.isLength(checkItem.value, 6, 16);
                         break;
                     case 'required':
-                        flag=validator.isEmpty(checkItem.value);
+                        flag = validator.isEmpty(checkItem.value);
                         break;
                 }
             }
-            if(!flag){break;}
+            if (!flag) {
+                break;
+            }
         }
         //显示错误
-        this.showError(checkItem,flag);
+        this.showError(checkItem, flag);
 
         return flag;
     }
 
-    RegisterModal.prototype.showError=function(node,boo){
-        if(boo){
-            _.addClass(node,'error');
+    RegisterModal.prototype.showError = function (node, boo) {
+        if (boo) {
+            _.addClass(node, 'error');
         }
     }
 
-    RegisterModal.prototype.getRadioValue=function(){}
-    RegisterModal.prototype.birthdaySelect=function(){}
-    RegisterModal.prototype.locationSelect=function(){}
+    RegisterModal.prototype.getRadioValue = function () {}
+    RegisterModal.prototype.birthdaySelect = function () {}
+    RegisterModal.prototype.locationSelect = function () {}
 
+    //表单提交
+    RegisterModal.prototype.submit = function (event) {
+        event.preventDefault();
+        this.check();
+        if (this.check()) {
+            var data = {
+                username: this.nPhone.value.trim(),
+                nickname: this.nNick.value.trim(),
+                password: hex_md5(this.pwd.value),
+                sex: this.getRadioValue('registerform', 'sex'),
+                captcha: this.nCaptcha.value.trim()
+            };
+            this.birthday = this.birthdaySelect.getValue().join('-');
+            data.birthday = this.birthday;
+            this.location = this.locationSelect.getValue();
+            data.province = this.location[0];
+            data.city = this.location[1];
+            data.district = this.location[2];
 
-    App.RegisterModal=RegisterModal;
+            _.ajax({
+                url: '/api/register',
+                type: 'post',
+                data: data,
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data.code === 200) {
+                        this.hide();
+                        this.fire({
+                            type: 'ok',
+                            data: data.result
+                        });
+                    } else {
+                        this.nError.innerText = data.msg;
+                        this.showError(this.nForm, true);
+                    }
+                }.bind(this),
+                fail: function () {}
+            });
+        }
+    }
+
+    App.RegisterModal = RegisterModal;
 }(window.App));
 
 
 /**
  * 构建顶栏
  */
-(function(App){
-    var nav={
-        init:function(options){
-            options=options||{};
-            this.loginCallback=options.login;
-            this.hdtab=new App.Tabs({
-                container:_.$("hdtabs"),
-                index:this.getTabIndex()
+(function (App) {
+    var nav = {
+        init: function (options) {
+            options = options || {};
+            this.loginCallback = options.login;
+            this.hdtab = new App.Tabs({
+                container: _.$("hdtabs"),
+                index: this.getTabIndex()
             });
-            this.search=new App.Search(_.$("search"));
-            this.guest=new App.Guest();
+            this.search = new App.Search(_.$("search"));
+            this.guest = new App.Guest();
             //绑定登录，注册，登出事件
             this.initLoginStatus();
         },
         //获取当前页面tabs中的index
-        getTabIndex:function(){
-            return window.location.href.search(/works/)>0?1:0;
+        getTabIndex: function () {
+            return window.location.href.search(/works/) > 0 ? 1 : 0;
         },
         //初始化登录状态
-        initLoginStatus:function(){
+        initLoginStatus: function () {
             _.ajax({
-                url:'/api/users?getloginuser',
-                success:function(data){
-                    data=JSON.parse(data);
-                    if(data.code===200){
+                url: '/api/users?getloginuser',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data.code === 200) {
                         this.initUserInfo(data.result);
-                        if(typeof this.loginCallback === 'function'){this.loginCallback(data.result);}
+                        if (typeof this.loginCallback === 'function') {
+                            this.loginCallback(data.result);
+                        }
                     }
                 }.bind(this),
-                error:function(data){}
+                error: function (data) {}
             });
         },
         //初始化用户信息
-        initUserInfo:function(data){
-            this.nSexIcon=_.$('sexIcon');
-            this.nName=_.$('name');
-            this.nGuest=_.$('guest');
-            this.nUser=_.$('userDropdown');
-            this.nLogout=_.$('logout');
+        initUserInfo: function (data) {
+            this.nSexIcon = _.$('sexIcon');
+            this.nName = _.$('name');
+            this.nGuest = _.$('guest');
+            this.nUser = _.$('userDropdown');
+            this.nLogout = _.$('logout');
 
             //设置用户姓名和性别icon
-            this.nName.innerText=data.nickname;
-            _.addClass(this.nSexIcon,App.iconConfig[data.sex]);
+            this.nName.innerText = data.nickname;
+            _.addClass(this.nSexIcon, App.iconConfig[data.sex]);
 
             //隐藏登录，注册按钮；显示用户信息
-            _.addClass(this.nGuest,'f-dn');
-            _.removeClass(this.nUser,'f-dn');
+            _.addClass(this.nGuest, 'f-dn');
+            _.removeClass(this.nUser, 'f-dn');
 
-            this.nLogout.addEventListener('click',function(){
+            this.nLogout.addEventListener('click', function () {
                 _.ajax({
-                    url:'/api/logout',
-                    type:'post',
-                    success:function(data){
-                        data=JSON.parse(data);
-                        if(data.code===200){
+                    url: '/api/logout',
+                    type: 'post',
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        if (data.code === 200) {
                             // _.addClass(this.nUser,'f-dn');
                             // _.removeClass(this.nGuest,'f-dn');
                             window.location.reload();
                         }
                     }.bind(this),
-                    error:function(){}
+                    error: function () {}
                 });
             }.bind(this));
         }
     }
 
-    App.nav=nav;
+    App.nav = nav;
 }(window.App));
-
-
