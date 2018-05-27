@@ -334,7 +334,7 @@
             }.bind(this));
         },
         //编辑方法
-        editWorks:function(works,workEl){
+        editWorks:function(works,worksEl){
             var input;
             var html=`
             <div class="modal-list modal_edit">
@@ -369,6 +369,7 @@
                         url:'/api/works/'+works.id,
                         type:'patch',
                         data:{name:newName},
+                        // contentType:'application/x-www-form-urlencoded;charset=UTF-8',
                         success:function(data){
                             data=JSON.parse(data);
                             worksEl.getElementsByTagName('h3')[0].innerText=data.result.name;
@@ -377,15 +378,6 @@
                             console.log(status,statusText);
                         }
                     });
-                    // $.ajax({
-                    //     url:'/api/works/'+works.id,
-                    //     method:'patch',
-                    //     data:{name:newName},
-                    //     success:function(data){
-                    //         //data=JSON.parse(data);
-                    //         worksEl.getElementsByTagName('h3')[0].innerText=data.result.name;
-                    //     }
-                    // });
                 }
             });
         }

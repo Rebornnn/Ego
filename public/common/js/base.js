@@ -432,7 +432,7 @@
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
                         success(xhr.responseText);
                     } else {
-                        error(xhr.status, xhr.statusText);
+                        error(xhr);
                     }
                 }
             };
@@ -454,7 +454,7 @@
 
 
         var url = options.url || "", //请求的链接
-            type = (options.type || "get").toLowerCase(), //请求的方法,默认为get
+            type = (options.type || "get").toUpperCase(), //请求的方法,默认为get
             data = options.data || null, //请求的数据
             contentType = options.contentType || "", //请求头
             dataType = options.dataType || "", //请求的类型
