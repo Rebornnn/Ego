@@ -563,15 +563,21 @@
     //渲染下拉列表
     Select.prototype.render = function (data, defaultIndex) {
         var optionsHTML = '';
+        var format_data=[];
 
         for (var i = 0; i < data.length; i++) {
             //格式化数据{name:value}
-            optionsHTML += `<li data-index=${i}>${data[i].name}</li>`
+            format_data[i]={
+                'code':data[i][0],
+                'name':data[i][1],
+                'other':data[i][2]
+            };
+            optionsHTML += `<li data-index=${i}>${format_data[i].name}</li>`;
         }
 
         this.nOption.innerHTML = optionsHTML;
         this.nOptions = this.nOption.children;
-        this.options = data;
+        this.options = format_data;
         this.selectedIndex = undefined;
         //默认选中第一项
         this.setSelect(defaultIndex || 0);
@@ -579,7 +585,7 @@
     //处理函数
     Select.prototype.clickHandler = function (event) {
         var index = event.target.dataset.index;
-        if (event.target.targetname === 'LI') {
+        if (event.target.tagNname === 'LI') {
             this.setSelect(index);
         } else {
             this.toggle();
@@ -599,7 +605,7 @@
     }
     //获取当前选中项的值
     Select.prototype.getValue = function () {
-        return this.options[this.selectedIndex].value;
+        return this.options[this.selectedIndex].code;
     }
     //设置选中项的选中状态并发出事件
     Select.prototype.setSelect = function (index) {
@@ -614,7 +620,7 @@
 
         this.fire({
             type: 'select',
-            data: this.getValue()
+            code: this.getValue()
         });
     }
 
@@ -626,7 +632,12 @@
  * 级联选择器
  */
 (function (App) {
-    function CascadeSelect() {
+
+    /**
+     * 
+     * @param {Object} options parent为父容器节点
+     */
+    function CascadeSelect(options) {
         _.extend(this, options);
         this.selectList = [];
         this.init();
@@ -635,22 +646,31 @@
     CascadeSelect.prototype.init = function () {
         for (var i = 0; i < 3; i++) {
             var select = new App.Select({
-                container: this.container
+                parent: this.parent
             });
             select.on('select', this.onChange.bind(this, i));
             this.selectList[i] = select;
         }
         this.selectList[0].render(this.data);
     }
-    CascadeSelect.prototype.getValue = function () {}
+    CascadeSelect.prototype.getValue = function () {
+        this.province=this.selectList[0].getValue();
+        this.city=this.selectList[1].getValue();
+        this.district=this.selectList[2].getValue();
+    }
     //响应select事件，渲染下一个Select数据
-    CascadeSelect.prototype.onChange = function () {
+    CascadeSelect.prototype.onChange = function (index,data) {
         var next = index + 1;
         if (next === this.selectList.length) return;
-        this.selectList[next].render(this.getList(next));
+        this.selectList[next].render(this.getList(next,data));
     }
     //获取第N个Select的数据
-    CascadeSelect.prototype.getList = function (n) {}
+    CascadeSelect.prototype.getList = function (next,data) {
+        var data_02=this.selectList[next].options.filter(function(item){
+            return item['code']===data;
+        })[0];
+        return data_02['other'];
+    }
 
     App.CascadeSelect = CascadeSelect;
 }(window.App));

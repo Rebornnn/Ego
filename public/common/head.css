@@ -311,19 +311,6 @@
     flex: 1;
 }
 
-/* .u-checkbox input[type="checkbox"]{
-    display: none;
-}
-.u-checkbox .u-icon-checkboxchecked{
-    display: none;
-}
-
-.u-checkbox input[type="checkbox"]:checked~.u-icon-checkboxchecked{
-    display: inline-block;
-}
-.u-checkbox input[type="checkbox"]:checked~.u-icon-checkbox{
-    display: none;
-} */
 
 .modal_signin .formitem_ct-captcha .u-ipt{
     height: 100%;
@@ -342,4 +329,17 @@
 .modal_signin button[type=submit]{
     width: 100%;
     margin-top: 10px;
+}
+
+.modal_signin .m-cascadeselect{
+    width: 345px;
+    line-height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal_signin .loation_select .m-select{
+    position: relative;
+    
 }
