@@ -332,14 +332,50 @@
 }
 
 .modal_signin .m-cascadeselect{
-    width: 345px;
-    line-height: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
 .modal_signin .loation_select .m-select{
     position: relative;
-    
+    width: 30%;
+    cursor: pointer;
+    height: 100%;
+}
+
+.modal_signin .loation_select .select_hd{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #5ed0ba;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 100%;
+}
+.modal_signin .loation_select .u-icon-dropdown{
+    width: 0;
+    border: 10px solid #fff;
+    border-top:10px solid #5ed0ba;
+}
+
+.modal_signin .loation_select .select_opt{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    border: 1px solid #f4f4f4;
+    background: #fff;
+    overflow-y: auto;
+    z-index: 90;
+}
+
+
+.modal_signin .select_opt li{
+    line-height: 30px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

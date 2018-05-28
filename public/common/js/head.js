@@ -343,7 +343,6 @@
                     <i class="u-icon u-icon-checkboxchecked"></i>
                     <span>我已阅读相关条款</span>
                 </label>
-                this.show();
             </div>
             <button class="u-btn u-btn-primary" type="submit">注&nbsp;&nbsp;册</button>
         </form>
@@ -364,6 +363,7 @@
 
         this.initSelect();
         this.initRegisterEvent();
+        this.show();
     }
 
     //扩展原型
@@ -381,14 +381,15 @@
 
 
         //绑定关闭事件
-        [this.nPhone, ['required', 'phone']],
         this.nClose.addEventListener('click', function () {
             this.hide();
         }.bind(this));
     }
 
     //初始化选择器
-    RegisterModal.prototype.initSelect = function () {}
+    RegisterModal.prototype.initSelect = function () {
+        this.locationSelect();
+    }
 
     //重置验证码图片
     RegisterModal.prototype.resetCaptcha = function () {
@@ -459,8 +460,14 @@
     }
 
     RegisterModal.prototype.getRadioValue = function () {}
-    RegisterModal.prototype.birthdaySelect = function () {}
-    RegisterModal.prototype.locationSelect = function () {}
+    RegisterModal.prototype.birthdaySelect = function () {
+    }
+    RegisterModal.prototype.locationSelect = function () {
+        this.location=new App.CascadeSelect({
+            parent:_.$('location'),
+            data:ADDRESS_CODES
+        });
+    }
 
     //表单提交
     RegisterModal.prototype.submit = function (event) {

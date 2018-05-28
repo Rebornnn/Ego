@@ -225,6 +225,7 @@
      * @param     {Function} func 事件处理函数 
      */
     function on(type, func) {
+        this.handlers={};
         if (typeof this.handlers[type] == "undefined") {
             this.handlers[type] = [];
         }
@@ -275,8 +276,7 @@
         }
     }
 
-    App.emitter = {
-        handlers: {},
+    App.emitter ={
         on: on,
         off: off,
         offType: offType,
@@ -522,14 +522,10 @@
     var template = `
     <div class="m-select">
         <div class="select_hd">
-            <span class="select_val></span>
+            <span class="select_val"></span>
             <span class="u-icon-dropdown"></span>
         </div>
         <ul class="select_opt f-dn">
-            <li data-index="0" class="z-select"><li>
-            <li data-index="0" ><li>
-            <li data-index="0" ><li>
-            <li data-index="0" ><li>
         </ul>
     </div>`;
 
@@ -551,14 +547,13 @@
 
     //初始化
     Select.prototype.init = function () {
-        this.render();
-        this.initEvent();
         this.parent.appendChild(this.body);
+        this.initEvent();
     }
     //绑定事件
     Select.prototype.initEvent = function () {
         this.body.addEventListener('click', this.clickHandler.bind(this));
-        document.addEventListener('click', this.close.bind(this));
+        //document.addEventListener('click', this.close.bind(this));
     }
     //渲染下拉列表
     Select.prototype.render = function (data, defaultIndex) {
@@ -585,7 +580,7 @@
     //处理函数
     Select.prototype.clickHandler = function (event) {
         var index = event.target.dataset.index;
-        if (event.target.tagNname === 'LI') {
+        if (event.target.tagName === 'LI') {
             this.setSelect(index);
         } else {
             this.toggle();
@@ -610,12 +605,12 @@
     //设置选中项的选中状态并发出事件
     Select.prototype.setSelect = function (index) {
         //取消上次选中效果
-        if (this.selectIndex !== undefined) {
+        if (this.selectedIndex !== undefined) {
             _.removeClass(this.nOptions[this.selectedIndex], 'z-select');
         }
         //设置选中
         this.selectedIndex = index;
-        this.nValue.innerText = this.nOptions[this.selectedIndex].name;
+        this.nValue.innerText = this.nOptions[this.selectedIndex].innerText;
         _.addClass(this.nOptions[this.selectedIndex], 'z-select');
 
         this.fire({
@@ -659,15 +654,15 @@
         this.district=this.selectList[2].getValue();
     }
     //响应select事件，渲染下一个Select数据
-    CascadeSelect.prototype.onChange = function (index,data) {
+    CascadeSelect.prototype.onChange = function (index,event) {
         var next = index + 1;
         if (next === this.selectList.length) return;
-        this.selectList[next].render(this.getList(next,data));
+        this.selectList[next].render(this.getList(index,event));
     }
     //获取第N个Select的数据
-    CascadeSelect.prototype.getList = function (next,data) {
-        var data_02=this.selectList[next].options.filter(function(item){
-            return item['code']===data;
+    CascadeSelect.prototype.getList = function (index,event) {
+        var data_02=this.selectList[index].options.filter(function(item){
+            return item['code']===event.code;
         })[0];
         return data_02['other'];
     }
