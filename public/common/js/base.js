@@ -284,6 +284,9 @@
  * 自定义事件
  */
 (function (App) {
+    //事件对象列表
+    var handlers={};
+
     /**
      * 注册事件
      * 
@@ -291,12 +294,11 @@
      * @param     {Function} func 事件处理函数 
      */
     function on(type, func) {
-        this.handlers={};
-        if (typeof this.handlers[type] == "undefined") {
-            this.handlers[type] = [];
+        if (typeof handlers[type] == "undefined") {
+            handlers[type] = [];
         }
 
-        this.handlers[type].push(func);
+        handlers[type].push(func);
     }
 
     /**
@@ -306,22 +308,22 @@
      * @param     {Function} func 事件处理函数 
      */
     function off(type, func) {
-        if (this.handlers[type] instanceof Array) {
-            var handlers = this.handlers[type];
-            for (var i = 0, len = handlers.length; i < len; i++) {
-                if (handlers[i] === func) {
+        if (handlers[type] instanceof Array) {
+            var handler = handlers[type];
+            for (var i = 0, len = handler.length; i < len; i++) {
+                if (handler[i] === func) {
                     break;
                 }
             }
 
-            handlers.splice(i, 1);
+            handler.splice(i, 1);
         }
     }
 
 
     function offType(type) {
-        if (this.handlers[type] instanceof Array) {
-            this.handlers[type] = [];
+        if (handlers[type] instanceof Array) {
+            handlers[type] = [];
         }
     }
 
@@ -334,10 +336,10 @@
         if (!event.target) {
             event.target = this;
         }
-        if (this.handlers[event.type] instanceof Array) {
-            var handlers = this.handlers[event.type];
-            for (var i = 0, len = handlers.length; i < len; i++) {
-                handlers[i](event);
+        if (handlers[event.type] instanceof Array) {
+            var handler = handlers[event.type];
+            for (var i = 0, len = handler.length; i < len; i++) {
+                handler[i](event);
             }
         }
     }
@@ -660,7 +662,7 @@
     }
     //获取当前选中项的值
     Select.prototype.getValue = function () {
-        return this.options[this.selectedIndex].code;
+        return this.options[this.selectedIndex].value;
     }
     //设置选中项的选中状态并发出事件
     Select.prototype.setSelect = function (index) {
@@ -675,7 +677,8 @@
 
         this.fire({
             type: 'select',
-            code: this.getValue()
+            value: this.getValue(),
+            index:this.selectedIndex
         });
     }
 
@@ -717,11 +720,11 @@
     CascadeSelect.prototype.onChange = function (index,event) {
         var next = index + 1;
         if (next === this.selectList.length) return;
-        this.selectList[next].render(this.getList(index,event));
+        this.selectList[next].render(this.getList(index,event.index));
     }
     //获取第N个Select的数据
-    CascadeSelect.prototype.getList = function (index,event) {
-        return this.selectList[index].options.list;
+    CascadeSelect.prototype.getList = function (n,index) {
+        return this.selectList[n].options[index].list;
     }
 
     App.CascadeSelect = CascadeSelect;

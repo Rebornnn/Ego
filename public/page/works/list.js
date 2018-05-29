@@ -360,11 +360,11 @@
                 var newName=_.$('name-inp').value.trim();
                 //检查name是否为空，为空则提示用户，并结束程序运行
                 if(!newName){
-                    
                     return;
                 }
 
                 if(newName!==works.name){
+                    this.modal.hide();
                     _.ajax({
                         url:'/api/works/'+works.id,
                         type:'patch',
@@ -379,7 +379,7 @@
                         }
                     });
                 }
-            });
+            }.bind(this));
         }
     }
 

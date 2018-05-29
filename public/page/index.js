@@ -253,7 +253,7 @@
                         if(!this.starList){
                             this.starList=new App.StarList(_.$('starList'),data.result);
                             this.starList.on('login',function(){
-                                this.nav.showLogin();
+                                App.nav.showLogin();
                             }.bind(this));
                         }else{
                             this.starList.render(data.result);

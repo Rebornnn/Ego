@@ -244,6 +244,7 @@
                             type: 'ok',
                             data: data.result
                         });
+                        this.offType('ok');
                     } else {
                         //根据错误码显示不同的错误提示
                         switch (data.code) {
@@ -331,13 +332,13 @@
             </div>
             <div class="u-formitem">
                 <label for="" class="formitem_tt">验证码</label>
-                <div class="formitem_ct formitem_ct-captcha">
+                <div class="formitem_ct formitem_ct-captcha f-cb">
                     <input type="text" id="captcha" class="u-ipt">
-                    <img id="captchaimg" src="/captch" alt="验证码">
+                    <img id="captchaimg" src="/captcha" alt="验证码">
                 </div>
             </div>
             <div class="u-formitem u-formitem-2 u-remember">
-                <label for="read" class="u-checkbox u-checkbox-read">
+                <label for="read" class="u-checkbox u-checkbox-remember">
                     <input type="checkbox" id="read">
                     <i class="u-icon u-icon-checkbox"></i>
                     <i class="u-icon u-icon-checkboxchecked"></i>
@@ -388,6 +389,7 @@
 
     //初始化选择器
     RegisterModal.prototype.initSelect = function () {
+        this.birthdaySelect();
         this.locationSelect();
     }
 
@@ -461,11 +463,11 @@
 
     RegisterModal.prototype.getRadioValue = function () {}
     RegisterModal.prototype.birthdaySelect = function () {
-        var formatData=_.formatData(ADDRESS_CODES);
+        var formatDate=_.formatDate(1970);
 
-        this.birthday=new CascadeSelect({
+        this.birthday=new App.CascadeSelect({
             parent:_.$('birthday'),
-            data:BIRTHDAY_CODES
+            data:formatDate
         });
     }
     RegisterModal.prototype.locationSelect = function () {
@@ -590,6 +592,10 @@
                     error: function () {}
                 });
             }.bind(this));
+        },
+        //构建登录框
+        showLogin: function(){
+            this.guest.nLogin.click();
         }
     }
 

@@ -182,6 +182,10 @@
     box-sizing: border-box;
 }
 
+.m-modal .m-form-1 ::placeholder{
+    color: #7ad7c4;
+}
+
 .modal_login .u-close{
     position: absolute;
     top: 5px;right: 5px;
@@ -218,38 +222,25 @@
     font-size: 12px;
     line-height: 24px;
 }
-
-.modal_login .u-remember label{
+/* 小按钮通用CSS */
+ .u-remember label{
     display: flex;
     line-height: 24px;
     align-items: center;
 }
 
-.modal_login .u-remember .u-icon{
+ .u-remember .u-icon{
     width: 16px;
     height: 13px;
     margin-right: 5px;
 }
 
-.modal_login .u-remember .u-icon-checkbox{
+ .u-remember .u-icon-checkbox{
     background: url(../res/icon.png) no-repeat -337px -21px;
 }
 
-.modal_login .u-remember .u-icon-checkboxchecked{
+ .u-remember .u-icon-checkboxchecked{
     background: url(../res/icon.png) no-repeat -337px 0;
-}
-
-.modal_login .u-icon-error{
-    background: url(../res/icon.png) no-repeat -337px -43px;
-}
-
-.modal_login button[type=submit]{
-    width: 100%;
-    margin-top: 10px;
-}
-
-.m-modal .m-form-1 ::placeholder{
-    color: #7ad7c4;
 }
 
 .u-checkbox input[type="checkbox"]{
@@ -265,6 +256,17 @@
 .u-checkbox input[type="checkbox"]:checked~.u-icon-checkbox{
     display: none;
 }
+/* --小按钮通用CSS */
+
+.modal_login .u-icon-error{
+    background: url(../res/icon.png) no-repeat -337px -43px;
+}
+
+.modal_login button[type=submit]{
+    width: 100%;
+    margin-top: 10px;
+}
+
 
 /* 注册框 */
 .modal_signin{
@@ -311,20 +313,21 @@
     flex: 1;
 }
 
-
 .modal_signin .formitem_ct-captcha .u-ipt{
+    float: left;
     height: 100%;
 }
 
 .modal_signin .formitem_ct-captcha #captchaimg{
+    float: right;
     height: 100%;
     width: 94px;
     cursor: pointer;
 }
 
-.modal_signin .u-remember{
+/* .modal_signin .u-remember{
     line-height: 24px;
-}
+} */
 
 .modal_signin button[type=submit]{
     width: 100%;
@@ -338,7 +341,7 @@
     height: 100%;
 }
 
-.modal_signin .loation_select .m-select{
+.modal_signin .m-cascadeselect .m-select{
     position: relative;
     width: 29%;
     cursor: pointer;
@@ -346,7 +349,7 @@
     text-indent: 10px;
 }
 
-.modal_signin .loation_select .select_hd{
+.modal_signin .m-cascadeselect .select_hd{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -355,14 +358,14 @@
     box-sizing: border-box;
     height: 100%;
 }
-.modal_signin .loation_select .u-icon-dropdown{
+.modal_signin .m-cascadeselect .u-icon-dropdown{
     width: 0;
     border: 8px solid #fff;
     border-top:8px solid #5ed0ba;
     margin: 8px 6px 0 0;
 }
 
-.modal_signin .loation_select .select_opt{
+.modal_signin .m-cascadeselect .select_opt{
     position: absolute;
     top: 100%;
     left: 0;
@@ -391,8 +394,8 @@
 }
 
 /* 去除滚动条 */
-.modal_signin .loation_select .select_opt {
+.modal_signin .m-cascadeselect .select_opt {
     -ms-overflow-style:none;
     overflow:-moz-scrollbars-none;
 }
-.modal_signin .loation_select .select_opt::-webkit-scrollbar{width:0px}
+.modal_signin .m-cascadeselect .select_opt::-webkit-scrollbar{width:0px}
