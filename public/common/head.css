@@ -333,16 +333,17 @@
 
 .modal_signin .m-cascadeselect{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
 }
 
 .modal_signin .loation_select .m-select{
     position: relative;
-    width: 30%;
+    width: 29%;
     cursor: pointer;
     height: 100%;
+    text-indent: 10px;
 }
 
 .modal_signin .loation_select .select_hd{
@@ -356,8 +357,9 @@
 }
 .modal_signin .loation_select .u-icon-dropdown{
     width: 0;
-    border: 10px solid #fff;
-    border-top:10px solid #5ed0ba;
+    border: 8px solid #fff;
+    border-top:8px solid #5ed0ba;
+    margin: 8px 6px 0 0;
 }
 
 .modal_signin .loation_select .select_opt{
@@ -379,3 +381,18 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.modal_signin .select_opt li:hover{
+    background: #eee;
+}
+
+.modal_signin .select_opt .z-select{
+    background: #eee;
+}
+
+/* 去除滚动条 */
+.modal_signin .loation_select .select_opt {
+    -ms-overflow-style:none;
+    overflow:-moz-scrollbars-none;
+}
+.modal_signin .loation_select .select_opt::-webkit-scrollbar{width:0px}

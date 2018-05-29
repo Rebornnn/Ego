@@ -153,6 +153,72 @@
 }(window._));
 
 
+/**
+ * 格式化传入级联选择器的地址数据
+ */
+(function(_){
+    /**
+     * 
+     * @param {Array} data 将数组转化为{name:name,vlaue:value,list:list} 
+     */
+    function formatData(data){
+        function format(data){
+            var resultData=data.map(function(item){
+                var result={
+                    value:item[0],
+                    name:item[1]
+                };
+                if(Array.isArray(item[2])){
+                    result.list=format(item[2]);
+                }
+                return result;
+            });
+            return resultData;
+        }
+        
+        return format(data);
+    }
+
+    _.formatData=formatData;
+}(window._));
+
+
+/**
+ * 格式化传入级联选择器的生日数据
+ */
+(function(_){
+    function formatDate(startYear,endYear){
+        startYear=startYear||1970;
+        endYear=endYear||new Date().getFullYear();
+
+        //日数据
+        var day=[];
+        for(var i=1;i<=31;i++){
+            day.push({name:i,value:i});
+        }
+
+        var resultDate=[];
+        for(var j=startYear;j<=endYear;j++){
+            var year={
+                name:j,
+                value:j,
+                list:[]
+            };
+            for(var k=1;k<=12;k++){
+                year.list.push({
+                    name:k,
+                    value:k,
+                    list:day.slice(0,new Date(j,k,0).getDate())
+                });
+            }
+            resultDate.unshift(year);
+        }
+
+        return resultDate;
+    }
+
+    _.formatDate=formatDate;
+}(window._));
 
 /**
  * 计算年龄
@@ -553,26 +619,20 @@
     //绑定事件
     Select.prototype.initEvent = function () {
         this.body.addEventListener('click', this.clickHandler.bind(this));
-        //document.addEventListener('click', this.close.bind(this));
+        document.addEventListener('click', this.close.bind(this),true);
     }
     //渲染下拉列表
     Select.prototype.render = function (data, defaultIndex) {
         var optionsHTML = '';
-        var format_data=[];
 
         for (var i = 0; i < data.length; i++) {
-            //格式化数据{name:value}
-            format_data[i]={
-                'code':data[i][0],
-                'name':data[i][1],
-                'other':data[i][2]
-            };
-            optionsHTML += `<li data-index=${i}>${format_data[i].name}</li>`;
+            //格式化的数据{name:value}
+            optionsHTML += `<li data-index=${i}>${data[i].name}</li>`;
         }
 
         this.nOption.innerHTML = optionsHTML;
         this.nOptions = this.nOption.children;
-        this.options = format_data;
+        this.options = data;
         this.selectedIndex = undefined;
         //默认选中第一项
         this.setSelect(defaultIndex || 0);
@@ -661,10 +721,7 @@
     }
     //获取第N个Select的数据
     CascadeSelect.prototype.getList = function (index,event) {
-        var data_02=this.selectList[index].options.filter(function(item){
-            return item['code']===event.code;
-        })[0];
-        return data_02['other'];
+        return this.selectList[index].options.list;
     }
 
     App.CascadeSelect = CascadeSelect;

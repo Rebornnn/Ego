@@ -461,11 +461,19 @@
 
     RegisterModal.prototype.getRadioValue = function () {}
     RegisterModal.prototype.birthdaySelect = function () {
+        var formatData=_.formatData(ADDRESS_CODES);
+
+        this.birthday=new CascadeSelect({
+            parent:_.$('birthday'),
+            data:BIRTHDAY_CODES
+        });
     }
     RegisterModal.prototype.locationSelect = function () {
+        var formatData=_.formatData(ADDRESS_CODES);
+
         this.location=new App.CascadeSelect({
             parent:_.$('location'),
-            data:ADDRESS_CODES
+            data:formatData
         });
     }
 
