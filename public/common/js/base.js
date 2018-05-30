@@ -310,13 +310,18 @@
     function off(type, func) {
         if (handlers[type] instanceof Array) {
             var handler = handlers[type];
-            for (var i = 0, len = handler.length; i < len; i++) {
-                if (handler[i] === func) {
-                    break;
+            //若指定函数则删除函数
+            if(func){
+                for (var i = 0, len = handler.length; i < len; i++) {
+                    if (handler[i] === func) {
+                        break;
+                    }
                 }
-            }
 
-            handler.splice(i, 1);
+                handler.splice(i, 1);
+            }
+            //若未指定函数则删除第一个处理函数
+            handler.splice(0,1);
         }
     }
 
@@ -678,8 +683,10 @@
         this.fire({
             type: 'select',
             value: this.getValue(),
-            index:this.selectedIndex
+            index:this.selectedIndex,
+            target:this
         });
+        
     }
 
     App.Select = Select;
@@ -718,6 +725,8 @@
     }
     //响应select事件，渲染下一个Select数据
     CascadeSelect.prototype.onChange = function (index,event) {
+        //在6个onChange事件处理函数中筛选出对应的onChange,要不然就堆栈溢出
+        if(this.selectList[index]!==event.target){return;}
         var next = index + 1;
         if (next === this.selectList.length) return;
         this.selectList[next].render(this.getList(index,event.index));
