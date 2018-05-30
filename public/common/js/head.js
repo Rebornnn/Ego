@@ -158,7 +158,7 @@
                 </label>
                 <span class="f-fr">忘记密码？</span>
             </div>
-            <div class="u-error f-dn">
+            <div class="u-error f-dn" id="uError">
                 <span class="u-icon u-icon-error"></span>
                 <span id="errormsg"></span>
             </div>
@@ -174,7 +174,8 @@
         this.nUsername = _.$('username');
         this.nPassword = _.$('password');
         this.nRemember = _.$('remember');
-        this.nError = _.$('errormsg');
+        this.nError=_.$('uError');
+        this.nErrormsg = _.$('errormsg');
         this.nRegister = _.$('goregister');
         this.nClose = _.$('login_close');
 
@@ -210,13 +211,13 @@
         //验证用户名
         flag = flag && !validator.isEmpty(this.nUsername.value);
         flag = flag && validator.isPhone(this.nUsername.value);
-        !flag && this.showError(this.nUsername, true);
+        !flag && this.showError(this.nUsername, flag);
         isValid = isValid && flag;
 
         //验证密码
         flag = true;
         flag = flag && !validator.isEmpty(this.nPassword.value);
-        !flag && this.showError(this.nPassword, true);
+        !flag && this.showError(this.nPassword, flag);
         isValid = isValid && flag;
 
         //显示错误
@@ -249,13 +250,15 @@
                         //根据错误码显示不同的错误提示
                         switch (data.code) {
                             case 400:
-                                this.nError.innerText = '密码错误，重新输入';
+                                _.removeClass(this.nError,'f-dn');
+                                this.nErrormsg.innerText = '密码错误，重新输入';
                                 break;
                             case 404:
-                                this.nError.innerText = '用户不存在，请重新输入';
+                                _.removeClass(this.nError,'f-dn');
+                                this.nErrormsg.innerText = '用户不存在，请重新输入';
                                 break;
                         }
-                        this.showError(this.nForm, true);
+                        this.showError(this.nForm, false);
                     }
                 }.bind(this),
                 error: function () {}
@@ -264,7 +267,7 @@
     }
 
     LoginModal.prototype.showError = function (node, boo) {
-        if (boo) {
+        if (!boo) {
             _.addClass(node, 'error');
         }
     }
@@ -304,7 +307,7 @@
                 <div class="formitem_ct">
                     <div class="sex_box">
                         <label>
-                            <input type="radio" name="sex" checkded value="0">
+                            <input type="radio" name="sex" checkded value="1">
                             <i class="u-icon u-icon-radio"></i>
                             <i class="u-icon u-icon-radiochecked"></i>
                             少男
@@ -345,6 +348,10 @@
                     <span>我已阅读相关条款</span>
                 </label>
             </div>
+            <div class="u-error f-dn" id="uError">
+                <span class="u-icon u-icon-error"></span>
+                <span id="errormsg"></span>
+            </div>
             <button class="u-btn u-btn-primary" type="submit">注&nbsp;&nbsp;册</button>
         </form>
     </div>`;
@@ -360,7 +367,10 @@
         this.nConfirmpwd = _.$('confirm_password');
         this.nCaptcha = _.$('captcha');
         this.nCaptchImg = _.$('captchaimg');
+        this.nRead=_.$('read');
         this.nClose = _.$('signin_close');
+        this.nError= _.$('uError');
+        this.nErrormsg=_.$('errormsg');
 
         this.initSelect();
         this.initRegisterEvent();
@@ -413,12 +423,22 @@
 
         isValid = this.checkRules(checkList);
         if (!isValid) {
-            errorMsg = '输入有误'
+            errorMsg = '输入有误';
         }
 
         //验证两次密码是否一致
+        isValid=this.pwd.value===this.nConfirmpwd.value;
+        if(!isValid){
+            errorMsg='两次密码输入不一致';
+        }
         //验证条款是否为空
+        isValid=this.nRead.checked;
+        if(!isValid){
+            errorMsg='没有勾选验证条款';
+        }
         //显示错误
+        _.removeClass(this.nError,'f-dn');
+        this.nErrormsg.innerText=errorMsg;
 
         return isValid;
     }
@@ -456,16 +476,23 @@
     }
 
     RegisterModal.prototype.showError = function (node, boo) {
-        if (boo) {
+        if (!boo) {
             _.addClass(node, 'error');
         }
     }
 
-    RegisterModal.prototype.getRadioValue = function () {}
+    RegisterModal.prototype.getRadioValue = function (form,name) {
+        var sexFields=_.$(form).elements[name];
+        for(var i=0;i<sexFields.length;i++){
+            if(sexFields[i].checked){
+                return sexFields[i].value;
+            }
+        }
+    }
     RegisterModal.prototype.birthdaySelect = function () {
         var formatDate=_.formatDate(1970);
 
-        this.birthday=new App.CascadeSelect({
+        return new App.CascadeSelect({
             parent:_.$('birthday'),
             data:formatDate
         });
@@ -473,7 +500,7 @@
     RegisterModal.prototype.locationSelect = function () {
         var formatData=_.formatData(ADDRESS_CODES);
 
-        this.location=new App.CascadeSelect({
+        return new App.CascadeSelect({
             parent:_.$('location'),
             data:formatData
         });
@@ -510,6 +537,7 @@
                             type: 'ok',
                             data: data.result
                         });
+                        this.offType('ok');
                     } else {
                         this.nError.innerText = data.msg;
                         this.showError(this.nForm, true);
@@ -517,6 +545,7 @@
                 }.bind(this),
                 fail: function () {}
             });
+            
         }
     }
 

@@ -719,9 +719,9 @@
         this.selectList[0].render(this.data);
     }
     CascadeSelect.prototype.getValue = function () {
-        this.province=this.selectList[0].getValue();
-        this.city=this.selectList[1].getValue();
-        this.district=this.selectList[2].getValue();
+        this.selectList.map(function(item){
+            return item.getValue();
+        });
     }
     //响应select事件，渲染下一个Select数据
     CascadeSelect.prototype.onChange = function (index,event) {

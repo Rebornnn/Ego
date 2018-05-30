@@ -258,7 +258,7 @@
 }
 /* --小按钮通用CSS */
 
-.modal_login .u-icon-error{
+.u-icon-error{
     background: url(../res/icon.png) no-repeat -337px -43px;
 }
 
@@ -311,6 +311,36 @@
     justify-content: center;
     align-items: center;
     flex: 1;
+}
+
+.modal_signin .sex_box input[type="radio"]{
+    display: none;
+}
+
+.modal_signin .sex_box .u-icon{
+    width: 16px;
+    height: 13px;
+    margin-right: 5px;
+}
+
+.modal_signin .sex_box .u-icon-radio{
+    background: url(../res/icon.png) no-repeat -336px -162px;
+}
+
+.modal_signin .sex_box .u-icon-radiochecked{
+    background: url(../res/icon.png) no-repeat -336px -144px;
+}
+
+.modal_signin .sex_box .u-icon-radiochecked{
+    display: none;
+}
+
+.modal_signin .sex_box input[type="radio"]:checked~.u-icon-radio{
+    display: none;
+}
+
+.modal_signin .sex_box input[type="radio"]:checked~.u-icon-radiochecked{
+    display: inline-block;
 }
 
 .modal_signin .formitem_ct-captcha .u-ipt{
