@@ -1,6 +1,6 @@
 .g-body{
     width: 1096px;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 /* 主栏 */
@@ -12,16 +12,16 @@
     width: 100%;
     height: 70px;
     background: #fff;
+    box-sizing: border-box;;
 }
 
 /* 分类 */
 .g-main .m-formitem-1{
-    margin: 0 14px;
     border-bottom: 2px solid #f2f2f2;
-    padding: 15px 32px 15px 16px;
+    padding: 15px 32px 15px 32px;
 }
 
-.g-main .m-formitem-1 .register{
+.g-main .m-formitem-1 .category{
     display: inline-block;
     width: 60px;
     font-size: 12px;
@@ -42,6 +42,7 @@
     border-radius: 3px;
     border: 1px solid #5ed0ba;
     background-color: #fff;
+    color: #5ed0ba;
     margin-right: 32px;
     cursor: pointer;
 }
@@ -56,12 +57,32 @@
 }
 
 /* 标签 */
+.g-main .m-formitem-3{
+    height: 28px;
+}
+
+.g-main .m-formitem-3 .tags{
+    display: inline-block;
+    width: 60px;
+    font-size: 12px;
+    line-height: 28px;
+}
+
 .m-tag{
     display: flex;
     flex-wrap: wrap;
 }
 .m-tag .tag{
     position: relative;
+    display: inline-block;
+    text-align: center;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 3px;
+    border: 1px solid #5ed0ba;
+    background-color: #fff;
+    color: #5ed0ba;
+    cursor: pointer;
     padding: 6px 12px;
     margin: 0 12px 0 0;
 }
@@ -71,13 +92,17 @@
     top:-3px;
     font-size: 20px;
     opacity: 0;
+    width: 8px;
+    height: 8px;
 }
 
 .m-tag .tag:hover .close{
     opacity: 0.2;
 }
-.m-tag .tap-add .u-inp{
+.m-tag .tag-add .u-inp{
     display: none;
+    border: 1px solid #5ed0ba;
+    border-radius: 3px;
 }
 .m-tag .tag-add span{
     display: block;

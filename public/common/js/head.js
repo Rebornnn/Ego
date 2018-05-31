@@ -437,7 +437,7 @@
             errorMsg = '没有勾选验证条款';
         }
         //显示错误
-        _.removeClass(this.nError, 'f-dn');
+        _.addClass(this.nError, 'f-flex');
         this.nErrormsg.innerText = errorMsg;
 
         return isValid;

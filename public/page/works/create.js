@@ -49,7 +49,7 @@
             tagEl=_.html2node(html);
             this.element.insertBefore(tagEl,this.addTag);
             //将标签存入数组
-            this.list.push(push);
+            this.list.push(tagEl);
         };
         //tags也支持数组
         if(tags&&!Array.isArray(tags)){
@@ -77,7 +77,7 @@
 
     Tag.prototype.addEvent=function(){
         //关闭按钮及添加tag的点击事件
-        var clickHandler=function(){
+        var clickHandler=function(e){
             var target=e.target;
             if(_.hasClass(target,'close')){
                 this.remove(e.innerText);
@@ -90,11 +90,11 @@
         this.element.addEventListener('click',clickHandler);
 
         //tag输入框失焦事件
-        var inputBlurHandler=function(e){
+        var tagInputBlurHandler=function(e){
             //清空输入框的值
             //删除this.addTag上的focused类
             e.target.value='';
-            _.removeClass(target,'focused');
+            _.removeClass(e.target,'focused');
         }.bind(this);
 
         //tag输入框回车事件
@@ -109,7 +109,7 @@
         }.bind(this);
 
         this.tagInput.addEventListener('blur',tagInputBlurHandler);
-        this.tagInput.addEventListener('keydown',tagInputKeydownHandle);
+        this.tagInput.addEventListener('keydown',tagInputKeydownHandler);
     }
     Tag.prototype.getValue=function(){
         return this.list;

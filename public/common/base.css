@@ -194,7 +194,11 @@ body {
 }
 
 .f-dn {
-    display: none;
+    display: none ;
+}
+
+.f-flex{
+    display: flex;
 }
 
 .f-fr {
@@ -283,8 +287,6 @@ body {
 /* 错误信息 */
 
 .u-error {
-    display: -webkit-flex;
-    display: flex;
     -webkit-align-items: center;
     align-items: center;
     font-size: 12px;
