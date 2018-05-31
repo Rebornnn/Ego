@@ -719,7 +719,7 @@
         this.selectList[0].render(this.data);
     }
     CascadeSelect.prototype.getValue = function () {
-        this.selectList.map(function(item){
+        return this.selectList.map(function(item){
             return item.getValue();
         });
     }

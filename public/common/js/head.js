@@ -174,7 +174,7 @@
         this.nUsername = _.$('username');
         this.nPassword = _.$('password');
         this.nRemember = _.$('remember');
-        this.nError=_.$('uError');
+        this.nError = _.$('uError');
         this.nErrormsg = _.$('errormsg');
         this.nRegister = _.$('goregister');
         this.nClose = _.$('login_close');
@@ -250,11 +250,11 @@
                         //根据错误码显示不同的错误提示
                         switch (data.code) {
                             case 400:
-                                _.removeClass(this.nError,'f-dn');
+                                _.removeClass(this.nError, 'f-dn');
                                 this.nErrormsg.innerText = '密码错误，重新输入';
                                 break;
                             case 404:
-                                _.removeClass(this.nError,'f-dn');
+                                _.removeClass(this.nError, 'f-dn');
                                 this.nErrormsg.innerText = '用户不存在，请重新输入';
                                 break;
                         }
@@ -367,10 +367,10 @@
         this.nConfirmpwd = _.$('confirm_password');
         this.nCaptcha = _.$('captcha');
         this.nCaptchImg = _.$('captchaimg');
-        this.nRead=_.$('read');
+        this.nRead = _.$('read');
         this.nClose = _.$('signin_close');
-        this.nError= _.$('uError');
-        this.nErrormsg=_.$('errormsg');
+        this.nError = _.$('uError');
+        this.nErrormsg = _.$('errormsg');
 
         this.initSelect();
         this.initRegisterEvent();
@@ -399,8 +399,8 @@
 
     //初始化选择器
     RegisterModal.prototype.initSelect = function () {
-        this.birthdaySelect();
-        this.locationSelect();
+        this.initBirthdaySelect();
+        this.initLocationSelect();
     }
 
     //重置验证码图片
@@ -427,18 +427,18 @@
         }
 
         //验证两次密码是否一致
-        isValid=this.pwd.value===this.nConfirmpwd.value;
-        if(!isValid){
-            errorMsg='两次密码输入不一致';
+        isValid = this.pwd.value === this.nConfirmpwd.value;
+        if (!isValid) {
+            errorMsg = '两次密码输入不一致';
         }
         //验证条款是否为空
-        isValid=this.nRead.checked;
-        if(!isValid){
-            errorMsg='没有勾选验证条款';
+        isValid = this.nRead.checked;
+        if (!isValid) {
+            errorMsg = '没有勾选验证条款';
         }
         //显示错误
-        _.removeClass(this.nError,'f-dn');
-        this.nErrormsg.innerText=errorMsg;
+        _.removeClass(this.nError, 'f-dn');
+        this.nErrormsg.innerText = errorMsg;
 
         return isValid;
     }
@@ -461,7 +461,7 @@
                         flag = validator.isLength(checkItem.value, 6, 16);
                         break;
                     case 'required':
-                        flag = validator.isEmpty(checkItem.value);
+                        flag = !validator.isEmpty(checkItem.value);
                         break;
                 }
             }
@@ -481,28 +481,28 @@
         }
     }
 
-    RegisterModal.prototype.getRadioValue = function (form,name) {
-        var sexFields=_.$(form).elements[name];
-        for(var i=0;i<sexFields.length;i++){
-            if(sexFields[i].checked){
+    RegisterModal.prototype.getRadioValue = function (form, name) {
+        var sexFields = _.$(form).elements[name];
+        for (var i = 0; i < sexFields.length; i++) {
+            if (sexFields[i].checked) {
                 return sexFields[i].value;
             }
         }
     }
-    RegisterModal.prototype.birthdaySelect = function () {
-        var formatDate=_.formatDate(1970);
+    RegisterModal.prototype.initBirthdaySelect = function () {
+        var formatDate = _.formatDate(1970);
 
-        return new App.CascadeSelect({
-            parent:_.$('birthday'),
-            data:formatDate
+        this.birthdaySelect = new App.CascadeSelect({
+            parent: _.$('birthday'),
+            data: formatDate
         });
     }
-    RegisterModal.prototype.locationSelect = function () {
-        var formatData=_.formatData(ADDRESS_CODES);
+    RegisterModal.prototype.initLocationSelect = function () {
+        var formatData = _.formatData(ADDRESS_CODES);
 
-        return new App.CascadeSelect({
-            parent:_.$('location'),
-            data:formatData
+        this.locationSelect = new App.CascadeSelect({
+            parent: _.$('location'),
+            data: formatData
         });
     }
 
@@ -532,7 +532,6 @@
                 success: function (data) {
                     data = JSON.parse(data);
                     if (data.code === 200) {
-                        this.hide();
                         this.fire({
                             type: 'ok',
                             data: data.result
@@ -545,7 +544,7 @@
                 }.bind(this),
                 fail: function () {}
             });
-            
+
         }
     }
 
@@ -623,7 +622,7 @@
             }.bind(this));
         },
         //构建登录框
-        showLogin: function(){
+        showLogin: function () {
             this.guest.nLogin.click();
         }
     }

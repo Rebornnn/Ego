@@ -15,7 +15,8 @@
 
     Tag.prototype.initList=function(){
         //最后的添加按钮
-        this.addTag=_.createElement('li','tag tag-add',);
+        this.addTag=_.createElement('li','tag',);
+        _.addClass(this.addTag,'tag-add');
         //输入框
         this.tagInput=_.createElement('input','u-inp');
         this.tagInput.type='text';
