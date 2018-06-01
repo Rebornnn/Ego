@@ -67,6 +67,7 @@
         <form class="form_work">
             <!-- 主栏 -->
             <fieldset class="g-main">
+                <!-- 作品分类 -->
                 <div class="m-formitem m-formitem-1">
                     <label class="category">作品分类</label>
                     <div class="u-cnt">
@@ -80,33 +81,31 @@
                         </label>
                     </div>
                 </div>
+                <!-- 作品上传 -->
+                <div class="m-formitem m-formitem-1">
+                    <label class="upload">上传作品</label>
+                    <div class="u-cnt">
+                        <input type="file" name="upload" class="u-btn u-btn-primary" value="选择图片上传">
+                    </div>
+                </div>
+                <!-- 作品标签 -->
                 <div class="m-formitem m-formitem-3" id="mTags">
                     <label class="tags">标签</label>
-                    <!-- <ul class="m-tag">
-                        <li class="tag">
-                            <button class="close">X</button>
-                            <span>少女系</span>
-                        </li>
-                        <li class="tag">
-                            <button class="close">X</button>
-                            <span>少女系</span>
-                        </li>
-                        <li class="tag tag-add">
-                            <input class="u-inp" type="text">
-                            <span class="txt">+ 自定义标签</span>
-                        </li>
-                    </ul> -->
+                  
                 </div>
-                <div class="u-recommendTags">
+                <!-- 推荐标签 -->
+                <div class="m-formitem m-recommendTags">
                     <div class="recommend">推荐标签</div>
-                    <div class="recommendTags f-cb"></div>
+                    <ul class="f-cb" id="recommendTags">
+
+                    </ul>
                 </div>
             </fieldset>
 
             <!-- 侧栏 -->
-            <div class="m-side">
+            <fieldset class="m-side">
 
-            </div>
+            </fieldset>
         </form>
     </div>
 

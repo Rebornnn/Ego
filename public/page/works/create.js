@@ -9,8 +9,11 @@
         this.list=[];
         this.element=_.createElement('ul','m-tag');
         this.options.parent.appendChild(this.element);
+        this.nRecommend=_.$('recommendTags');
+
         this.initList();
         this.addEvent();
+        this.initRecommend();
     }
 
     Tag.prototype.initList=function(){
@@ -20,7 +23,7 @@
         //输入框
         this.tagInput=_.createElement('input','u-inp');
         this.tagInput.type='text';
-        //默认提升文本
+        //默认文本
         this.tagTxt=_.createElement('span','txt','+ 自定义标签');
 
         this.addTag.appendChild(this.tagInput);
@@ -111,8 +114,37 @@
         this.tagInput.addEventListener('blur',tagInputBlurHandler);
         this.tagInput.addEventListener('keydown',tagInputKeydownHandler);
     }
+
     Tag.prototype.getValue=function(){
         return this.list;
+    }
+
+    Tag.prototype.initRecommend=function(){
+        _.ajax({
+            type:'get',
+            url:'/api/tags?recommend',
+            success:function(data){
+                data=JSON.parse(data);
+                var result=data.result.split(',');
+                var html='';
+
+                for(var i=0;i<result.length;i++){
+                    html+=`
+                    <li class='tag f-ff' data-index=${i}>+ ${result[i]}</li>
+                    `;
+                }
+
+                this.nRecommend.innerHTML=html;
+
+                this.nRecommend.addEventListener('click',function(e){
+                    var target=e.target;
+                    this.add(result[target.dataset.index]);
+                }.bind(this));
+            }.bind(this),
+            error:function(){}
+        });
+
+        
     }
 
     App.Tag=Tag;
