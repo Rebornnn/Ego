@@ -162,7 +162,7 @@
                 <span class="u-icon u-icon-error"></span>
                 <span id="errormsg"></span>
             </div>
-            <button class="u-btn u-btn-primary" type="submit">登录&nbsp;&nbsp;</button>
+            <button class="u-btn u-btn-primary" type="submit">登&nbsp;&nbsp;录</button>
         </form>
     </div>`;
 
@@ -225,7 +225,7 @@
     }
 
     LoginModal.prototype.submit = function (event) {
-        event.preventDefault();
+        event.preventDefault(event);
         if (this.check()) {
             var data = {
                 username: this.nUsername.value.trim(),
@@ -415,6 +415,7 @@
         var isValid = true,
             errorMsg = '';
         var checkList = [
+            [this.nPhone,['required','phone']],
             [this.nNick, ['required', 'nickname']],
             [this.pwd, ['required', 'length']],
             [this.nConfirmpwd, ['required', 'length']],
@@ -424,23 +425,35 @@
         isValid = this.checkRules(checkList);
         if (!isValid) {
             errorMsg = '输入有误';
+            //显示错误
+            _.addClass(this.nError, 'f-flex');
+            this.nErrormsg.innerText = errorMsg;
+
+            return isValid;
         }
 
         //验证两次密码是否一致
         isValid = this.pwd.value === this.nConfirmpwd.value;
         if (!isValid) {
             errorMsg = '两次密码输入不一致';
+            //显示错误
+            _.addClass(this.nError, 'f-flex');
+            this.nErrormsg.innerText = errorMsg;
+
+            return isValid;
         }
+
         //验证条款是否为空
         isValid = this.nRead.checked;
         if (!isValid) {
             errorMsg = '没有勾选验证条款';
-        }
-        //显示错误
-        _.addClass(this.nError, 'f-flex');
-        this.nErrormsg.innerText = errorMsg;
+            //显示错误
+            _.addClass(this.nError, 'f-flex');
+            this.nErrormsg.innerText = errorMsg;
 
-        return isValid;
+            return isValid;
+        }
+        
     }
 
     //校验规则配置
@@ -454,6 +467,9 @@
             for (var j = 0; j < rules.length; j++) {
                 var key = rules[j];
                 switch (key) {
+                    case 'phone':
+                        flag=validator.isPhone(checkItem.value);
+                        break;
                     case 'nickname':
                         flag = validator.isNickName(checkItem.value);
                         break;
@@ -508,7 +524,7 @@
 
     //表单提交
     RegisterModal.prototype.submit = function (event) {
-        event.preventDefault();
+        event.preventDefault(event);
         this.check();
         if (this.check()) {
             var data = {

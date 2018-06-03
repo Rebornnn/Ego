@@ -45,14 +45,14 @@
             //按html结构组装标签元素
             var html=`
             <li class="tag" id="${tag}">
-                    <button class="close">X</button>
+                    <span class="close">X</span>
                     <span>${tag}</span>
             </li>
             `;
             tagEl=_.html2node(html);
             this.element.insertBefore(tagEl,this.addTag);
             //将标签存入数组
-            this.list.push(tagEl);
+            this.list.push(tag);
         };
         //tags也支持数组
         if(tags&&!Array.isArray(tags)){
@@ -67,10 +67,10 @@
             if(this.list[i]===tag){
                 //从数组中删除标签
                 this.list=this.list.filter(function(item,index,arr){
-                    return arr[index]!==item;
+                    return index!=i;
                 })
                 //删除标签元素
-                _.$('tag').parent.removeChild(_.$('tag'));
+                _.$(tag).parentElement.removeChild(_.$(tag));
 
                 break;
             }
@@ -83,8 +83,8 @@
         var clickHandler=function(e){
             var target=e.target;
             if(_.hasClass(target,'close')){
-                this.remove(e.innerText);
-            }else if(_.hasClass(target,'text')){
+                this.remove(target.parentElement.id);
+            }else if(_.hasClass(target,'txt')){
                 //给this.addTag添加focused类
                 _.addClass(this.addTag,'focused');
             }
@@ -97,7 +97,7 @@
             //清空输入框的值
             //删除this.addTag上的focused类
             e.target.value='';
-            _.removeClass(e.target,'focused');
+            _.removeClass(this.addTag,'focused');
         }.bind(this);
 
         //tag输入框回车事件
@@ -150,14 +150,188 @@
     App.Tag=Tag;
 }(window.App));
 
+/**
+ * 提醒框模板
+ */
+(function(App){
+    function warnModal(options){
+        App.Modal.call(this,options);
+        //缓存节点
+        this.nConfirm=_.$('confirm');
+
+        this.initEvent();
+        this.show();
+    }
+
+    warnModal.prototype=Object.create(App.Modal.prototype);
+
+    warnModal.prototype.initEvent=function(){
+        this.nConfirm.addEventListener('click',this.hide.bind(this));
+    };
+
+    App.warnModal=warnModal;
+}(window.App));
+
+/**
+ * 图片上传
+ */
+(function(App){
+    function UploadWorks(){
+        //缓存节点
+        this.fileInput=_.$('uUpload'); 
+        this.nButton=_.$('uploadButton');
+        this.nProgress=_.$('uProgress');
+        this.nProgressBar=_.$('progressBar');
+        this.nTotal=_.$('total');
+        this.nFinished=_.$('finished');
+        this.nUploading=_.$('uploading');
+
+        this.addEvent();
+    }
+
+    UploadWorks.prototype.addEvent=function(){
+        this.fileInput.addEventListener('change',this.changeHandler.bind(this));
+    }
+
+    UploadWorks.prototype.changeHandler=function(e){
+        var files=e.target.files;
+        var sizeExceeddFiles=[];
+        var sizeOkFiles=[];
+        var maxSize=1024*1024;
+
+        //遍历文件，按照图片大小归档
+        for(var i=0;i<files.length;i++){
+            if(files[i].size>maxSize){
+                sizeExceeddFiles.push(files[i]);
+            }else{
+                sizeOkFiles.push(files[i])
+            }
+        }
+
+        if(sizeExceeddFiles.length>0){
+            this.warn('图片大小不能超过1M!');
+        }
+
+        if(sizeOkFiles.length>10){
+            this.warn('一次最多只能上传10张图片');
+        }
+
+        //开始上传文件
+        this.uploadFiles(sizeOkFiles);
+    }
+
+    //提醒框
+    UploadWorks.prototype.warn=function(warnMsg){
+        var html=`
+        <div class="modal_warn">
+            <div class="modal_head">
+                <span class="u-tips">警告信息:</span>
+            </div>
+            <div class="u-content">
+                ${warnMsg}
+            </div>
+            <div>
+                <button class="u-btn u-btn-primary" id="confirm">确&nbsp;&nbsp;认</button>
+            </div>
+        </div>
+        `;
+
+        this.modal=new App.warnModal({
+            parent:_.$('g-main'),
+            content:html
+        });
+    }
+
+    UploadWorks.prototype.uploadFiles=function(files){
+        var success=this.upWorks;
+        //计算文件总长度
+        var totalSize=files.reduce(function(prev,cur,index,arr){
+            return prev+cur.size;
+        },0);
+
+        //初始化progessBar的值
+        var loadedSize=0;
+        var uploadingFileIndex=1;
+        this.nProgressBar.value=loadedSize;
+        this.nProgressBar.max=totalSize;
+        
+        //更改样式，让用户知道正在上传
+        //上传文件前禁用上传按钮
+        _.addClass(this.nButton,'disabled');
+        _.removeClass(this.nProgress,'f-dn');
+
+        //计算已经上传的资源总长度
+        var getLoadedSize=function(loaded){
+            return loadedSize+=loaded;
+        };
+
+        var upload=function(){
+            var file=files[uploadingFileIndex-1];
+            if(!file){
+                //上传完毕，恢复按钮及其他状态
+                _.removeClass(this.nButton,'disabled');
+                _.addClass(this.nProgress,'f-dn');
+                return;
+            }
+
+            var fd=new FormData();
+            fd.append('file',file,file.name);
+            var xhr=new XMLHttpRequest();
+            xhr.withCredentials=true;
+            xhr.upload.onprogress=function(e){
+                if(e.lengthComputable){
+                    //更新progressBar的value为getLoadedSize
+                    this.nProgressBar.value=getLoadedSize(e.loaded);
+                    //设置progressInfo
+                    this.nTotal.innerText=files.length;
+                    this.nFinished.innerText=uploadingFileIndex;
+                    this.nUploading.innerText=Math.ceil((loadedSize/totalSize)*100)>100?100:Math.ceil((loadedSize/totalSize)*100);
+                }
+            }.bind(this);
+            xhr.onreadystatechange=function(){
+                if(xhr.readyState===4){
+                    if((xhr.status>=200&&xhr.status<300)||xhr.status===304){
+                        success(xhr.responseText);
+                        uploadingFileIndex+=1;
+                        upload();
+                    }
+                }
+            };
+
+            xhr.open('POST','/api/works?upload');
+            xhr.send(fd);
+        }.bind(this);
+
+        upload();
+    }
+
+    UploadWorks.prototype.upWorks=function(data){
+        data=JSON.parse(data);
+        var html=`
+        <li class="u-picture" id="${data.result.id}">
+            <img src=${data.result.url}>
+            <div class="u-btn  u-btn-primary" id="cover">设为封面</div>
+        </li>
+        `;
+        var node=_.html2node(html);
+        _.$('up_Works').appendChild(node);
+    };
+
+    App.UploadWorks=UploadWorks;
+}(window.App));
+
 (function(App){
     var page={
         init:function(){
             App.nav.init();
-            new App.Tag({
+            this.initForm();
+        },
+        initForm:function(){
+            this.tag=new App.Tag({
                 parent:_.$('mTags'),
                 tags:['少男','少女']
             });
+            this.uploadWorks=new App.UploadWorks();
         }
     };
 
