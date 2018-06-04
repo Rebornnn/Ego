@@ -111,8 +111,8 @@
                 </div>
 
                 <!-- 作品说明 -->
-                <div class="m-formitem m-formitem-3">
-                    <label for="instruction" class="m-formitem-3_tt">作品说明</label>
+                <div class="m-formitem m-formitem-3 f-cb">
+                    <label for="instruction" class="m-formitem-3_tt instruction">作品说明</label>
                     <textarea class="instruction_area" name="instruction" id="instructionArea"></textarea>
                 </div>
 
@@ -131,7 +131,9 @@
                 </div>
 
                 <!-- 创建按钮 -->
-                <button class="u-btn u-btn-primary" type="submit">创&nbsp;建</button>
+                <div class="m-formitem m-formitem-3">
+                    <span class="u-btn u-btn-primary" type="click">创&nbsp;建</span>
+                </div>
             </fieldset>
             
             <!-- 侧栏 -->
@@ -144,16 +146,19 @@
                             <input type="radio" name="authorization" checked value=0>
                             <i class="u-icon u-icon-radio"></i>
                             <i class="u-icon u-icon-radiochecked"></i>
+                            所有人可见
                         </label>
                         <label>
                             <input type="radio" name="authorization" value=1>
                             <i class="u-icon u-icon-radio"></i>
                             <i class="u-icon u-icon-radiochecked"></i>
+                            关注者/粉丝可见
                         </label>
                         <label>
                             <input type="radio" name="authorization" value=2>
                             <i class="u-icon u-icon-radio"></i>
                             <i class="u-icon u-icon-radiochecked"></i>
+                            仅自己可见
                         </label>
                     </div>
                 </div>

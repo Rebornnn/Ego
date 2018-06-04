@@ -224,6 +224,7 @@ body {
     text-decoration: none;
     border-radius: 3px;
     border: 1px solid #5ed0ba;
+    cursor: pointer;
 }
 
 .u-btn-primary {

@@ -1,6 +1,6 @@
 .g-body{
     width: 1096px;
-    margin: 20px auto;
+    margin: 56px auto 0 auto;
 }
 
 /* 主栏 */
@@ -104,33 +104,68 @@
 /* 上传图片列表 */
 .g-main .m-list{
     width: 100%;
-    height: 418px;
+    min-height: 252px;
     background: #f7f8f8;
     border-bottom: 2px solid #f2f2f2;
     box-sizing: border-box;
+    padding: 36px 40px;
+}
+
+.m-list .up_works{
+    margin-right: -16px; 
+}
+
+.m-list .u-picture{
+    width: 100px;
+    height: 180px;
+    text-align: center;
+    margin:0 16px 14px 0;
+}
+
+.m-list .u-picture img{
+    width: 100px;
+    height: 140px;
+}
+
+.m-list .u-picture .u-btn{
+    width: 76px;
+    height: 26px;
+    line-height: 26px;
+    margin: 12px auto 0 auto;
 }
 
 /* 名称 说明 标签 */
 .g-main .m-formitem-3{
-    padding-left: 100px;
+    padding-left: 162px;
 }
 .g-main .m-formitem-3 label{
     display: inline-block;
     width: 60px;
     font-size: 12px;
-    line-height: 28px;
+    line-height: 38px;
 }
 
 /* 作品名称 */
 .m-formitem-3 .name_ipt{
-    width: 200px;
-    height: 28px;
+    width: 294px;
+    height: 38px;
+    text-indent: 10px;
     border: 1px solid #5ed0ba;
 }
 
 .m-formitem-3 .error{
     color: red;
     line-height: 28px;
+}
+
+/* 作品说明 */
+.m-formitem-3 .instruction{
+    float: left;
+}
+.m-formitem-3 .instruction_area{
+    width: 405px;
+    height: 105px;
+    border: 1px solid #5ed0ba;
 }
 
 /* 标签 */
@@ -191,7 +226,7 @@
 /* 推荐标签 */
 .g-main .m-recommendTags{
     padding: 0;
-    padding-left: 60px;
+    padding-left: 162px;
 }
 .m-recommendTags .recommend{
     color: #5ed0ba;
@@ -213,12 +248,112 @@
 }
 
 /* 创建按钮 */
-.g-main button[type=submit]{
-    display: block;
-    margin-left: 100px;
+.g-main span[type="click"]{
+    margin: 20px 0;
 }
 
 /* 边栏 */
 .g-side{
     float: right;
+    width: 314px;
+    margin-left: 12px;
+    background: #f7f8f8;
+    padding: 27px 18px;
+    box-sizing: border-box;
+}
+
+.g-side .m-formitem-4{
+    width: 100%;
+}
+
+.g-side .m-formitem-4 label{
+    display: block;
+}
+
+
+.m-formitem-4 .m-formitem-4_ct input[type="radio"]{
+    display: none;
+}
+
+.m-formitem-4 .m-formitem-4_ct .u-icon{
+    width: 16px;
+    height: 14px;
+    margin-right: 5px;
+}
+
+.m-formitem-4 .m-formitem-4_ct .u-icon-radio{
+    display: inline-block;
+    background: url(../../res/icon.png) no-repeat -336px -162px;
+}
+
+.m-formitem-4 .m-formitem-4_ct .u-icon-radiochecked{
+    background: url(../../res/icon.png) no-repeat -337px -144px;
+}
+
+.m-formitem-4 .m-formitem-4_ct .u-icon-radiochecked{
+    display: none;
+}
+
+.m-formitem-4 .m-formitem-4_ct input[type="radio"]:checked~.u-icon-radio{
+    display: none;
+}
+
+.m-formitem-4 .m-formitem-4_ct input[type="radio"]:checked~.u-icon-radiochecked{
+    display: inline-block;
+}
+
+/* 作品授权 */
+.g-side .m-formitem-5{
+    width: 100%;
+}
+.g-side .m-formitem-5 label{
+    display: block;
+}
+
+.m-formitem-5_ct .m-select{
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    height: 36px;
+    text-indent: 10px;
+}
+
+.m-formitem-5_ct .select_hd{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #5ed0ba;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 100%;
+}
+.m-formitem-5_ct .u-icon-dropdown{
+    width: 0;
+    border: 8px solid #fff;
+    border-top:8px solid #5ed0ba;
+    margin: 8px 6px 0 0;
+}
+
+.m-formitem-5_ct .select_opt{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    border: 1px solid #f4f4f4;
+    background: #fff;
+    overflow-y: auto;
+    z-index: 90;
+}
+
+
+.m-formitem-5_ct .select_opt li{
+    line-height: 30px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.m-formitem-5_ct .select_opt li:hover{
+    background: #eee;
 }

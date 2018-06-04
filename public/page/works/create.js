@@ -312,7 +312,7 @@
         var html=`
         <li class="u-picture f-ff" id="${data.result.id}">
             <img src=${data.result.url}>
-            <div class="u-btn  u-btn-primary" id="cover">设为封面</div>
+            <div class="u-btn  u-btn-link" id="cover">设为封面</div>
         </li>
         `;
         var node=_.html2node(html);
