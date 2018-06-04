@@ -210,10 +210,12 @@
 
         if(sizeExceeddFiles.length>0){
             this.warn('图片大小不能超过1M!');
+            return;
         }
 
         if(sizeOkFiles.length>10){
             this.warn('一次最多只能上传10张图片');
+            return;
         }
 
         //开始上传文件
@@ -237,7 +239,7 @@
         `;
 
         this.modal=new App.warnModal({
-            parent:_.$('g-main'),
+            parent:_.$('gMain'),
             content:html
         });
     }
@@ -308,7 +310,7 @@
     UploadWorks.prototype.upWorks=function(data){
         data=JSON.parse(data);
         var html=`
-        <li class="u-picture" id="${data.result.id}">
+        <li class="u-picture f-ff" id="${data.result.id}">
             <img src=${data.result.url}>
             <div class="u-btn  u-btn-primary" id="cover">设为封面</div>
         </li>
@@ -332,6 +334,18 @@
                 tags:['少男','少女']
             });
             this.uploadWorks=new App.UploadWorks();
+        },
+        initSelect:function(){
+            var formData=[
+                {name:'不限制作品用途',value:0},
+                {name:'不限制作品用途',value:1},
+                {name:'不限制作品用途',value:2},
+            ];
+
+            this.privilege=new App.Select({
+                parent:_.$('uPrivilege'),
+                data:formData
+            });
         }
     };
 

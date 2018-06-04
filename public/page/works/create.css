@@ -5,6 +5,7 @@
 
 /* 主栏 */
 .g-main{
+    float: left;
     width: 770px;
     border: 1px solid #f2f2f2;
     box-sizing: border-box;
@@ -109,17 +110,30 @@
     box-sizing: border-box;
 }
 
-/* 标签 */
+/* 名称 说明 标签 */
 .g-main .m-formitem-3{
-    padding-left: 60px;
+    padding-left: 100px;
 }
-.g-main .m-formitem-3 .tags{
+.g-main .m-formitem-3 label{
     display: inline-block;
     width: 60px;
     font-size: 12px;
     line-height: 28px;
 }
 
+/* 作品名称 */
+.m-formitem-3 .name_ipt{
+    width: 200px;
+    height: 28px;
+    border: 1px solid #5ed0ba;
+}
+
+.m-formitem-3 .error{
+    color: red;
+    line-height: 28px;
+}
+
+/* 标签 */
 .m-tag{
     display: inline-block;
 }
@@ -196,4 +210,15 @@
     cursor: pointer;
     padding: 0 12px;
     margin: 0 12px 0 0;
+}
+
+/* 创建按钮 */
+.g-main button[type=submit]{
+    display: block;
+    margin-left: 100px;
+}
+
+/* 边栏 */
+.g-side{
+    float: right;
 }

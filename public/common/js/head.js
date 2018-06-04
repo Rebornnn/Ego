@@ -307,13 +307,13 @@
                 <div class="formitem_ct">
                     <div class="sex_box">
                         <label>
-                            <input type="radio" name="sex" checkded value="1">
+                            <input type="radio" name="sex" checkded value=0>
                             <i class="u-icon u-icon-radio"></i>
                             <i class="u-icon u-icon-radiochecked"></i>
                             少男
                         </label>
                         <label>
-                            <input type="radio" name="sex" value="0">
+                            <input type="radio" name="sex" value=1>
                             <i class="u-icon u-icon-radio"></i>
                             <i class="u-icon u-icon-radiochecked"></i>
                             少女
