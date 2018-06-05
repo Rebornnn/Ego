@@ -187,14 +187,14 @@
         this.nTotal=_.$('total');
         this.nFinished=_.$('finished');
         this.nUploading=_.$('uploading');
-        this.nCover=_.$('cover');
+        this.nUpworks=_.$('up_Works');
 
         this.addEvent();
     }
 
     UploadWorks.prototype.addEvent=function(){
         this.fileInput.addEventListener('change',this.changeHandler.bind(this));
-        this.nCover.addEventListener('click',this.setCover.bind(this));
+        this.nUpworks.addEventListener('click',this.setCover.bind(this));
     }
 
     UploadWorks.prototype.changeHandler=function(e){
@@ -327,15 +327,19 @@
 
 
     UploadWorks.prototype.setCover=function(e){
-        this.coverId=e.target.dataset.id;
-        this.coverUrl=e.target.dataset.url;
+        if(e.target.id==='cover'){
+            this.coverId=e.target.dataset.id;
+            this.coverUrl=e.target.dataset.url;
+        }
     }
 
     UploadWorks.prototype.getValue=function(){
-        return {
-            pictures:this.pictures,
-            coverId:this.coverId||this.pictures[0].id,
-            coverUrl:this.coverUrl||this.pictures[0].url
+        if(this.pictures){
+            return {
+                pictures:this.pictures,
+                coverId:this.coverId||this.pictures[0].id,
+                coverUrl:this.coverUrl||this.pictures[0].url
+            };
         }
     }
 
@@ -347,7 +351,7 @@
         init:function(){
             App.nav.init();
             this.initForm();
-            initSelect();
+            this.initSelect();
         },
         initForm:function(){
             this.tag=new App.Tag({
@@ -367,8 +371,9 @@
 
             this.privilege=new App.Select({
                 parent:_.$('uPrivilege'),
-                data:formData
             });
+
+            this.privilege.render(formData);
         },
         getRadioValue:function(form,name){
             var radioFields = _.$(form).elements[name];
@@ -388,16 +393,20 @@
                 authorization:this.getRadioValue('formWork','authorization')
             };
 
-            _.extend(data,this.uploadWorks.getValue());
+            this.uploadWorks.getValue()&&_.extend(data,this.uploadWorks.getValue());
 
-            _.ajax({
-                url:'/api/works',
-                type:'POST',
-                data:data,
-                success:function(){
-                    window.location.path='/works';
-                }
-            });
+            if(!data.name){
+                _.removeClass(_.$('workError'),'f-dn');
+            }else{
+                _.ajax({
+                    url:'/api/works',
+                    type:'POST',
+                    data:data,
+                    success:function(){
+                        window.location.pathname='/works';
+                    }
+                });
+            }
         }
     };
 

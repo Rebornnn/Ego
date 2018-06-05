@@ -269,12 +269,17 @@
 
 .g-side .m-formitem-4{
     width: 100%;
+    padding-bottom: 30px;
 }
 
 .g-side .m-formitem-4 label{
     display: block;
 }
 
+.g-side .m-formitem-4_ct label{
+    margin:22px 0;
+    color: #7b7a7a;
+}
 
 .m-formitem-4 .m-formitem-4_ct input[type="radio"]{
     display: none;
@@ -313,6 +318,7 @@
 }
 .g-side .m-formitem-5 label{
     display: block;
+    margin-bottom: 15px;
 }
 
 .m-formitem-5_ct .m-select{
@@ -334,7 +340,7 @@
 }
 .m-formitem-5_ct .u-icon-dropdown{
     width: 0;
-    border: 8px solid #fff;
+    border: 8px solid #f7f8f8;
     border-top:8px solid #5ed0ba;
     margin: 8px 6px 0 0;
 }
@@ -362,3 +368,16 @@
 .m-formitem-5_ct .select_opt li:hover{
     background: #eee;
 }
+
+/* 通知框 */
+.modal_warn{
+    width: 300px;
+    text-align: center;
+}
+
+.modal_warn .u-content{
+    margin: 30px;
+    font-size: 16px;
+    font-weight: 300;
+}
+

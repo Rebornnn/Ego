@@ -243,6 +243,7 @@
         },
         //加载列表
         loadList:function(options){
+            _.$('mWorks').innerHTML='你还没有登录～';
             _.ajax({
                 url:'api/works',
                 data:options.query,
