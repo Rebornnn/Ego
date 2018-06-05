@@ -177,6 +177,8 @@
  */
 (function(App){
     function UploadWorks(){
+        
+
         //缓存节点
         this.fileInput=_.$('uUpload'); 
         this.nButton=_.$('uploadButton');
@@ -185,12 +187,14 @@
         this.nTotal=_.$('total');
         this.nFinished=_.$('finished');
         this.nUploading=_.$('uploading');
+        this.nCover=_.$('cover');
 
         this.addEvent();
     }
 
     UploadWorks.prototype.addEvent=function(){
         this.fileInput.addEventListener('change',this.changeHandler.bind(this));
+        this.nCover.addEventListener('click',this.setCover.bind(this));
     }
 
     UploadWorks.prototype.changeHandler=function(e){
@@ -218,6 +222,8 @@
             return;
         }
 
+        //缓存文件数组
+        this.pictures=sizeOkFiles;
         //开始上传文件
         this.uploadFiles(sizeOkFiles);
     }
@@ -310,14 +316,28 @@
     UploadWorks.prototype.upWorks=function(data){
         data=JSON.parse(data);
         var html=`
-        <li class="u-picture f-ff" id="${data.result.id}">
+        <li class="u-picture f-ff" id=${data.result.id}>
             <img src=${data.result.url}>
-            <div class="u-btn  u-btn-link" id="cover">设为封面</div>
+            <div class="u-btn  u-btn-link" id="cover" data-id=${data.result.id} data-url=${data.result.url}>设为封面</div>
         </li>
         `;
         var node=_.html2node(html);
         _.$('up_Works').appendChild(node);
     };
+
+
+    UploadWorks.prototype.setCover=function(e){
+        this.coverId=e.target.dataset.id;
+        this.coverUrl=e.target.dataset.url;
+    }
+
+    UploadWorks.prototype.getValue=function(){
+        return {
+            pictures:this.pictures,
+            coverId:this.coverId||this.pictures[0].id,
+            coverUrl:this.coverUrl||this.pictures[0].url
+        }
+    }
 
     App.UploadWorks=UploadWorks;
 }(window.App));
@@ -327,13 +347,16 @@
         init:function(){
             App.nav.init();
             this.initForm();
+            initSelect();
         },
         initForm:function(){
             this.tag=new App.Tag({
                 parent:_.$('mTags'),
-                tags:['少男','少女']
+                tags:['少男']
             });
             this.uploadWorks=new App.UploadWorks();
+            //绑定提交事件
+            _.$('create').addEventListener('click',this.submit.bind(this));
         },
         initSelect:function(){
             var formData=[
@@ -345,6 +368,35 @@
             this.privilege=new App.Select({
                 parent:_.$('uPrivilege'),
                 data:formData
+            });
+        },
+        getRadioValue:function(form,name){
+            var radioFields = _.$(form).elements[name];
+            for (var i = 0; i < radioFields.length; i++) {
+                if (radioFields[i].checked) {
+                    return radioFields[i].value;
+                }
+            }
+        },
+        submit:function(){
+            var data={
+                name:_.$('workName').value,
+                tag:this.tag.getValue().join(','),
+                category:this.getRadioValue('formWork','category'),
+                description:_.$('instructionArea').value,
+                privilege:this.privilege.getValue(),
+                authorization:this.getRadioValue('formWork','authorization')
+            };
+
+            _.extend(data,this.uploadWorks.getValue());
+
+            _.ajax({
+                url:'/api/works',
+                type:'POST',
+                data:data,
+                success:function(){
+                    window.location.path='/works';
+                }
             });
         }
     };

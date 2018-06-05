@@ -128,10 +128,15 @@
 }
 
 .m-list .u-picture .u-btn{
+    display: none;
     width: 76px;
     height: 26px;
     line-height: 26px;
     margin: 12px auto 0 auto;
+}
+
+.m-list .u-picture:hover .u-btn{
+    display: inline-block;
 }
 
 /* 名称 说明 标签 */
