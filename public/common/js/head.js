@@ -120,8 +120,7 @@
             //注册ok事件
             this.modal.on('ok', function (event) {
                 this.modal.hide();
-                App.nav.initUserInfo(event.data);
-                App.nav.loginCallback && App.nav.loginCallback(event.data);
+                this.nLogin.click();
             }.bind(this));
 
         }.bind(this));
@@ -340,7 +339,7 @@
                 <label for="" class="formitem_tt">验证码</label>
                 <div class="formitem_ct formitem_ct-captcha f-cb">
                     <input type="text" id="captcha" class="u-ipt">
-                    <img id="captchaimg" src="/captcha" alt="验证码">
+                    <img id="captchaimg" src="" alt="验证码">
                 </div>
             </div>
             <div class="u-formitem u-formitem-2 u-remember">
@@ -378,6 +377,7 @@
         this.initSelect();
         this.initRegisterEvent();
         this.show();
+        this.resetCaptcha();
     }
 
     //扩展原型
@@ -558,8 +558,9 @@
                         });
                         this.offType('ok');
                     } else {
-                        this.nError.innerText = data.msg;
-                        this.showError(this.nForm, true);
+                        _.addClass(this.nError, 'f-flex');
+                        this.nErrormsg.innerText = data.msg;
+                        this.showError(this.nForm, false);
                     }
                 }.bind(this),
                 error: function (data) {
