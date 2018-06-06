@@ -6,33 +6,35 @@
 var path = require('path');
 module.exports = {
     /* 根目录 */
-    webRoot: 'F:/Ego/public/',
+    webRoot: 'F:/新建文件夹/Ego/public/',
     /* 视图目录 */
-    viewRoot: 'F:/Ego/public/html/',
+    viewRoot: 'F:/新建文件夹/Ego/public/html/',
     /* 路由 */
     routes: {
-        //"ALL /api/*": "代理所有接口, 这里输入代理服务器地址",
+        "ALL /api/*": 'http://59.111.103.100/',
+        "GET /captcha":'http://59.111.103.100/',
+        "GET /uploads/:filename": 'http://59.111.103.100/',
         "GET /works/detail/:id": { name: '作品详情页面', index: 0, list: [{"id":13096,"path":"works\\detail"}] },
         "GET /works/create": { name: '作品创建页面', index: 0, list: [{"id":13081,"path":"works\\create"}] },
         "GET /works": { name: '作品列表页面', index: 0, list: [{"id":13079,"path":"works\\list"}] },
         "GET /uploads/:filename": { path: 'get/uploads/_/filename/data', id: 36427, group: '图画',isFile: true },
         "GET /search": { name: '搜索结果页面', index: 0, list: [{"id":13080,"path":"search"}] },
         "GET /index": { name: '首页', index: 0, list: [{"id":13078,"path":"index"}] },
-        "GET /captcha": { path: 'get/captcha/data', id: 29450, group: '验证码',isFile: true },
-        "POST /api/works?upload": { path: 'post/api/works/_/upload/data', id: 28719, group: '作品' },
-        "PATCH /api/works/:id": { path: 'patch/api/works/_/id/data', id: 28580, group: '作品' },
-        "DELETE /api/works/:id": { path: 'delete/api/works/_/id/data', id: 28581, group: '作品' },
-        "GET /api/works/:id": { path: 'get/api/works/_/id/data', id: 28577, group: '作品' },
-        "POST /api/works": { path: 'post/api/works/data', id: 28579, group: '作品' },
-        "GET /api/works": { path: 'get/api/works/data', id: 28578, group: '作品' },
-        "POST /api/users?unfollow": { path: 'post/api/users/_/unfollow/data', id: 28971, group: '用户' },
-        "GET /api/users?getstarlist": { path: 'get/api/users/_/getstarlist/data', id: 30936, group: '用户' },
-        "GET /api/users?getloginuser": { path: 'get/api/users/_/getloginuser/data', id: 29446, group: '用户' },
-        "POST /api/users?follow": { path: 'post/api/users/_/follow/data', id: 28970, group: '用户' },
-        "GET /api/tags?recommend": { path: 'get/api/tags/_/recommend/data', id: 35276, group: '标签' },
-        "POST /api/register": { path: 'post/api/register/data', id: 28507, group: '用户' },
-        "POST /api/logout": { path: 'post/api/logout/data', id: 28525, group: '用户' },
-        "POST /api/login": { path: 'post/api/login/data', id: 28516, group: '用户' },
+        //"GET /captcha": { path: 'get/captcha/data', id: 29450, group: '验证码',isFile: true },
+        // "POST /api/works?upload": { path: 'post/api/works/_/upload/data', id: 28719, group: '作品' },
+        // "PATCH /api/works/:id": { path: 'patch/api/works/_/id/data', id: 28580, group: '作品' },
+        // "DELETE /api/works/:id": { path: 'delete/api/works/_/id/data', id: 28581, group: '作品' },
+        // "GET /api/works/:id": { path: 'get/api/works/_/id/data', id: 28577, group: '作品' },
+        // "POST /api/works": { path: 'post/api/works/data', id: 28579, group: '作品' },
+        // "GET /api/works": { path: 'get/api/works/data', id: 28578, group: '作品' },
+        // "POST /api/users?unfollow": { path: 'post/api/users/_/unfollow/data', id: 28971, group: '用户' },
+        // "GET /api/users?getstarlist": { path: 'get/api/users/_/getstarlist/data', id: 30936, group: '用户' },
+        // "GET /api/users?getloginuser": { path: 'get/api/users/_/getloginuser/data', id: 29446, group: '用户' },
+        // "POST /api/users?follow": { path: 'post/api/users/_/follow/data', id: 28970, group: '用户' },
+        // "GET /api/tags?recommend": { path: 'get/api/tags/_/recommend/data', id: 35276, group: '标签' },
+        // "POST /api/register": { path: 'post/api/register/data', id: 28507, group: '用户' },
+        // "POST /api/logout": { path: 'post/api/logout/data', id: 28525, group: '用户' },
+        // "POST /api/login": { path: 'post/api/login/data', id: 28516, group: '用户' }
     },
     /* 注入给页面的模型数据的服务器配置 */
     // modelServer: {
@@ -56,7 +58,7 @@ module.exports = {
     /* 自动打开的页面地址 */
     openUrl: '',
     /* 端口 */
-    port: 8004,
+    port: 8002,
     /* 是否使用 https 协议，设为true的时候表示启用 */
     https: false,
     /* 是否使用 nei 提供的在线 mock 数据 */
@@ -76,9 +78,9 @@ module.exports = {
     /* 项目的 key */
     projectKey: 'e389c52125abdd607c4455e4d448e5d3',
     /* 同步模块mock数据路径 */
-    mockTpl: 'F:/Ego/mock.data/template/',
+    mockTpl: 'F:/新建文件夹/Ego/mock.data/template/',
     /* 异步接口mock数据路径 */
-    mockApi: 'F:/Ego/mock.data/interface/',
+    mockApi: 'F:/新建文件夹/Ego/mock.data/interface/',
     /* 是否修改代理的host */
     changeOrigin: true,
     /* 模板后缀 */

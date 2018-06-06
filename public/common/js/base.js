@@ -539,7 +539,11 @@
         var timeout_bool = false, //是否请求超时
             timeout_flag = null, //超时标识
             xhr = null; //xhr对象
-        setData();
+        //暂停不使用序列化
+        //setData();
+        if(type==='POST'||type==='PATCH'){
+            data = options.data ? JSON.stringify(options.data) : null;
+        }
         before();
         if (dataType === "jsonp") {
             createJsonp();

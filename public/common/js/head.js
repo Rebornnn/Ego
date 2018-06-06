@@ -235,7 +235,8 @@
 
             _.ajax({
                 url: '/api/login',
-                type: 'post',
+                type: 'POST',
+                contentType:'application/json',
                 data: data,
                 success: function (data) {
                     data = JSON.parse(data);
@@ -261,7 +262,9 @@
                         this.showError(this.nForm, false);
                     }
                 }.bind(this),
-                error: function () {}
+                error: function (data) {
+                    console.log(data);
+                }
             });
         }
     }
@@ -453,7 +456,7 @@
 
             return isValid;
         }
-        
+         return isValid;
     }
 
     //校验规则配置
@@ -525,7 +528,7 @@
     //表单提交
     RegisterModal.prototype.submit = function (event) {
         event.preventDefault(event);
-        this.check();
+        console.log(this.check());
         if (this.check()) {
             var data = {
                 username: this.nPhone.value.trim(),
@@ -543,7 +546,8 @@
 
             _.ajax({
                 url: '/api/register',
-                type: 'post',
+                type: 'POST',
+                contentType:'application/json',
                 data: data,
                 success: function (data) {
                     data = JSON.parse(data);
@@ -558,7 +562,9 @@
                         this.showError(this.nForm, true);
                     }
                 }.bind(this),
-                fail: function () {}
+                error: function (data) {
+                    console.log(data);
+                }
             });
 
         }
