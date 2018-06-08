@@ -226,9 +226,10 @@
 (function (_) {
     /**
      * 
-     * @param {String} birthday 格式为“1991-10-10” 
+     * @param {String} birthday 格式为“1991/10/10或1991-10-10” 
      */
     function getAge(birthday) {
+        birthday=birthday.replace(/-/g,'/'); //safari不识别-
         var today = new Date();
         var birthDate = new Date(birthday);
         var age = today.getFullYear() - birthDate.getFullYear();
@@ -555,7 +556,14 @@
     _.ajax = ajax;
 }(window._));
 
-
+/**
+ * 更改url，调用mock数据
+ */
+(function(_){
+    function mockUrl(url,type) {
+        return 'Ego/mock.data/interface'+type.toLowerrCase()+url.replace(/\/?/,'query')+ +new Date();
+    }
+}(window._));
 
 /**
  * 通用modal

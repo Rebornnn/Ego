@@ -6,9 +6,9 @@
     <meta name="description" content="ego"/>
     <meta name="keywords" content="ego"/>
     <title>ego</title>
-    <link href="../common/base.css" rel="stylesheet"/>
-    <link href="../page/index.css" rel="stylesheet"/>
-    <link href="../common/head.css" rel="stylesheet"/>
+    <link href="public/common/base.css" rel="stylesheet"/>
+    <link href="public/page/index.css" rel="stylesheet"/>
+    <link href="public/common/head.css" rel="stylesheet"/>
 </head>
 <body>
     <!--顶栏-->
@@ -21,7 +21,7 @@
             <div class="m-tabs" id="hdtabs">
                 <ul class="f-cb">
                     <li class="z-active"><a href="/index">首页</a></li>
-                    <li><a  href="/works">作品</a></li>
+                    <li><a  href="/works/list.html">作品</a></li>
                     <li><a href="">圈子</a></li>
                     <li><a href="">奇思妙想</a></li>
                 </ul>
@@ -30,7 +30,7 @@
             </div>
 
             <!-- 搜索框 -->
-            <form action="/search" id="search" method="GET">
+            <form action="Ego/html/search" id="search" method="GET">
                 <div class="u-search">
                     <input type="text" id="keyword" name="keyword" placeholder="输入搜索内容">
                     <button class="icon-btn" type="submit"></button>
@@ -46,7 +46,7 @@
             <!-- 用户信息 -->
             <div class="m-user f-dn" id="userDropdown">
                 <div class="user_info">
-                    <img class="user_avatar" src="../res/images/avater.png" alt="头像">
+                    <img class="user_avatar" src="public/res/images/avater.png" alt="头像">
                     <span class="user_name" id="name">born</span>
                     <i class="sex" id="sexIcon"></i>
                     <i class="down"></i>
@@ -76,10 +76,10 @@
                     <i class="u-icon u-icon-diamond"></i><span class="sction_name">/ 精 选 推 荐 /</span><span class="section_more"></span>
                 </h4>
                 <ul class="m-list m-list-4 f-cb">
-                    <li><img src="../res/images/work1.jpg" alt="作品1"></li>
-                    <li><img src="../res/images/work2.jpg" alt="作品2"></li>
-                    <li><img src="../res/images/work3.jpg" alt="作品3"></li>
-                    <li><img src="../res/images/work4.jpg" alt="作品4"></li>
+                    <li><img src="public/res/images/work1.jpg" alt="作品1"></li>
+                    <li><img src="public/res/images/work2.jpg" alt="作品2"></li>
+                    <li><img src="public/res/images/work3.jpg" alt="作品3"></li>
+                    <li><img src="public/res/images/work4.jpg" alt="作品4"></li>
                 </ul>
             </div>
             <!-- 明日之星 -->
@@ -97,16 +97,16 @@
                     <i class="u-icon u-icon-work"></i><span class="sction_name">/ 最 新 作 品 /</span><span class="section_more"></span>
                 </h4>
                 <ul class="section_cnt m-list m-list-1 f-cb">
-                    <li><img src="../res/images/work5.jpg" alt="作品1"><div>我的作品名字</div></li>
-                    <li><img src="../res/images/work5.jpg" alt="作品2"><div>我的作品名字</div></li>
-                    <li><img src="../res/images/work6.jpg" alt="作品3"><div>我的作品名字</div></li>
-                    <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                    <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                    <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                    <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                    <li><img src="../res/images/work6.jpg" alt="作品4"><div>我的作品名字</div></li>
-                    <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                    <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                    <li><img src="public/res/images/work5.jpg" alt="作品1"><div>我的作品名字</div></li>
+                    <li><img src="public/res/images/work5.jpg" alt="作品2"><div>我的作品名字</div></li>
+                    <li><img src="public/res/images/work6.jpg" alt="作品3"><div>我的作品名字</div></li>
+                    <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                    <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                    <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                    <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                    <li><img src="public/res/images/work6.jpg" alt="作品4"><div>我的作品名字</div></li>
+                    <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                    <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
                 </ul>
             </div>
             <!-- 活动进行时 -->
@@ -116,14 +116,14 @@
                 </h4>
                 <ul class="section_cnt m-list m-list-5 f-cb">
                     <li class="f-cb">
-                        <img src="../res/images/activity1.png">
+                        <img src="public/res/images/activity1.png">
                         <div>
                             <div class="u-btn u-btn-primary">快来PK</div>
                             <div class="u-btn u-btn-primary">邀请小伙伴</div>
                         </div>
                     </li>
                     <li class="f-cb">
-                        <img src="../res/images/activity2.png">
+                        <img src="public/res/images/activity2.png">
                         <div>
                             <div class="u-btn u-btn-primary">快来PK</div>
                             <div class="u-btn u-btn-primary">邀请小伙伴</div>
@@ -137,16 +137,16 @@
                         <i class="u-icon u-icon-original"></i><span class="sction_name">/ 我 们 都 爱 原 创 /</span><span class="section_more"></span>
                 </h4>
                 <div class="section_cnt-1 m-list">
-                    <div class="big_picture"><img src="../res/images/work7.jpg" alt="大图"><div>我的作品名字</div></div>
+                    <div class="big_picture"><img src="public/res/images/work7.jpg" alt="大图"><div>我的作品名字</div></div>
                     <ul class="m-list m-list-1 f-cb">
-                        <li><img src="../res/images/work5.jpg" alt="作品1"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work6.jpg" alt="作品3"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work6.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品1"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work6.jpg" alt="作品3"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work6.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
                     </ul>
                 </div>
             </div>
@@ -156,16 +156,16 @@
                         <i class="u-icon u-icon-fans"></i><span class="sction_name">/ 我 们 都 是 同 人 粉 /</span><span class="section_more"></span>
                 </h4>
                 <div class="section_cnt-1 m-list">
-                    <div class="big_picture"><img src="../res/images/work7.jpg" alt="大图"><div>我的作品名字</div></div>
+                    <div class="big_picture"><img src="public/res/images/work7.jpg" alt="大图"><div>我的作品名字</div></div>
                     <ul class="m-list m-list-1 f-cb">
-                        <li><img src="../res/images/work5.jpg" alt="作品1"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work6.jpg" alt="作品3"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work6.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品1"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work6.jpg" alt="作品3"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work6.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
                     </ul>
                 </div>
             </div>
@@ -175,16 +175,16 @@
                         <i class="u-icon u-icon-imitate"></i><span class="sction_name">/ 看 谁 临 摹 的 好 /</span><span class="section_more"></span>
                 </h4>
                 <div class="section_cnt-1 m-list">
-                    <div class="big_picture"><img src="../res/images/work7.jpg" alt="大图"><div>我的作品名字</div></div>
+                    <div class="big_picture"><img src="public/res/images/work7.jpg" alt="大图"><div>我的作品名字</div></div>
                     <ul class="m-list m-list-1 f-cb">
-                        <li><img src="../res/images/work5.jpg" alt="作品1"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work6.jpg" alt="作品3"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work6.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
-                        <li><img src="../res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品1"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work6.jpg" alt="作品3"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work6.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
+                        <li><img src="public/res/images/work5.jpg" alt="作品4"><div>我的作品名字</div></li>
                     </ul>
                 </div>
             </div>
@@ -195,7 +195,7 @@
 
         <!--边栏-->
         <div class="g-side" id="gSide">
-            <div class="m-mywork"><img src="../res/images/myWork.png" alt="我的作品"></div>
+            <div class="m-mywork"><img src="public/res/images/myWork.png" alt="我的作品"></div>
             <!-- 圈子 -->
         </div>
     </div>
@@ -206,12 +206,12 @@
         <div class="m-side f-fr">/ &nbsp;&nbsp;&nbsp;&nbsp;关 &nbsp;&nbsp;&nbsp;&nbsp;于 &nbsp;&nbsp;&nbsp;&nbsp;我 &nbsp;&nbsp;&nbsp;&nbsp;们 &nbsp;&nbsp;&nbsp;&nbsp;/</div>
     </div>
 
-<script src="../common/js/base.js"></script>
-<script src="../common/js/head.js"></script>
-<script src="../page/index.js"></script>
-<script src="../lib/handlebars-v4.0.11.js"></script>
-<script src="../common/js/template.js"></script>
-<script src="../lib/address_codes.js"></script>
-<script src="../lib/md5.js"></script>
+<script src="public/common/js/base.js"></script>
+<script src="public/common/js/head.js"></script>
+<script src="public/page/index.js"></script>
+<script src="public/lib/handlebars-v4.0.11.js"></script>
+<script src="public/common/js/template.js"></script>
+<script src="public/lib/address_codes.js"></script>
+<script src="public/lib/md5.js"></script>
 </body>
 </html>

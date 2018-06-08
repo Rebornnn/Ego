@@ -191,7 +191,7 @@
     //点击取消关注操作
     StarList.prototype.unfollow=function(followInfo,replaceNode){
         _.ajax({
-            url:'api/users?unfollow',
+            url:'/api/users?unfollow',
             type:'post',
             data:{id:followInfo.id},
             contentType:'application/json',
@@ -226,7 +226,7 @@
                 container:_.$('slider'),
                 initIndex:0,
                 imgLength:4,
-                imgSrc:['../res/banner0.jpg','../res/banner1.jpg','../res/banner2.jpg','../res/banner3.jpg'],
+                imgSrc:['public/res/banner0.jpg','public/res/banner1.jpg','public/res/banner2.jpg','public/res/banner3.jpg'],
                 interval:2000
             });
             this.compileTemplateAside();
@@ -246,7 +246,7 @@
         },
         initStarList:function(){
             _.ajax({
-                url:'api/users?getstarlist',
+                url:'/api/users?getstarlist',
                 success:function(data){
                     data=JSON.parse(data);
                     if(data.code===200){
@@ -268,13 +268,13 @@
         compileTemplateAside: function(){
 			var html = '';
 
-            html += `<div class="m-mywork"><img src="../res/images/myWork.png" alt="我的作品"></div>`;
+            html += `<div class="m-mywork"><img src="public/res/images/myWork.png" alt="我的作品"></div>`;
 			// 圈子
 			html += App.template.aside_circle({
 				list: [
-					{img_url: '../res/images/community1.jpg', circle_name: '门口小贩',circle_members:5221},
-					{img_url: '../res/images/community2.jpg', circle_name: '原画集中营',circle_members:5221},
-					{img_url: '../res/images/community3.jpg', circle_name: '—— Horizon ——',circle_members:5221}
+					{img_url: 'public/res/images/community1.jpg', circle_name: '门口小贩',circle_members:5221},
+					{img_url: 'public/res/images/community2.jpg', circle_name: '原画集中营',circle_members:5221},
+					{img_url: 'public/res/images/community3.jpg', circle_name: '—— Horizon ——',circle_members:5221}
 				]
 			});
 
@@ -292,22 +292,22 @@
 			// 排行
 			html += App.template.aside_ranking({
 				list: [
-					{img_url: '../res/images/work5.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
-					{img_url: '../res/images/work6.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
-					{img_url: '../res/images/work8.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
-					{img_url: '../res/images/work9.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
-					{img_url: '../res/images/work10.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421}
+					{img_url: 'public/res/images/work5.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
+					{img_url: 'public/res/images/work6.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
+					{img_url: 'public/res/images/work8.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
+					{img_url: 'public/res/images/work9.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421},
+					{img_url: 'public/res/images/work10.jpg',work_name: '我是作品名称',author_name: '用户名',visit_num: 2348,collection_num: 421}
 				]
 			});
 
 			// 达人排行
 			html += App.template.aside_authorranking({
 				list: [
-					{img_url: '../res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
-					{img_url: '../res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
-					{img_url: '../res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
-					{img_url: '../res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
-					{img_url: '../res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421}
+					{img_url: 'public/res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
+					{img_url: 'public/res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
+					{img_url: 'public/res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
+					{img_url: 'public/res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421},
+					{img_url: 'public/res/avatar1.png',author_name: 'Grinch',works_num: 2348,fans_num: 421}
 				]
 			});
 
