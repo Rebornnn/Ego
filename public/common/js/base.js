@@ -561,9 +561,25 @@
  */
 (function(_){
     function mockUrl(url,type) {
-        return 'Ego/mock.data/interface'+type.toLowerrCase()+url.replace(/\/?/,'query')+ +new Date();
+        return 'Ego/mock.data/interface'+'/'+type.toLowerCase()+url.replace(/\?/,'/query/')+'/data.json?t=' +new Date();
     }
+
+    _.mockUrl=mockUrl;
 }(window._));
+
+/**
+ * 将请求类型转换get
+ * github上的mock，只能使用get方法
+ */
+(function(_){
+    function switchType(type){
+        return 'GET';
+    }
+
+    _.switchType=switchType;
+}(window._));
+
+
 
 /**
  * 通用modal

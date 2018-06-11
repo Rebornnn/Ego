@@ -172,8 +172,8 @@
     //点击关注操作
     StarList.prototype.follow=function(followInfo,replaceNode){
         _.ajax({
-            url:'/api/users?follow',
-            type:'post',
+            url:_.mockUrl('/api/users?follow','post'),
+            type:_.switchType('post'),
             data:{id:followInfo.id},
             contentType:'application/json',
             success:function(data){
@@ -191,8 +191,8 @@
     //点击取消关注操作
     StarList.prototype.unfollow=function(followInfo,replaceNode){
         _.ajax({
-            url:'/api/users?unfollow',
-            type:'post',
+            url:_.mockUrl('/api/users?unfollow','post'),
+            type:_.switchType('post'),
             data:{id:followInfo.id},
             contentType:'application/json',
             success:function(data){
@@ -246,7 +246,7 @@
         },
         initStarList:function(){
             _.ajax({
-                url:'/api/users?getstarlist',
+                url:_.mockUrl('/api/users?getstarlist','get'),
                 success:function(data){
                     data=JSON.parse(data);
                     if(data.code===200){

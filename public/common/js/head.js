@@ -233,8 +233,8 @@
             };
 
             _.ajax({
-                url: '/api/login',
-                type: 'POST',
+                url: _.mockUrl('/api/login','post'),
+                type: _.switchType('post'),
                 contentType:'application/json',
                 data: data,
                 success: function (data) {
@@ -545,8 +545,8 @@
             data.district = this.location[2];
 
             _.ajax({
-                url: '/api/register',
-                type: 'POST',
+                url: _.mockUrl('/api/register','POST'),
+                type: _.switchType('POST'),
                 contentType:'application/json',
                 data: data,
                 success: function (data) {
@@ -599,7 +599,7 @@
         //初始化登录状态
         initLoginStatus: function () {
             _.ajax({
-                url: '/api/users?getloginuser',
+                url: _.mockUrl('/api/users?getloginuser','GET'),
                 success: function (data) {
                     data = JSON.parse(data);
                     if (data.code === 200) {
@@ -630,8 +630,8 @@
 
             this.nLogout.addEventListener('click', function () {
                 _.ajax({
-                    url: '/api/logout',
-                    type: 'post',
+                    url: _.mockUrl('/api/logout','POST'),
+                    type: _.switchType('POST'),
                     success: function (data) {
                         data = JSON.parse(data);
                         if (data.code === 200) {
