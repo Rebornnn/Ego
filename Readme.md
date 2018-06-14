@@ -4,7 +4,7 @@
     
 本仓库有两个分支：
 - master分支，提供nei构建工具以及后端接口，可在本地搭建本地服务器运行项目。
-- online分支，没有nei构建工具和后端接口，只用来线上展示，用mock数据来模拟ajax请求。
+- gb-pages分支，没有nei构建工具和后端接口，只用来线上展示，用mock数据来模拟ajax请求。
 
 ### Get Start
 1. git clone 本仓库
