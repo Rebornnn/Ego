@@ -245,7 +245,7 @@
         loadList:function(options){
             _.$('mWorks').innerHTML='你还没有登录～';
             _.ajax({
-                url:'api/works',
+                url:_.mockUrl('/api/works','get'),
                 data:options.query,
                 success:function(data){
                     data=JSON.parse(data);
@@ -326,8 +326,8 @@
             this.modal.on('ok',function(){
                 this.modal.hide();
                 _.ajax({
-                    url:'api/works/'+works.id,
-                    type:'delete',
+                    url:_.mockUrl('/api/works?'+'id','delete'),
+                    type:_.switchType('delete'),
                     success:function(data){
                         this.initList();
                     }.bind(this)
@@ -367,8 +367,8 @@
                 if(newName!==works.name){
                     this.modal.hide();
                     _.ajax({
-                        url:'/api/works/'+works.id,
-                        type:'patch',
+                        url:_.mockUrl('/api/works?'+'id','patch'),
+                        type:_.switchType('patch'),
                         data:{name:newName},
                         // contentType:'application/x-www-form-urlencoded;charset=UTF-8',
                         success:function(data){

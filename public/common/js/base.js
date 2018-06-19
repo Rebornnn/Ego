@@ -561,7 +561,7 @@
  */
 (function(_){
     function mockUrl(url,type) {
-        return 'Ego/mock.data/interface'+'/'+type.toLowerCase()+url.replace(/\?/,'/query/')+'/data.json?t=' +new Date();
+        return '/Ego/mock.data/interface'+'/'+type.toLowerCase()+url.replace(/\?/,'/query/')+'/data.json?t=' +new Date();
     }
 
     _.mockUrl=mockUrl;

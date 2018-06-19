@@ -122,7 +122,7 @@
     Tag.prototype.initRecommend=function(){
         _.ajax({
             type:'get',
-            url:'/api/tags?recommend',
+            url:_.mockUrl('/api/tags?recommend','get'),
             success:function(data){
                 data=JSON.parse(data);
                 var result=data.result.split(',');
@@ -399,11 +399,11 @@
                 _.removeClass(_.$('workError'),'f-dn');
             }else{
                 _.ajax({
-                    url:'/api/works',
-                    type:'POST',
+                    url:_.mockUrl('/api/works','post'),
+                    type:_.switchType('POST'),
                     data:data,
                     success:function(){
-                        window.location.pathname='/works';
+                        window.location.pathname='/Ego/html/works/list.html';
                     }
                 });
             }
