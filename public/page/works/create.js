@@ -252,7 +252,7 @@
     }
 
     UploadWorks.prototype.uploadFiles=function(files){
-        var success=this.upWorks;
+        var success=this.upWorks.bind(this);
         //计算文件总长度
         var totalSize=files.reduce(function(prev,cur,index,arr){
             return prev+cur.size;
@@ -335,15 +335,15 @@
         }
     }
 
-    UploadWorks.prototype.getValue=function(){
-        if(this.pictures){
-            return {
-                pictures:this.pictures,
-                coverId:this.coverId||_.$('cover').dataset.id,
-                coverUrl:this.coverUrl||_.$('cover').dataset.url
-            };
-        }
-    }
+    // UploadWorks.prototype.getValue=function(){
+    //     if(this.pictures){
+    //         return {
+    //             pictures:this.pictures,
+    //             coverId:this.coverId||_.$('cover').dataset.id,
+    //             coverUrl:this.coverUrl||_.$('cover').dataset.url
+    //         };
+    //     }
+    // }
 
     App.UploadWorks=UploadWorks;
 }(window.App));
@@ -407,6 +407,7 @@
                     url:'/api/works',
                     type:'POST',
                     data:data,
+                    contentType:'application/json',
                     success:function(){
                         window.location.pathname='/works';
                     }
