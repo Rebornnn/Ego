@@ -188,9 +188,9 @@
                 callback:function(currentPage){
                     this.loadList({
                         query:{
-                            limit:10,
+                            total:0,
                             offset:(currentPage-1)*10,
-                            total:0
+                            limit:10
                         },
                         callback:function(data){
                             this.renderList(data.result.data);
@@ -229,7 +229,11 @@
         //初始化列表
         initList:function(){
             this.loadList({
-                query:{},
+                query:{
+                    total:0,
+                    offset:0,
+                    limit:10,
+                },
                 callback:function(data){
                     _.addClass(_.$('g-bd'),'list-loaded');
                     if(!data.result.data.length){
@@ -245,7 +249,7 @@
         loadList:function(options){
             _.$('mWorks').innerHTML='你还没有登录～';
             _.ajax({
-                url:'api/works',
+                url:'api/works?',
                 data:options.query,
                 success:function(data){
                     data=JSON.parse(data);

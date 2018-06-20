@@ -223,7 +223,8 @@
         }
 
         //缓存文件数组
-        this.pictures=sizeOkFiles;
+        //this.pictures=sizeOkFiles;
+        this.pictures=[];
         //开始上传文件
         this.uploadFiles(sizeOkFiles);
     }
@@ -316,13 +317,14 @@
     UploadWorks.prototype.upWorks=function(data){
         data=JSON.parse(data);
         var html=`
-        <li class="u-picture f-ff" id=${data.result.id}>
+        <li class="u-picture f-fl" id=${data.result.id}>
             <img src=${data.result.url}>
             <div class="u-btn  u-btn-link" id="cover" data-id=${data.result.id} data-url=${data.result.url}>设为封面</div>
         </li>
         `;
         var node=_.html2node(html);
         _.$('up_Works').appendChild(node);
+        this.pictures.push(data.result);
     };
 
 
@@ -337,8 +339,8 @@
         if(this.pictures){
             return {
                 pictures:this.pictures,
-                coverId:this.coverId||this.pictures[0].id,
-                coverUrl:this.coverUrl||this.pictures[0].url
+                coverId:this.coverId||_.$('cover').dataset.id,
+                coverUrl:this.coverUrl||_.$('cover').dataset.url
             };
         }
     }
@@ -379,7 +381,7 @@
             var radioFields = _.$(form).elements[name];
             for (var i = 0; i < radioFields.length; i++) {
                 if (radioFields[i].checked) {
-                    return radioFields[i].value;
+                    return parseInt(radioFields[i].value,10);
                 }
             }
         },
@@ -390,10 +392,13 @@
                 category:this.getRadioValue('formWork','category'),
                 description:_.$('instructionArea').value,
                 privilege:this.privilege.getValue(),
-                authorization:this.getRadioValue('formWork','authorization')
+                authorization:this.getRadioValue('formWork','authorization'),
+                pictures:this.uploadWorks.pictures,
+                coverId:parseInt(this.uploadWorks.coverId||_.$('cover').dataset.id,10),
+                coverUrl:this.uploadWorks.coverUrl||_.$('cover').dataset.url
             };
-
-            this.uploadWorks.getValue()&&_.extend(data,this.uploadWorks.getValue());
+            
+            //this.uploadWorks.getValue()&&_.extend(data,this.uploadWorks.getValue());
 
             if(!data.name){
                 _.removeClass(_.$('workError'),'f-dn');

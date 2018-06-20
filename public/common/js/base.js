@@ -430,7 +430,7 @@
                 }
                 data = data.join("&").replace("/%20/g", "+");
                 //若是使用get方法或JSONP，则手动添加到URL中
-                if (type === "get" || dataType === "jsonp") {
+                if (type === "GET" || dataType === "jsonp") {
                     url += url.indexOf("?") > -1 ? (url.indexOf("=") > -1 ? "&" + data : data) : "?" + data;
                 }
             }
@@ -539,8 +539,11 @@
         var timeout_bool = false, //是否请求超时
             timeout_flag = null, //超时标识
             xhr = null; //xhr对象
-        //暂停不使用序列化
-        //setData();
+        
+        //get方法时使用setData();
+        if(type === 'GET'){
+            setData(data);
+        }
         if(type==='POST'||type==='PATCH'){
             data = options.data ? JSON.stringify(options.data) : null;
         }
