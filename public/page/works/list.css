@@ -172,6 +172,15 @@
     box-sizing: border-box;
 }
 
+modal-list .modal_head{
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #5eccb6;
+    border-bottom:1px solid #d3d4d4;
+}
+
 .modal-list .u-close{
     position: absolute;
     top: 5px;right: 5px;
@@ -181,6 +190,31 @@
     cursor: pointer;
 }
 
+.modal-list .u-content{
+    margin-top: 21px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.modal-list .u-content input{
+    box-sizing: border-box;
+    width: 200px;
+    height: 30px;
+    border: 2px solid #5ed0ba;
+    border-radius: 4px;
+}
+.modal-list .u-content .del-item-name{
+    color: #5eccb6;
+}
+.modal-list .u-buttons{
+    height: 40px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.modal-list .u-buttons buttobutton{
+    margin-left: 18px;
+}
 /* 分页器 */
 .m-pagination{
     display: flex;

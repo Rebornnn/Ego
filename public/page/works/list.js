@@ -313,9 +313,9 @@
                 <div class="u-content">
                     确定要删除作品<em class="del-item-name">"${works.name}"</em>吗
                 </div>
-                <div>
+                <div class='u-buttons'>
                     <button class="u-btn u-btn-primary" id="confirm">确&nbsp;&nbsp;认</button>
-                    <button class="u-btn u-btn-primary" id="cancel">取&nbsp;&nbsp;消</button>
+                    <button class="u-btn u-btn-link" id="cancel">取&nbsp;&nbsp;消</button>
                 </div>
             </div>
             `;
@@ -346,9 +346,9 @@
                 <div class=u-content>
                     <input id="name-inp" class="item-name-inp" value="${works.name}" autofocus placeholder="名称不能为空"/>
                 </div>
-                <div>
+                <div class='u-buttons>
                     <button class="u-btn u-btn-primary" id="confirm">确&nbsp;&nbsp;认</button>
-                    <button class="u-btn u-btn-primary" id="cancel">取&nbsp;&nbsp;消</button>
+                    <button class="u-btn u-btn-link" id="cancel">取&nbsp;&nbsp;消</button>
                 </div>
             </div>
             `;
