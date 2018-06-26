@@ -403,7 +403,7 @@
                     type:_.switchType('POST'),
                     data:data,
                     success:function(){
-                        window.location.pathname='/Ego/html/works/list.html';
+                        window.location.pathname='/Ego/public/html/works/list.html';
                     }
                 });
             }
